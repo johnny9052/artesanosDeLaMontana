@@ -1,0 +1,107 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+
+/*Fondos*/
+body,nav, nav ul a,
+nav .brand-logo,footer, .side-nav{
+    background-color: black;
+}
+
+footer,.teal{
+    background-color: black !important;
+}
+
+
+/*Texto del menu principal*/
+a,nav ul a,
+nav .brand-logo {    
+    color: white !important;  
+}
+
+
+p {
+    line-height: 2rem;
+    color: white;
+}
+
+h5{
+    color: #4db6ac;
+}
+
+.textoVerde{
+    color: #4db6ac !important;
+}
+
+.header{
+    color: white;
+}
+
+/*Texto menu movil*/
+.button-collapse {
+    color: white;
+}
+
+/*Texto de las imagenes*/
+.parallax-container {
+    min-height: 380px;
+    line-height: 0;
+    height: auto;
+    color: orange;
+}
+.parallax-container .section {
+    width: 100%;
+}
+
+@media only screen and (max-width : 992px) {
+    .parallax-container .section {
+        position: absolute;
+        top: 40%;
+    }
+    #index-banner .section {
+        top: 10%;
+    }
+}
+
+@media only screen and (max-width : 600px) {
+    #index-banner .section {
+        top: 0;
+    }
+}
+
+.icon-block {
+    padding: 0 15px;
+}
+.icon-block .material-icons {
+    font-size: inherit;
+}
+
+footer.page-footer {
+    margin: 0;
+}
+
+.modalDark{
+    background-color: black !important;
+}
+
+input, textArea{
+    color: white !important;
+}
+
+.iconoverde{
+    color: #4db6ac;
+}
+
+.iconoblanco{
+    color: white !important;
+}
+
+
+.textojustificado{
+    text-align: justify !important;
+}
