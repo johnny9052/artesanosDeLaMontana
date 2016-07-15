@@ -17,6 +17,7 @@ and open the template in the editor.
 
         <br>       
 
+        <!-- PRIMERA BARRA DE CARGA-->
         <div class="row">
             <div class="col s4  offset-s4 l4 offset-l4 m4 offset-m4 container">
                 <div class="progress">
@@ -24,30 +25,22 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-
-
-
+        <!--END PRIMERA BARRA DE CARGA-->
 
         <br>
-
         <br>
 
 
-        <!--  striped      highlight-->
-
+        <!-- LISTADO DE DATOS-->
         <table  class="centered bordered responsive-table highlight" id="TblList">                        
         </table>
+        <!--END LISTADO DE DATOS-->
 
         <br>       
 
-        <div class="row">
-            <div class="col s4  offset-s4 l4 offset-l4 m4 offset-m4 container">
-                <div class="progress">
-                    <div class="indeterminate"></div>
-                </div>
-            </div>
-        </div>
+     
 
+        <!-- MODAL NUEVO REGISTRO -->
         <div id="ModalNew" class="boxModal modal">
             <div class="modal-content">
                 <!-- CENTRAR LOS ELEMENTOS DEL FORMULARIO -->
@@ -81,13 +74,13 @@ and open the template in the editor.
                 </div>                    
             </div>
         </div>
+        <!--END MODAL NUEVO REGISTRO -->
 
 
 
 
 
-
-        <!-- Modal Structure -->
+        <!--CONFIRMACION ELIMINACION REGISTRO -->
         <div id="ModalConfirm" class="modal">
             <div class="modal-content">
                 <h4>Confirmar</h4>
@@ -98,7 +91,7 @@ and open the template in the editor.
                 <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="goNavigation('ModalConfirm', 'ModalNew');">Cancelar</a>
             </div>
         </div>
-
+        <!--END CONFIRMACION ELIMINACION REGISTRO -->
 
 
 

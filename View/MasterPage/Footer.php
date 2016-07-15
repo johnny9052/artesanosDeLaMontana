@@ -13,7 +13,7 @@ and open the template in the editor.
         <div class="container">
             <div class="row">
                 <div class="col s12">                    
-                    <p class="grey-text text-lighten-4">Empresa o institucion</p>
+                    <p class="grey-text text-lighten-4">Cerveceria Artesanos de la montaña</p>
                 </div>                   
             </div>
         </div>
@@ -21,7 +21,7 @@ and open the template in the editor.
             <div class="container">
                 © <?php
                 echo date("Y");
-                ?> All rights reserved                
+                ?> Cerveceria Artesanos de la montaña - All rights reserved                
             </div>
         </div>
     </body>

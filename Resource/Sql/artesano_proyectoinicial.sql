@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-06-2016 a las 22:54:10
+-- Tiempo de generación: 15-07-2016 a las 05:14:34
 -- Versión del servidor: 5.6.12-log
 -- Versión de PHP: 5.4.16
 
@@ -17,16 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de datos: `proyectoinicial`
+-- Base de datos: `artesano_proyectoinicial`
 --
-CREATE DATABASE IF NOT EXISTS `proyectoinicial` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `proyectoinicial`;
+CREATE DATABASE IF NOT EXISTS `artesano_proyectoinicial` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `artesano_proyectoinicial`;
 
 DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listrol`(iduser int)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `listrol`(iduser int)
     COMMENT 'Procedimiento que lista los roles de un determinado usuario'
 BEGIN
    select id,nombre as nombre_rol,descripcion 
@@ -34,7 +34,7 @@ BEGIN
    order by nombre;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `listuser`(iduser int)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `listuser`(iduser int)
     COMMENT 'Procedimiento que lista los usuarios'
 BEGIN
    
@@ -46,41 +46,41 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadallmenu`()
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `loadallmenu`()
     COMMENT 'Procedimiento que lista todos los menus del sistema'
 BEGIN
    
 	select m.id,m.nombre,m.codigo,m.padre as codpadre,m2.nombre as nombrepadre,m.prioridad
-	from Menu as m
+	from menu as m
 	left JOIN menu as m2 on m.padre = m2.id	
 	order by m.prioridad;
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadapage`(vpage varchar(2000),vrol int)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `loadapage`(IN `vpage` VARCHAR(2000), IN `vrol` INT)
     COMMENT 'Procedimiento que lista los menus'
 BEGIN
    
 	select m.codigo
-	from Menu as m 	
+	from menu as m 	
 	inner join menu_rol as mr on mr.idmenu = m.id
 	where mr.idrol = vrol AND m.codigo = vpage;	
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadmenu`(IN `rol` INT)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `loadmenu`(IN `rol` INT)
     COMMENT 'Procedimiento que lista los menus de un determinado rol'
 BEGIN
    
 	select m.id,m.nombre,m.codigo,m.padre as codpadre,m2.nombre as nombrepadre,mr.idrol,m.prioridad
-	from Menu as m
+	from menu as m
 	left JOIN menu as m2 on m.padre = m2.id
 	LEFT join menu_rol as mr on mr.idmenu = m.id
 	where (mr.idrol = rol OR (m.padre = -1 AND (mr.idrol = rol OR mr.idrol IS NULL)))
 	order by m.prioridad;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loadrol`(idfilter int,iduser int)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `loadrol`(idfilter int,iduser int)
     COMMENT 'Procedimiento que lista los roles'
 BEGIN
  
@@ -100,14 +100,14 @@ BEGIN
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `login`(usu VARCHAR(50), pass VARCHAR(50))
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `login`(IN `usu` VARCHAR(50), IN `pass` VARCHAR(50))
     COMMENT 'Procedimiento que valida las credenciales de un usuairo'
 BEGIN
-   select usuario,primer_nombre,primer_apellido,rol from Usuario where password=pass and usuario=usu;		
+   select usuario,primer_nombre,primer_apellido,rol from usuario where password=pass and usuario=usu;		
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `searchrol`(idrol int)
-    COMMENT 'Procedimiento que lista los roles'
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `searchrol`(idrol int)
+    COMMENT 'Procedimiento que carga la informacion de un rol'
 BEGIN
  
 	
@@ -117,7 +117,7 @@ BEGIN
 	
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `searchuser`(vid int)
+CREATE DEFINER=`artesano`@`localhost` PROCEDURE `searchuser`(vid int)
     COMMENT 'Procedimiento que carga la informacion de un usuario'
 BEGIN
  	
@@ -131,7 +131,7 @@ END$$
 --
 -- Funciones
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleterol`(cod INT) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `deleterol`(cod INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un rol'
@@ -142,7 +142,7 @@ BEGIN
 	RETURN res;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `deleteuser`(vid INT) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `deleteuser`(vid INT) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que elimina un usuario'
@@ -153,7 +153,7 @@ SET res = 1;
 	RETURN res;
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saverol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `saverol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un rol'
@@ -172,7 +172,7 @@ IF NOT EXISTS(select nombre from rol where nombre=nom)
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `saveuser`(id int, vfirstname varchar(50), vsecondname varchar(50), vfirstlastname varchar(50), vsecondlastname varchar(50), vuser varchar(50), vpass varchar(50), vrol int, vdescription varchar(50)) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `saveuser`(id int, vfirstname varchar(50), vsecondname varchar(50), vfirstlastname varchar(50), vsecondlastname varchar(50), vuser varchar(50), vpass varchar(50), vrol int, vdescription varchar(50)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que almacena un rol'
@@ -196,7 +196,7 @@ IF NOT EXISTS(select usuario from usuario where usuario=vuser)
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updatepermission`(`vid` INT, `vpermission` VARCHAR(2000)) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `updatepermission`(vid integer, vpermission varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que actualiza los permisos de un rol'
@@ -213,7 +213,7 @@ BEGIN
     	SET permiso = ELT(1, vpermission);
         /*Se elimina ese primer valor y se reemplaza en la cadena*/
     	SET vpermission = SUBSTRING(vpermission, LOCATE(',',vpermission) + 1);
-        /*Se almacena en la tabla*/
+        /*Se almacena en la tabla, siempre y cuando tenga un dato para almacenar*/
 		IF permiso <> ',' THEN	
     		INSERT INTO menu_rol(idrol, idmenu) VALUES (vid, permiso);
 		END IF;
@@ -224,7 +224,7 @@ BEGIN
     RETURN res;	
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updaterol`(`cod` INT, `nom` VARCHAR(50), `des` VARCHAR(2000)) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `updaterol`(cod INT,nom varchar(50),des varchar(2000)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un rol'
@@ -243,7 +243,7 @@ IF NOT EXISTS(select nombre from rol where nombre=nom and id<>cod)
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `updateuser`(`vid` INT, `vfirstname` VARCHAR(50), `vsecondname` VARCHAR(50), `vfirstlastname` VARCHAR(50), `vsecondlastname` VARCHAR(50), `vuser` VARCHAR(50), `vpass` VARCHAR(50), `vrol` INT, `vdescription` VARCHAR(50)) RETURNS int(1)
+CREATE DEFINER=`artesano`@`localhost` FUNCTION `updateuser`(vid int, vfirstname varchar(50), vsecondname varchar(50), vfirstlastname varchar(50), vsecondlastname varchar(50), vuser varchar(50), vpass varchar(50), vrol int, vdescription varchar(50)) RETURNS int(1)
     READS SQL DATA
     DETERMINISTIC
     COMMENT 'Funcion que modifica un rol'
@@ -298,16 +298,16 @@ INSERT INTO `menu` (`id`, `nombre`, `codigo`, `padre`, `descripcion`, `prioridad
 (4, 'Usuarios', 'Configuration/User', 2, NULL, 2),
 (5, 'Inicio', NULL, -1, NULL, 1),
 (6, 'Permisos', 'Configuration/Permission', 2, NULL, 3),
-(7, 'Horario', 'Configutation/Date', 1, NULL, 1),
-(8, 'EAM', NULL, -1, NULL, 5),
-(9, 'ING SOFT', 'EAM/IngeSoft', 8, NULL, 2),
-(10, 'ING MEC', 'EAM/IngeMec', 8, NULL, 1),
-(11, 'San Solano', NULL, -1, NULL, 6),
-(12, 'Secundaria', 'Solano/Secundaria', 11, NULL, 2),
-(13, 'Primaria', 'Solano/Primaria', 11, NULL, 1),
-(14, 'Web', NULL, -1, NULL, 5),
-(15, 'HTML', 'Web/HTML', 14, NULL, 2),
-(16, 'CSS', 'Web/CSS', 14, NULL, 1);
+(7, 'Productos', 'Configutation/Product', 1, NULL, 1),
+(8, 'Proceso cervecero', NULL, -1, NULL, 5),
+(9, 'Fabricacion', 'ProcesoCerveza/Fabricacion', 8, NULL, 2),
+(10, 'Reporte Fabricacion', 'ProcesoCerveza/ReporteFabricacion', 8, NULL, 1),
+(11, 'Inventario', NULL, -1, NULL, 6),
+(12, 'Marca', 'Inventario/Marca', 11, NULL, 2),
+(13, 'Producto', 'Inventario/Producto', 11, NULL, 1),
+(14, 'Puntos de venta', NULL, -1, NULL, 5),
+(15, 'Tipo de punto', 'PuntoVenta/TipoPunto', 14, NULL, 2),
+(16, 'Punto de venta', 'PuntoVenta/PuntoVenta', 14, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -327,27 +327,9 @@ CREATE TABLE IF NOT EXISTS `menu_rol` (
 --
 
 INSERT INTO `menu_rol` (`idrol`, `idmenu`) VALUES
-(84, 16),
-(84, 15),
-(2, 6),
-(2, 7),
-(60, 4),
-(60, 7),
-(63, 6),
-(62, 4),
 (1, 3),
 (1, 4),
-(1, 6),
-(85, 3),
-(85, 4),
-(85, 6),
-(85, 7),
-(85, 10),
-(85, 9),
-(85, 16),
-(85, 15),
-(85, 13),
-(85, 12);
+(1, 6);
 
 -- --------------------------------------------------------
 
@@ -360,23 +342,15 @@ CREATE TABLE IF NOT EXISTS `rol` (
   `nombre` varchar(50) DEFAULT NULL,
   `descripcion` varchar(2000) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=86 ;
 
 --
 -- Volcado de datos para la tabla `rol`
 --
 
 INSERT INTO `rol` (`id`, `nombre`, `descripcion`) VALUES
-(1, 'Administrador', 'Super administrador del sistema'),
-(2, 'Docente', 'Controla los estudiantes de la institucion'),
-(59, 'Secretaria', 'Opciones varias'),
-(60, 'rector', 'reportes'),
-(61, 'coordinadora', 'atencion estudiantes'),
-(62, 'decano', 'cara de la facultad'),
-(63, 'Vigilante', 'camara de seguridad'),
-(82, 'Visitante', 'Este es para juan 33'),
-(84, 'estudiante', 'fsddsf'),
-(85, 'artesanos', 'usuario de prueba para la empresa');
+(1, 'administrador', 'Super administrador del sistema, tiene todos los permisos'),
+(85, 'artesano', 'Tiene todos los permisos, excepto configuracion de roles, usuarios y permisos de usuario');
 
 -- --------------------------------------------------------
 
@@ -403,29 +377,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `usuario`, `password`, `rol`, `descripcion`) VALUES
-(1, 'Johnny', 'Alexander', 'Salazar', 'Cardona', 'admin', '202cb962ac59075b964b07152d234b70', 1, NULL),
-(2, 'Juan', 'David', 'Montoya', 'Montealegre', 'judamo', '202cb962ac59075b964b07152d234b70', 82, ''),
-(7, 'diego lopez', 'df', 'dfds', 'dfdsf', 'prueba', '202cb962ac59075b964b07152d234b70', 59, 'dfsd'),
-(16, 'carlos', '', 'gomez', '', 'carlitos', '202cb962ac59075b964b07152d234b70', 82, 'asasdsaasd'),
-(17, 'pepito', 'sdjka', 'ksfsk', 'skj', 'pepito', '202cb962ac59075b964b07152d234b70', 84, 'sadasd'),
-(19, 'Luisa', '', 'Novia Richard', '', 'luisa', '202cb962ac59075b964b07152d234b70', 85, 'prueba');
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `menu_rol`
---
-ALTER TABLE `menu_rol`
-  ADD CONSTRAINT `menu_usuario_idmenu_fkey` FOREIGN KEY (`idmenu`) REFERENCES `menu` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `menu_usuario_idrol_fkey` FOREIGN KEY (`idrol`) REFERENCES `rol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_rol_fkey` FOREIGN KEY (`rol`) REFERENCES `rol` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+(1, 'Johnny', 'Alexander', 'Salazar', 'Cardona', 'johnny9052', 'df5be1862ca6bf8589cf799004248e87', 1, '');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

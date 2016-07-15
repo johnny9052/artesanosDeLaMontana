@@ -83,7 +83,7 @@ DELIMITER //
 CREATE PROCEDURE login(usu VARCHAR(50), pass VARCHAR(50))
 COMMENT 'Procedimiento que valida las credenciales de un usuairo'
 BEGIN
-   select usuario,primer_nombre,primer_apellido,rol from Usuario where password=pass and usuario=usu;		
+   select usuario,primer_nombre,primer_apellido,rol from usuario where password=pass and usuario=usu;		
 END//
 
 DELIMITER ;
@@ -174,7 +174,7 @@ COMMENT 'Procedimiento que lista todos los menus del sistema'
 BEGIN
    
 	select m.id,m.nombre,m.codigo,m.padre as codpadre,m2.nombre as nombrepadre,m.prioridad
-	from Menu as m
+	from menu as m
 	left JOIN menu as m2 on m.padre = m2.id	
 	order by m.prioridad;
 
@@ -192,7 +192,7 @@ COMMENT 'Procedimiento que lista los menus'
 BEGIN
    
 	select m.codigo
-	from Menu as m 	
+	from menu as m 	
 	inner join menu_rol as mr on mr.idmenu = m.id
 	where mr.idrol = vrol AND m.codigo = vpage;	
 
@@ -219,7 +219,7 @@ COMMENT 'Procedimiento que lista los menus de un determinado rol'
 BEGIN
    
 	select m.id,m.nombre,m.codigo,m.padre as codpadre,m2.nombre as nombrepadre,mr.idrol,m.prioridad
-	from Menu as m
+	from menu as m
 	left JOIN menu as m2 on m.padre = m2.id
 	LEFT join menu_rol as mr on mr.idmenu = m.id
 	where (mr.idrol = rol OR (m.padre = -1 AND (mr.idrol = rol OR mr.idrol IS NULL)))
@@ -465,3 +465,4 @@ BEGIN
 END//
 
 DELIMITER ;
+

@@ -17,6 +17,7 @@ and open the template in the editor.
 
         <br>       
 
+        <!-- BOTON AÑADIR Y PRIMERA BARRA DE CARGA-->
         <div class="row">
             <div class="col s4 l4 m4 left">
                 <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true);">
@@ -29,14 +30,22 @@ and open the template in the editor.
                 </div>
             </div>
         </div>
-
-
+        <!--END BOTON AÑADIR Y PRIMERA BARRA DE CARGA-->
 
 
         <br>
-
         <br>
 
+        <!-- LISTADO DE REGISTROS-->
+        <table  class="centered bordered responsive-table highlight" id="TblList">                        
+        </table>
+        <!-- END LISTADO DE REGISTROS-->
+
+
+      
+
+
+        <!-- MODAL PARA ADMINISTRACION DE REGISTROS-->
         <div id="ModalNew" class="boxModal modal">
             <div class="modal-content">
                 <!-- CENTRAR LOS ELEMENTOS DEL FORMULARIO -->
@@ -128,15 +137,12 @@ and open the template in the editor.
 
             </div>
         </div>
+        <!-- END MODAL PARA ADMINISTRACION DE REGISTROS-->
 
 
 
-        <!--  striped      highlight-->
 
-        <table  class="centered bordered responsive-table highlight" id="TblList">                        
-        </table>
-
-        <!-- Modal Structure -->
+        <!-- MODAL DE CONFIRMACION-->
         <div id="ModalConfirm" class="modal">
             <div class="modal-content">
                 <h4>Confirmar</h4>
@@ -147,10 +153,7 @@ and open the template in the editor.
                 <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="goNavigation('ModalConfirm', 'ModalNew');">Cancelar</a>
             </div>
         </div>
-
-
-
-
+        <!-- END MODAL DE CONFIRMACION-->
 
     </body>
 </html>

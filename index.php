@@ -59,10 +59,10 @@
                                 <a class="collapsible-header">Productos<i class="material-icons right">arrow_drop_down</i></a>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a href="index.php?page=estudiantes">American brown</a></li>                                    
-                                        <li><a href="index.php?page=estudiantes">Irish red</a></li>            
-                                        <li><a href="index.php?page=estudiantes">Imperial stout con café</a></li>                                      
-                                        <li><a href="index.php?page=estudiantes">Pale Ale</a></li>            
+                                        <li><a class="submenu" href="index.php?page=estudiantes">American brown ale (Dulima)</a></li>                                    
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Irish red ale (Santa Chava)</a></li>            
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Imperial stout con café (Tatamá)</a></li>                                      
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Bohemian Pilsener (Cumanday)</a></li>            
                                     </ul>
                                 </div>
                             </li>

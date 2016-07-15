@@ -105,3 +105,8 @@ input, textArea{
 .textojustificado{
     text-align: justify !important;
 }
+
+
+.submenu{
+    font-size: 10px !important;
+}
