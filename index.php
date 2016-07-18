@@ -4,6 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
         <title>Artesanos de la montaña</title>
+        
+        <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
 
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -230,7 +232,7 @@
 
         <div class="fixed-action-btn" style="bottom: 25px; right: 24px;border-style: none !important;">
             <a class="btn-floating btn-large white" style="width: 90px;height: 90px;border-style: none !important;">
-                <img src="Resource/Images/Public/LogoCircular2.png" alt="" style="width: 90px;height: 90px;border-style: none !important;"/>                
+                <img src="Resource/Images/Public/LogoCircular.png" alt="" style="width: 90px;height: 90px;border-style: none !important;"/>                
             </a>           
         </div>
 

@@ -12,9 +12,11 @@ and open the template in the editor.
 
         <!--Prevenir autocompletado -->
         <meta http-equiv="Pragma" content="no-cache">
-        <meta http-equiv="Expires" content="-1">
+        <meta http-equiv="Expires" content="-1">        
 
         <title>Sistema</title>
+        
+        <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
         <!--Import materialize.css ONLINE-->
         <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
