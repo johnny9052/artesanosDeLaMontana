@@ -77,7 +77,6 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
-
 DROP PROCEDURE IF EXISTS login;
 DELIMITER //
 CREATE PROCEDURE login(usu VARCHAR(50), pass VARCHAR(50))
@@ -466,3 +465,31 @@ END//
 
 DELIMITER ;
 
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS `artesano_proyectoinicial`.`mensaje` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NULL,
+  `email` VARCHAR(50) NULL,
+  `descripcion` VARCHAR(2000) NULL,
+  `estado` bit NULL,
+  PRIMARY KEY (`id`));
+
+
+
+DELIMITER //
+CREATE FUNCTION savepublicmessage(nom varchar(50),email varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un mensaje enviado por un cliente'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    insert into mensaje(nombre,email,descripcion,estado) values(nom,email,des,0);	
+    set res = 1;								
+    RETURN res;	
+END//
+
+DELIMITER ;

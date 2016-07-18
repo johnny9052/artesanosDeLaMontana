@@ -13,7 +13,7 @@ and open the template in the editor.
         <div class="container">
             <div class="row">
                 <div class="col s12">                    
-                    <p class="grey-text text-lighten-4">Cerveceria Artesanos de la montaña</p>
+                    <p class="grey-text text-lighten-4">Cerveceria Artesanos de la Montaña</p>
                 </div>                   
             </div>
         </div>

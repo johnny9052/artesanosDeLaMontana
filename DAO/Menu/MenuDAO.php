@@ -122,7 +122,7 @@ class MenuDAO {
         $completar='..';
         
         /* Logo de la empresa */
-        $menu = '<a id="logo-container"><img src="Resource/Multimedia/Images/Logo.png" class="Logo"></a>';
+        $menu = '<a id="logo-container"><img src="Resource/Multimedia/Images/Logo.png" class="Logo"></a><br>';
         /* Menu inicio */
         $menu.='<li><a href="administracion.php">Inicio</a></li>';
 

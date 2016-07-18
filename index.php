@@ -30,10 +30,12 @@
         <!--        <nav class="white" role="navigation">-->
         <nav role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="#" class="brand-logo">Logo</a>
+                <a id="logo-container" href="#" class="brand-logo">
+
+                </a>
                 <ul class="right hide-on-med-and-down">
 
-                    <li><a href="#ModalComentario" class="modal-trigger">Contactanos</a></li>
+                    <li><a href="#ModalComentario" class="modal-trigger">Contáctanos</a></li>
 
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Productos<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -41,17 +43,17 @@
                     <ul id="dropdown1" class="dropdown-content">                                                
                         <li class="menufondo"><a href="#!">American brown ale (Dulima)</a></li>
                         <li class="divider"></li>
-                        <li><a href="#!">Irish red ale (Santa Chava)</a></li>
+                        <li><a href="#!">Irish Red Ale (Santa Chava)</a></li>
                         <li class="divider"></li>                        
-                        <li><a href="#!">Imperial stout con café (Tatamá)</a></li>
+                        <li><a href="#!">Imperial Stout Con Café (Tatamá)</a></li>
                         <li class="divider"></li>
-                        <li><a href="#!">Bohemian Pilsener (Cumanday)</a></li>
+                        <li><a href="#!">Bohemian Ale (Cumanday)</a></li>
                         <li class="divider"></li>                                                                                               
                     </ul>                                                                                                                             
                 </ul>
 
                 <ul id="nav-mobile" class="side-nav">
-                    <li><a href="#ModalComentario" class="modal-trigger">Contactanos</a></li>
+                    <li><a href="#ModalComentario" class="modal-trigger">Contáctanos</a></li>
 
                     <li class="no-padding">
                         <ul class="collapsible collapsible-accordion">
@@ -59,10 +61,10 @@
                                 <a class="collapsible-header">Productos<i class="material-icons right">arrow_drop_down</i></a>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a class="submenu" href="index.php?page=estudiantes">American brown ale (Dulima)</a></li>                                    
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Irish red ale (Santa Chava)</a></li>            
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Imperial stout con café (Tatamá)</a></li>                                      
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Bohemian Pilsener (Cumanday)</a></li>            
+                                        <li><a class="submenu" href="index.php?page=estudiantes">American Brown Ale (Dulima)</a></li>                                    
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Irish Red Ale (Santa Chava)</a></li>            
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Imperial Stout Con Café (Tatamá)</a></li>                                      
+                                        <li><a class="submenu" href="index.php?page=estudiantes">Bohemian Ale (Cumanday)</a></li>            
                                     </ul>
                                 </div>
                             </li>
@@ -77,10 +79,10 @@
             <div class="section no-pad-bot">
                 <div class="container">
                     <br><br>
-                    <h1 class="header center text-lighten-3">Artesanos de la Montaña</h1>
-                    <div class="row center">
-                        <h5 class="header col s12 light">Algo más que una cerveza artesanal, es la esencia de Colombia en cada sorbo</h5>
-                    </div>
+                    <!--                    <h1 class="header center text-lighten-3">Artesanos de la Montaña</h1>
+                                        <div class="row center">
+                                            <h5 class="header col s12 light">Algo más que una cerveza artesanal, es la esencia de Colombia en cada sorbo</h5>
+                                        </div>-->
 
                 </div>
             </div>
@@ -101,8 +103,10 @@
                     <div class="col s12 m4">
                         <div class="icon-block">
                             <h2 class="center brown-text"><i class="material-icons iconoverde">grade</i></h2>
-                            <h5 class="center">Excelencia unica</h5>
-                            <p class="light textojustificado">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+                            <h5 class="center">Excelencia única</h5>
+                            <p class="light textojustificado">
+                                Producimos cervezas usando materias primas de alta calidad, a través de métodos artesanales, jugando con el balance entre sabor, aroma y cuerpo, desarrollando técnicas que apoyan el proceso artesanal, optimizándolo, sin que este se industrialice.
+                            </p>
                         </div>
                     </div>
 
@@ -111,7 +115,9 @@
                             <h2 class="center brown-text"><i class="material-icons iconoverde">group</i></h2>
                             <h5 class="center">Comparte con amigos</h5>
 
-                            <p class="light textojustificado">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+                            <p class="light textojustificado">
+                                El sabor particular de los procesos artesanales, buscan cautivar el paladar inexperto y atrapar al más experimentado, apelamos a la necesidad humana de sentir bienestar a través de los recuerdos y las emociones, estimulando los sentidos del cliente, ideal para acompañar una charla entre amigos o una buena comida, apta para ocasiones especiales, la compañía de la familia, comidas y encuentros sociales.
+                            </p>
                         </div>
                     </div>
 
@@ -120,7 +126,9 @@
                             <h2 class="center brown-text"><i class="material-icons iconoverde">store</i></h2>
                             <h5 class="center">Sabor regional</h5>
 
-                            <p class="light textojustificado">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                            <p class="light textojustificado">
+                                Buscamos reflejar la esencia de Colombia, usando la investigación e innovación en el procesamiento de las materias primas, adicionando sabores y olores, de frutas orgánicas y semillas tostadas como el café especial, producido en la región cafetera.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -148,11 +156,13 @@
                         <h3><i class="mdi-content-send brown-text"></i></h3>
 
                         <div class="row center">
-                            <a  href="#ModalComentario"  id="download-button" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Contactanos</a>                         
+                            <a  href="#ModalComentario"  id="download-button" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Contáctanos</a>                         
                         </div>
 
 
-                        <p class="textojustificado light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam pellentesque tristique arcu, non consequat magna fermentum ac. Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien id, viverra ultrices eros. Morbi sem neque, posuere et pretium eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie. Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat. Nullam eget dignissim mauris, non tristique erat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+                        <p class="textojustificado light">
+                            La región cafetera se destaca por la amabilidad y el respeto de las personas que viven en esta bella región del país, por ello esperamos entablar relaciones de cordialidad y respeto con nuestros clientes, que reflejen la cultura cafetera, Para nosotros es muy importante responder a todas las inquietudes, para facilitar una pronta respuesta. 
+                        </p>
                     </div>
                 </div>
 
@@ -176,20 +186,20 @@
         <footer class="page-footer teal">
             <div class="container">
                 <div class="row">
-                    <div class="col l6 s12">
+                    <div class="col l5 s12">
                         <h5 class="">Visitanos</h5>
                         <p class="grey-text text-lighten-4">
                             Nos encontramos ubicados en Pereria<br>
-                            Escribenos a artesanosdelamontana@gmail.com para tener el gusto de antenderlo
+                            Escribenos a artesanosdelamontana@gmail.com
                         </p>
                     </div>
-                    <div class="col l3 s12">
+                    <div class="col l4 s12">
                         <h5 class="">Productos</h5>
                         <ul>
-                            <li><a class="white-text" href="#!">American brown ale (Dulima)</a></li>
-                            <li><a class="white-text" href="#!">Irish red ale (Santa Chava)</a></li>
-                            <li><a class="white-text" href="#!">Imperial stout con café (Tatamá)</a></li>
-                            <li><a class="white-text" href="#!">Bohemian Pilsener (Cumanday)</a></li>
+                            <li><a class="white-text" href="#!">American Brown Ale (Dulima)</a></li>
+                            <li><a class="white-text" href="#!">Irish Red Ale (Santa Chava)</a></li>
+                            <li><a class="white-text" href="#!">Imperial Stout Con Café (Tatamá)</a></li>
+                            <li><a class="white-text" href="#!">Bohemian Ale (Cumanday)</a></li>
                         </ul>
                     </div>
 
@@ -215,37 +225,48 @@
             </div>
         </footer>
 
+
+
+
+        <div class="fixed-action-btn" style="bottom: 25px; right: 24px;border-style: none !important;">
+            <a class="btn-floating btn-large white" style="width: 90px;height: 90px;border-style: none !important;">
+                <img src="Resource/Images/Public/LogoCircular2.png" alt="" style="width: 90px;height: 90px;border-style: none !important;"/>                
+            </a>           
+        </div>
+
+
         <!-- Modal Structure -->
         <div id="ModalComentario" class="modal modal-fixed-footer modalDark">
             <div class="modal-content">
                 <h4></h4>
 
-                <div class="row" id="FormContainer">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">perm_identity</i>
-                                <input id="input_text" type="text" length="30" placeholder="Ingresa tu nombre">                                
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">email</i>
-                                <input id="input_text" type="text" length="20" placeholder="Ingresa tu correo">
-                            </div>                            
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">mode_edit</i>
-                                <textarea id="textarea1" class="materialize-textarea" length="500" placeholder="¿Que quieres comentarnos?"></textarea>                                
-                            </div>
-                        </div>
-                    </form>
+                <div class="row col s12" id="FormContainer">
+
+                    <div class="row input-field col s12">
+                        <i class="material-icons prefix">perm_identity</i>                       
+                        <input id="txtName" name="name" type="text" value="" autocomplete="off" required 
+                               length="50"  placeholder="Ingresa tu nombre">
+                    </div>                            
+
+
+                    <div class="row input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input id="txtEmail" name="email" type="email" value="" autocomplete="off" required 
+                                placeholder="Ingresa tu correo">
+                    </div>                            
+
+
+                    <div class="row input-field col s12">
+                        <i class="material-icons prefix">mode_edit</i>
+                        <textarea id="txtDescription" class="materialize-textarea" length="2000" 
+                                  placeholder="¿Que quieres comentarnos?" required name="description"></textarea>                                
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer modalDark">
                 <a class="modal-action modal-close waves-effect waves-red btn-flat ">Cancelar</a>
-                <a class="modal-action modal-close waves-effect waves-green btn-flat" onclick="save();">Enviar</a>
+                <a class="modal-action waves-effect waves-green btn-flat" onclick="save();">Enviar</a>
             </div>
         </div>
 
