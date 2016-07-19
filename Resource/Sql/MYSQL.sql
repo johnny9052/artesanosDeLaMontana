@@ -475,6 +475,7 @@ CREATE TABLE IF NOT EXISTS `artesano_proyectoinicial`.`mensaje` (
   `nombre` VARCHAR(50) NULL,
   `email` VARCHAR(50) NULL,
   `descripcion` VARCHAR(2000) NULL,
+  `respuesta` VARCHAR(2000) NULL,
   `estado` bit NULL,
   PRIMARY KEY (`id`));
 
@@ -490,6 +491,83 @@ BEGIN
     insert into mensaje(nombre,email,descripcion,estado) values(nom,email,des,0);	
     set res = 1;								
     RETURN res;	
+END//
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listmessage(iduser int)
+COMMENT 'Procedimiento que lista los mensajes'
+BEGIN
+   
+	SELECT id, nombre as nombre_solicitante, descripcion, respuesta,CASE estado 
+             WHEN 1 THEN 'Cerrado' 
+ 	     ELSE 'Abierto' END as estado
+	FROM mensaje;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchmessage(vid int)
+COMMENT 'Procedimiento que carga la informacion de un mensaje'
+BEGIN
+ 	
+	SELECT id, nombre, email, descripcion,respuesta, estado
+	FROM mensaje
+	where id = vid;	
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatemessage(cod INT,resp varchar(2000),est INT) RETURNS INT( 1 ) 
+COMMENT  'Funcion que actualiza el estado de un mensaje de un usuario'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+    update mensaje set respuesta = resp, estado = est where id = cod;		
+    set res=1;
+												
+    RETURN res;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletemessage(vid INT) RETURNS INT( 1 ) 
+COMMENT  'Funcion que elimina un mensaje'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM mensaje WHERE id = vid;
+SET res = 1;
+	RETURN res;
 END//
 
 DELIMITER ;
