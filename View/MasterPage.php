@@ -14,7 +14,7 @@ and open the template in the editor.
     <body>
 
         <!-- Navbar goes here -->
-        <nav class="blue">
+        <nav class="black">
             <?php
             include("View/MasterPage/Banner.php");
             include("View/MasterPage/Menu.php");
@@ -38,7 +38,7 @@ and open the template in the editor.
         </main>
 
 
-        <footer class="page-footer center-row blue fixed">
+        <footer class="page-footer center-row black fixed">
             <?php
             include("View/MasterPage/Footer.php");
             ?>

@@ -760,13 +760,13 @@
   color: #4db6ac !important; }
 
 .teal.lighten-1 {
-  background-color: #26a69a !important; }
+  background-color: rgb(188,128,0) !important; }
 
 .teal-text.text-lighten-1 {
   color: #26a69a !important; }
 
 .teal {
-  background-color: #009688 !important; }
+  background-color: rgb(188,128,0) !important; }
 
 .teal-text {
   color: #009688 !important; }
@@ -5789,7 +5789,7 @@ small {
 .btn, .btn-large {
   text-decoration: none;
   color: #fff;
-  background-color: #26a69a;
+  background-color: rgb(188,128,0);
   text-align: center;
   letter-spacing: .5px;
   -webkit-transition: .2s ease-out;
@@ -5799,7 +5799,7 @@ small {
   transition: .2s ease-out;
   cursor: pointer; }
   .btn:hover, .btn-large:hover {
-    background-color: #2bbbad; }
+    background-color: #e89f03; }
 
 .btn-floating {
   display: inline-block;
@@ -5811,7 +5811,7 @@ small {
   height: 37px;
   line-height: 37px;
   padding: 0;
-  background-color: #26a69a;
+  background-color: rgb(188,128,0);
   border-radius: 50%;
   transition: .3s;
   cursor: pointer;

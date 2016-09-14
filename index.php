@@ -4,14 +4,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
         <title>Artesanos de la montaña</title>
-        
+
         <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
 
         <link href="Resource/Framework/MaterializedPublic/css/materialize.css" rel="stylesheet" type="text/css" media="screen,projection"/>        
         <link href="Resource/Framework/MaterializedPublic/css/styleBlack.css" rel="stylesheet" type="text/css" media="screen,projection"/>
+
+        <link href="Resource/Framework/MaterializedPublic/css/icons.css" rel="stylesheet" type="text/css"/>
 
         <link href="Resource/Style/Public/modal.css" rel="stylesheet" type="text/css"/>        
 
@@ -254,7 +256,7 @@
                     <div class="row input-field col s12">
                         <i class="material-icons prefix">email</i>
                         <input id="txtEmail" name="email" type="email" value="" autocomplete="off" required 
-                                placeholder="Ingresa tu correo">
+                               placeholder="Ingresa tu correo">
                     </div>                            
 
 

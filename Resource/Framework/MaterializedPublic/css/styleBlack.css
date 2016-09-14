@@ -31,11 +31,14 @@ p {
 }
 
 h5{
-    color: #4db6ac;
+    /*color: #4db6ac;*/
+    color: rgb(188,128,0);
+
 }
 
 .textoVerde{
-    color: #4db6ac !important;
+    /*color: #4db6ac !important;*/
+    color: rgb(188,128,0) !important;
 }
 
 .header{
@@ -94,7 +97,8 @@ input, textArea{
 }
 
 .iconoverde{
-    color: #4db6ac;
+    /*color: #4db6ac;*/
+    color: rgb(188,128,0);
 }
 
 .iconoblanco{
