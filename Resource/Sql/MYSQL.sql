@@ -234,7 +234,7 @@ DELIMITER ;
 
 
 DELIMITER //
-CREATE PROCEDURE loadrol(idfilter int,iduser int)
+CREATE PROCEDURE loadrol(idfilter int)
 COMMENT 'Procedimiento que lista los roles'
 BEGIN
  
@@ -571,3 +571,1256 @@ SET res = 1;
 END//
 
 DELIMITER ;
+
+
+
+
+
+-- ----------------------------------------------------------------------------
+-- Table proyectoInicial.rol
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS amargor (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NULL,
+  `descripcion` VARCHAR(2000) NULL,
+  PRIMARY KEY (`id`));
+
+
+insert into amargor(nombre,descripcion) values('bajo','');
+insert into amargor(nombre,descripcion) values('medio','');
+insert into amargor(nombre,descripcion) values('alto','');
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadamargor(idfilter int)
+COMMENT 'Procedimiento que lista los amargores'
+BEGIN
+ 
+	IF idfilter > -1 THEN
+	
+		select id,nombre
+		from amargor
+		ORDER BY nombre;
+		
+   ELSE	
+	
+		select id,nombre
+		from amargor
+		ORDER BY nombre;
+	
+   END IF;
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+-- ----------------------------------------------------------------------------
+-- Table proyectoInicial.menu
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tipo_cerveza (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `descripcion` VARCHAR(2000) NOT NULL,
+  `alcohol` DOUBLE NOT NULL,
+  `amargor` INT NOT NULL,
+  `valor` DOUBLE NOT NULL,
+  `cantidad` DOUBLE NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`amargor`) REFERENCES amargor(id)
+ );
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savebeerproduct(id int, vname varchar(50), vdescription varchar(2000),valcohol double, vamargor int,
+                                    vvalor double, vcantidad double) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena tipo de cerveza'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select vname from tipo_cerveza where nombre=vname)
+		THEN
+			insert into tipo_cerveza(nombre, descripcion, alcohol, amargor, 
+					   valor, cantidad)
+			VALUES (vname,vdescription,valcohol,vamargor,vvalor,vcantidad);
+			set res = 1;										
+		END IF;
+
+	RETURN res;		
+END//
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listbeerproduct(iduser int)
+COMMENT 'Procedimiento que lista los tipos de cerveza '
+BEGIN
+   select tip.id,tip.nombre,tip.descripcion, tip.alcohol as 'alcohol (%)', 
+          am.nombre  as 'amargor', tip.valor as 'valor $', tip.cantidad as 'cantidad (ml)'
+   from tipo_cerveza as tip
+   inner join amargor as am on am.id = tip.amargor
+   order by tip.nombre;
+END//
+
+DELIMITER ;
+
+
+ 
+
+
+DELIMITER //
+CREATE PROCEDURE searchbeerproduct(idbeerproduct int)
+COMMENT 'Procedimiento que carga la informacion de un tipo de cerveza'
+BEGIN
+ 
+	
+	select  id,nombre,descripcion,alcohol,amargor,valor,cantidad
+	from tipo_cerveza
+	where id = idbeerproduct;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatebeerproduct(vid int, vname varchar(50), vdescription varchar(2000),valcohol double, vamargor int,
+                                    vvalor double, vcantidad double) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un tipo de cerveza'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from tipo_cerveza where nombre=vname and id<>vid)
+		THEN
+			update tipo_cerveza set nombre = vname,
+                               descripcion = vdescription,
+                               alcohol = valcohol,
+                               amargor = vamargor,
+                               valor = vvalor,
+                               cantidad = vcantidad
+                               where id = vid;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletebeerproduct(vid INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un tipo de cerveza'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+        delete from tipo_cerveza where id = vid;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+-- ----------------------------------------------------------------------------
+-- Table proyectoInicial.menu
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS tipo_inventario (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NOT NULL,
+  `descripcion` VARCHAR(2000) NULL,
+  PRIMARY KEY (`id`)
+ );
+
+insert into tipo_inventario(nombre,descripcion) values('Materia prima','');
+insert into tipo_inventario(nombre,descripcion) values('Insumo','');
+insert into tipo_inventario(nombre,descripcion) values('Utencilios','');
+insert into tipo_inventario(nombre,descripcion) values('Equipos','');
+
+
+-- ----------------------------------------------------------------------------
+-- Table proyectoInicial.menu
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS inventario (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `id_tipo` INT NOT NULL, 
+  `nombre` VARCHAR(50) NOT NULL,
+  `codigo` VARCHAR(50) NOT NULL,
+  `fecha_adquisicion` date NOT NULL,
+  `costo` DOUBLE NOT NULL,  
+   PRIMARY KEY (`id`),
+   FOREIGN KEY (`id_tipo`) REFERENCES tipo_inventario(id)
+ );
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadtypeinventary(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de inventario'
+BEGIN
+ 
+	IF idfilter > -1 THEN
+	
+		select id,nombre
+		from tipo_inventario
+		ORDER BY nombre;
+		
+   ELSE	
+	
+		select id,nombre
+		from tipo_inventario
+		ORDER BY nombre;
+	
+   END IF;
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveinventary(vid int, vname varchar(50), vcode varchar(50),vdate date,
+                                    vvalor double, vtype int) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena inventarios'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select codigo from inventario where codigo=vcode)
+		THEN
+			insert into inventario(id_tipo,nombre, codigo, 
+                                               fecha_adquisicion,costo)
+			VALUES (vtype,vname,vcode,vdate,vvalor);
+			set res = 1;										
+		END IF;
+
+	RETURN res;		
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listinventary(iduser int)
+COMMENT 'Procedimiento que lista los inventarios '
+BEGIN
+   select inv.id,inv.nombre,tip.nombre as 'tipo', inv.codigo, 
+          inv.fecha_adquisicion as 'fecha entrada', 
+          inv.costo as '$ valor'
+   from inventario as inv
+   inner join tipo_inventario as tip on tip.id = inv.id_tipo
+   order by inv.codigo;
+END//
+
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchinventary(idinventary int)
+COMMENT 'Procedimiento que carga la informacion de un inventario'
+BEGIN 
+	select  id,id_tipo,nombre, codigo,fecha_adquisicion,costo
+	from inventario
+	where id = idinventary;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateinventary(vid int, vname varchar(50), vcode varchar(50),vdate date,
+                                    vvalor double, vtype int) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un inventario'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from inventario where codigo=vcode and id<>vid)
+		THEN
+			update inventario set nombre = vname,
+                               id_tipo = vtype,
+                               nombre= vname, 
+                               codigo = vcode,
+                               fecha_adquisicion=vdate,
+                               costo = vvalor
+                               where id = vid;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deleteinventary(vid INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un inventario'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+        delete from inventario where id = vid;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savebitter(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un nivel de amargor'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from amargor where nombre=nom)
+		THEN
+			insert into amargor(nombre,descripcion) values(nom,des);	
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listbitter(iduser int)
+COMMENT 'Procedimiento que lista los niveles de amargor'
+BEGIN
+   select id,nombre as 'nombre amargor',descripcion 
+   from amargor
+   order by nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletebitter(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un nivel de amargor'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+    delete from amargor where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatebitter(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un nivel de amargor'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from amargor where nombre=nom and id<>cod)
+		THEN
+			update amargor set nombre = nom,descripcion = des where id = cod;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchbitter(idbitter int)
+COMMENT 'Procedimiento que carga la informacion de un rol'
+BEGIN
+ 
+	
+	select id,nombre,descripcion
+	from amargor
+	where id = idbitter;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveinventarytype(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un nivel de tipo_inventario'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from tipo_inventario where nombre=nom)
+		THEN
+			insert into tipo_inventario(nombre,descripcion) values(nom,des);	
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listinventarytype(iduser int)
+COMMENT 'Procedimiento que lista los niveles de tipo_inventario'
+BEGIN
+   select id,nombre as 'nombre tipo_inventario',descripcion 
+   from tipo_inventario
+   order by nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deleteinventarytype(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un nivel de tipo_inventario'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+    delete from tipo_inventario where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateinventarytype(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un nivel de tipo_inventario'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from tipo_inventario where nombre=nom and id<>cod)
+		THEN
+			update tipo_inventario set nombre = nom,descripcion = des where id = cod;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchinventarytype(idinventarytype int)
+COMMENT 'Procedimiento que carga la informacion de un rol'
+BEGIN
+ 
+	
+	select id,nombre,descripcion
+	from tipo_inventario
+	where id = idinventarytype;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+CREATE TABLE IF NOT EXISTS tipo_gasto (
+   id INT NOT NULL AUTO_INCREMENT,
+   nombre VARCHAR(50) NULL,
+   descripcion VARCHAR(2000) NULL,
+  PRIMARY KEY (id));
+
+
+
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Servicios publicos','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Insumos','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Materias primas','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Eventos','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Publicidad','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Transporte','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Gastos administrativos','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Obligaciones legales','');
+INSERT INTO tipo_gasto(nombre,descripcion) values ('Mantenimiento','');
+
+
+
+DELIMITER //
+CREATE FUNCTION savespendtype(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un nivel de tipo_gasto'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from tipo_gasto where nombre=nom)
+		THEN
+			insert into tipo_gasto(nombre,descripcion) values(nom,des);	
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listspendtype(iduser int)
+COMMENT 'Procedimiento que lista los niveles de tipo_gasto'
+BEGIN
+   select id,nombre as 'nombre tipo_gasto',descripcion 
+   from tipo_gasto
+   order by nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletespendtype(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un nivel de tipo_gasto'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+    delete from tipo_gasto where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatespendtype(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un nivel de tipo_gasto'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from tipo_gasto where nombre=nom and id<>cod)
+		THEN
+			update tipo_gasto set nombre = nom,descripcion = des where id = cod;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchspendtype(idspendtype int)
+COMMENT 'Procedimiento que carga la informacion de un tipo_gasto'
+BEGIN
+ 
+	
+	select id,nombre,descripcion
+	from tipo_gasto
+	where id = idspendtype;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS entrada_cerveza (
+   id INT NOT NULL AUTO_INCREMENT,
+   id_tipo_cerveva int not null,
+   cantidad int not null,   
+   presentacion VARCHAR(50) NULL,
+   lote VARCHAR(50) NULL,
+   fecha_fabricacion date not null,
+   fecha_gasificacion date not null,
+   observaciones VARCHAR(2000) NULL,
+   PRIMARY KEY (id),
+   FOREIGN KEY (id_tipo_cerveva) REFERENCES tipo_cerveza (id)
+  );
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadbeertype(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de cerveza'
+BEGIN 
+	IF idfilter > -1 THEN	
+		select id,nombre
+		from tipo_cerveza
+		ORDER BY nombre;		
+        ELSE		
+		select id,nombre
+		from tipo_cerveza
+		ORDER BY nombre;	
+   END IF;
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savebeerin(vid INT,vBeerType INT, vBootle INT, 
+                           vPresentation varchar(50), vLote varchar(50), 
+                           vDateMosto date, vDateGasificacion date, 
+                           vDescription varchar(2000)
+                           ) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena una entrada de cerveza'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select lote from entrada_cerveza where lote=vLote)
+		THEN
+			insert into entrada_cerveza(id_tipo_cerveva,cantidad,
+                                           presentacion,lote,fecha_fabricacion, 
+                                           fecha_gasificacion,observaciones) 
+                               values(vBeerType,vBootle,vPresentation,vLote, 
+                                      vDateMosto,vDateGasificacion,vDescription);
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listbeerin(iduser int)
+COMMENT 'Procedimiento que lista las entradas de cerveza'
+BEGIN
+   select cerv.id, tip.nombre as 'tipo cerveza',cerv.cantidad,
+          cerv.presentacion,cerv.lote,cerv.fecha_fabricacion,
+          cerv.fecha_gasificacion,cerv.observaciones
+   from entrada_cerveza cerv
+   join tipo_cerveza as tip on cerv.id_tipo_cerveva = tip.id  
+   order by nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchbeerin(idbeerin int)
+COMMENT 'Procedimiento que carga la informacion de una entrada de cerveza'
+BEGIN
+ 
+	
+	select id,id_tipo_cerveva,cantidad,presentacion,lote,fecha_fabricacion, 
+               fecha_gasificacion,observaciones
+	from entrada_cerveza
+	where id = idbeerin;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletebeerin(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina una entrada de una cerveza'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+        delete from entrada_cerveza where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatebeerin(vid INT,vBeerType INT, vBootle INT, 
+                           vPresentation varchar(50), vLote varchar(50), 
+                           vDateMosto date, vDateGasificacion date, 
+                           vDescription varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica una entrada de una cerveza'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from entrada_cerveza where lote=vLote and id<>vid)
+		THEN
+			update entrada_cerveza set 
+                               id_tipo_cerveva = vBeerType,
+                               cantidad = vBootle,
+                               presentacion = vPresentation,
+                               lote = vLote,
+                               fecha_fabricacion = vDateMosto, 
+                               fecha_gasificacion = vDateGasificacion,
+                               observaciones = vDescription
+                        where id = vid;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listbeerinventary(iduser int)
+COMMENT 'Procedimiento que calcula y lista el total de cervezas disponibles'
+BEGIN
+        select tip.id, tip.nombre as 'tipo', SUM(ent.cantidad) as 'cantidad disponible'
+        from entrada_cerveza as ent
+        inner join tipo_cerveza as tip on ent.id_tipo_cerveva = tip.id
+        group by tip.nombre
+        order by tip.nombre;
+END//
+DELIMITER ;
+
+
+
+
+CREATE TABLE IF NOT EXISTS tipo_cliente (
+   id INT NOT NULL AUTO_INCREMENT,   
+   nombre VARCHAR(50) NULL,
+   descripcion VARCHAR(2000) NULL,
+   PRIMARY KEY (id)
+  );
+
+insert into tipo_cliente (nombre,descripcion) values ('Empresa','');
+insert into tipo_cliente (nombre,descripcion) values ('Persona natural','');
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadclienttype(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de cliente'
+BEGIN 
+	IF idfilter > -1 THEN	
+		select id,nombre
+		from tipo_cliente
+		ORDER BY nombre;		
+        ELSE		
+		select id,nombre
+		from tipo_cliente
+		ORDER BY nombre;	
+   END IF;
+END//
+DELIMITER ;
+
+
+CREATE TABLE IF NOT EXISTS cliente (
+   id INT NOT NULL AUTO_INCREMENT,
+   id_tipo_cliente int not null,   
+   nombre VARCHAR(50) NULL,
+   code VARCHAR(50) NULL,
+   email VARCHAR(50) NULL,
+   direccion VARCHAR(50) NULL,
+   telefono VARCHAR(50) NULL,
+   observaciones VARCHAR(2000) NULL,
+   PRIMARY KEY (id),
+   FOREIGN KEY (id_tipo_cliente) REFERENCES tipo_cliente (id)
+  );
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveclient(vid INT,vTypeClient INT, vName varchar(50), 
+                           vCode varchar(50), vEmail varchar(50), 
+                           vAddress varchar(50), vPhonenumber varchar(50), 
+                           vDescription varchar(2000)
+                           ) RETURNS INT( 1 )
+COMMENT  'Funcion que almacena un cliente'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select code from cliente where code=vCode)
+		THEN
+			insert into cliente(id_tipo_cliente,nombre,
+                                           code,email,direccion,telefono, 
+                                           observaciones) 
+                               values(vTypeClient,vName,vCode,vEmail, 
+                                      vAddress,vPhonenumber,vDescription);
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listclient(iduser int)
+COMMENT 'Procedimiento que calcula y lista los clientes'
+BEGIN
+        select cli.id, tip.nombre as 'Tipo', cli.nombre,cli.code as 'Codigo',
+               cli.email,cli.direccion,cli.telefono,cli.observaciones
+        from cliente as cli
+        inner join tipo_cliente as tip on cli.id_tipo_cliente = tip.id
+        order by tip.nombre;
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchclient(idclient int)
+COMMENT 'Procedimiento que carga la informacion de una entrada de cerveza'
+BEGIN
+ 
+	
+	select id,id_tipo_cliente,nombre,code,email,direccion,
+               telefono,observaciones
+	from cliente
+	where id = idclient;
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deleteclient(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un cliente'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+        delete from cliente where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateclient(vid INT,vTypeClient INT, vName varchar(50), 
+                           vCode varchar(50), vEmail varchar(50), 
+                           vAddress varchar(50), vPhonenumber varchar(50), 
+                           vDescription varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un cliente'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from cliente where code=vCode and id<>vid)
+		THEN
+			update cliente set 
+                                id_tipo_cliente=vTypeClient,
+                                nombre=vName,
+                                code=vCode,
+                                email=vEmail,
+                                direccion=vAddress,
+                                telefono=vPhonenumber, 
+                                observaciones=vDescription    
+                        where id = vid;		
+			set res=1;														
+		END IF;
+	RETURN res;	
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS gasto (
+   id INT NOT NULL AUTO_INCREMENT,
+   id_tipo_gasto int not null,   
+   observaciones VARCHAR(2000) NULL,
+   valor DOUBLE,
+   fecha DATE,   
+   PRIMARY KEY (id),
+   FOREIGN KEY (id_tipo_gasto) REFERENCES tipo_gasto (id)
+  );
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadexpensetype(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de cerveza'
+BEGIN 
+	IF idfilter > -1 THEN	
+		select id,nombre
+		from tipo_gasto
+		ORDER BY nombre;		
+        ELSE		
+		select id,nombre
+		from tipo_gasto
+		ORDER BY nombre;	
+   END IF;
+END//
+DELIMITER ;
+
+
+
+ 
+DELIMITER //
+CREATE FUNCTION saveexpense(vid INT,vTypeexpense INT,
+                            vDescription varchar(2000), vValue DOUBLE,
+                            vDateExpense date                           
+                           ) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un gasto'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from gasto 
+              where id_tipo_gasto=vTypeexpense AND fecha = vDateExpense)
+		THEN
+			insert into gasto(id_tipo_gasto,observaciones,
+                                           valor,fecha) 
+                               values(vTypeexpense,vDescription,vValue,
+                                      vDateExpense);
+			set res = 1;										
+		END IF;
+	RETURN res;	
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listexpense(idexpense int)
+COMMENT 'Procedimiento que calcula y lista los gastos'
+BEGIN
+        select g.id,tip.nombre as 'Tipo de Gasto',g.observaciones,g.valor,g.fecha
+        from gasto as g
+        inner join tipo_gasto as tip on g.id_tipo_gasto = tip.id
+        order by g.fecha;
+END//
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchexpense(idexpense int)
+COMMENT 'Procedimiento que carga la informacion de un gasto'
+BEGIN 	
+	select id,id_tipo_gasto,observaciones,valor,fecha
+	from gasto
+	where id = idexpense;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deleteexpense(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un gasto'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+        delete from gasto where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updateexpense(vid INT,vTypeexpense INT,
+                            vDescription varchar(2000), vValue DOUBLE,
+                            vDateExpense date ) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un cliente'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select id from gasto where id_tipo_gasto=vTypeexpense AND fecha = vDateExpense and id<>vid)
+		THEN
+			update  gasto set 
+                                id_tipo_gasto=vTypeexpense,
+                                observaciones=vDescription,
+                                valor=vValue,
+                                fecha=vDateExpense
+                        where id = vid;		
+			set res=1;														
+		END IF;
+	RETURN res;	
+END//
+DELIMITER ;
+

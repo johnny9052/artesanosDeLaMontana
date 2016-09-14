@@ -13,6 +13,12 @@ $(document).ready(function () {
     );
 
     $('select').material_select();
+
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+        format: 'yyyy-mm-dd'
+    });
 });
 
 
@@ -82,7 +88,7 @@ function Execute(dataSend, url, before, success) {
         },
         data: dataSend,
         success: function (data) {
-            //alert(data);            
+            //alert(data);
             //$("#txtName").val(data);
             showLoadBar(false);
             var info = eval("(" + data + ")");
@@ -98,7 +104,7 @@ function Execute(dataSend, url, before, success) {
                 case "Error":
                     showToast(info.msg);
                     break;
-                case undefined:
+                case undefined:;
                 default :
                     /*En el caso de que sea un listar info, buscar o pintar menu*/
                     if (dataSend.action === "list" || dataSend.action === "menu" || dataSend.action === "search"
@@ -221,7 +227,7 @@ function buildSelect(info, idSelect) {
 
 /**
  * Refresca un select
- * @param {int} id : id del select a refrescar
+ * @param {string} id : id del select a refrescar
  * @param {string} val : valor por defecto que sera seleccionado
  * @author Johnny Alexander Salazar
  * @version 0.1
@@ -338,7 +344,15 @@ function cleanForm(form) {
     $(campos).each(function () {
         var elemento = this;
         if (elemento.value) {
-            $("#" + elemento.id).val("");
+            /*Si es un select, coloca el -1*/
+            if (elemento.type === "select-one") {                
+                $("#" + elemento.id).val("-1");
+                $('#' + elemento.id).material_select('destroy');
+                $('#' + elemento.id).material_select();
+            } else {
+                $("#" + elemento.id).val("");
+            }
+
         }
         /*Si esta pintado como invalido se le quita*/
         $("#" + elemento.id).removeClass("invalid");

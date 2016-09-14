@@ -13,8 +13,17 @@ class Internationalization {
     private $LogOutSuccess = "Sesion cerrada con exito";
     private $OperationSuccess = "Operacion exitosa";
     private $OperationError = "Error en la operacion";
+    private $OperationErrorForeign = "Error en la operacion, el registro esta asociado a otra informacion";
+    
+    function getOperationErrorForeign() {
+        return $this->OperationErrorForeign;
+    }
 
-    function getLogInError() {
+    function setOperationErrorForeign($OperationErrorForeign) {
+        $this->OperationErrorForeign = $OperationErrorForeign;
+    }
+
+        function getLogInError() {
         return $this->LogInError;
     }
 

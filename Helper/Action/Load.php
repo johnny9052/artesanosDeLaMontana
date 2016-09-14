@@ -10,9 +10,29 @@ function ExecuteActionLoad($action, $obj, $dao) {
     switch ($action) {
 
         case "loadRol":
-            $dao->LoadRol($obj);
+            $dao->LoadSelect($obj, "loadrol");
             break;
 
+        case "loadAmargor":
+            $dao->LoadSelect($obj, "loadamargor");
+            break;
+
+        case "loadTypeInventary":
+            $dao->LoadSelect($obj, "loadtypeinventary");
+            break;
+
+        case "loadBeerType":
+            $dao->LoadSelect($obj, "loadbeertype");
+            break;
+
+        case "loadClientType":
+            $dao->LoadSelect($obj, "loadclienttype");
+            break;
+        
+        case "loadTypeExpense":
+            $dao->LoadSelect($obj, "loadexpensetype");
+            break;
+        
         default :
             echo 'No action found';
             break;

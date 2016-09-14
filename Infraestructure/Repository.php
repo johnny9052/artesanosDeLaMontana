@@ -34,9 +34,9 @@ class Repository extends Internationalization {
         if ($array) {//tiene parametros?
             for ($i = 0; $i < count($array); $i++) {
                 (is_string($array[$i])) ? $query.="'" . $array[$i] . "'" : $query.=$array[$i]; //si es String pone comilla
-                //echo $i. ' &&  '.count($array). ' ----';
+//echo $i. ' &&  '.count($array). ' ----';
                 if ((int) ($i) < (int) (count($array) - 1)) { //si quedan mas parametros pone una ,
-                    //echo 'entre';
+//echo 'entre';
                     $query.=",";
                 }
             }
@@ -130,24 +130,30 @@ class Repository extends Internationalization {
      * @return string Echo de resultado de la consulta en formato JSON
      * @param string $query Consulta a ejecutar     
      * @author Johnny Alexander Salazar
-     * @version 0.1
+     * @version 0.2
      */
     public function Execute($query) {
+        try {
+            /* Le asigno la consulta SQL a la conexion de la base de datos */
+            $resultado = $this->objCon->getConnect()->prepare($query);
+            /* Executo la consulta */
+            $resultado->execute();
+            /* Si obtuvo resultados, entonces paselos a un vector */
+            if ($resultado->rowCount() > 0) {
+                $vec = $resultado->fetchAll(PDO::FETCH_ASSOC);
+            }
 
-        /* Le asigno la consulta SQL a la conexion de la base de datos */
-        $resultado = $this->objCon->getConnect()->prepare($query);
-        /* Executo la consulta */
-        $resultado->execute();
-        /* Si obtuvo resultados, entonces paselos a un vector */
-        if ($resultado->rowCount() > 0) {
-            $vec = $resultado->fetchAll(PDO::FETCH_ASSOC);
-        }      
-
-        if (isset($vec)) {
-            echo(json_encode($vec));
-        } else {
-            echo ' {
+            if (isset($vec)) {
+                echo(json_encode($vec));
+            } else {
+                echo ' {
                 "res" : "Error"
+            }';
+            }
+        } catch (PDOException $exception) {
+            /* Se captura el error de ejecucion SQL */
+            echo ' {
+                "res" : "' . $exception . '"
             }';
         }
     }
@@ -158,23 +164,26 @@ class Repository extends Internationalization {
      * @return string Echo de resultado de la consulta en formato JSON
      * @param string $query Consulta a ejecutar     
      * @author Johnny Alexander Salazar
-     * @version 0.1
+     * @version 0.2
      */
     public function ExecuteTransaction($query) {
-       
-        /* Le asigno la consulta SQL a la conexion de la base de datos */
-        $resultado = $this->objCon->getConnect()->prepare($query);
-        /* Executo la consulta */
-        $resultado->execute();
-        /* Si obtuvo resultados, entonces paselos a un vector */
-        if ($resultado->rowCount() > 0) {
-            $vec = $resultado->fetchAll(PDO::FETCH_NUM);
-        }      
+        try {
+            /* Le asigno la consulta SQL a la conexion de la base de datos */
+            $resultado = $this->objCon->getConnect()->prepare($query);
+            /* Executo la consulta */
+            $resultado->execute();
+            /* Si obtuvo resultados, entonces paselos a un vector */
+            if ($resultado->rowCount() > 0) {
+                $vec = $resultado->fetchAll(PDO::FETCH_NUM);
+            }
 
-        if ($vec[0][0]> 0) {
-            echo(json_encode(['res' => 'Success', "msg" => $this->getOperationSuccess()]));
-        } else {
-            echo(json_encode(['res' => 'Error', "msg" => $this->getOperationError()]));
+            if ($vec[0][0] > 0) {
+                echo(json_encode(['res' => 'Success', "msg" => $this->getOperationSuccess()]));
+            } else {
+                echo(json_encode(['res' => 'Error', "msg" => $this->getOperationError()]));
+            }
+        } catch (PDOException $exception) {
+            echo(json_encode(['res' => 'Error', "msg" => $this->getOperationErrorForeign()]));
         }
     }
 
@@ -215,7 +224,7 @@ class Repository extends Internationalization {
      */
     public function BuildPaginator($query) {
 
-        //Longitud maxima de los caracteres del listado
+//Longitud maxima de los caracteres del listado
         $max = 25;
 
         /* Le asigno la consulta SQL a la conexion de la base de datos */
@@ -226,7 +235,7 @@ class Repository extends Internationalization {
         /* Se meten los datos a un vector, organizados sus campos no por nombre, 
           si no enumarados */
         $vec = $resultado->fetchAll(PDO::FETCH_NUM);
-        //echo $resultado->columnCount() . '----' . $resultado->rowCount();
+//echo $resultado->columnCount() . '----' . $resultado->rowCount();
 
         /* quedo pendiente mirar como saco todos los registros por un lado y 
          * los campos por el otro de ser necesario, para eso si se necesita 
@@ -234,7 +243,7 @@ class Repository extends Internationalization {
          */
 
         if ($resultado->rowCount() > 0) {
-            //$cadenaHTML = "<table class='centered responsive-table striped'>";
+//$cadenaHTML = "<table class='centered responsive-table striped'>";
             $cadenaHTML = "<thead>";
             $cadenaHTML.= "<tr>";
             $cadenaHTML.= "<th data-field='sel'>registro #</th>";
@@ -243,9 +252,9 @@ class Repository extends Internationalization {
 
             for ($cont = 1; $cont < $resultado->columnCount(); $cont++) { //arma la cabecera de la tabla
                 $col = $resultado->getColumnMeta($cont);
-                //Coloca la cabecera reempleazando los guiones bajos con espacios
+//Coloca la cabecera reempleazando los guiones bajos con espacios
                 $cadenaHTML .= "<th data-field='" . $col['name'] . "'>" . str_replace("_", " ", $col['name']) . "</th>";
-                //VERIFICAR AQUI
+//VERIFICAR AQUI
             }
 
 
@@ -256,15 +265,15 @@ class Repository extends Internationalization {
 
 
             for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
-                //variable que contiene el tr con la funcion del selradio y el update data
-                //$funcion = "<tr class='rowTable' onclick=showData([";
+//variable que contiene el tr con la funcion del selradio y el update data
+//$funcion = "<tr class='rowTable' onclick=showData([";
                 $funcion = "<tr class='rowTable' onclick=search(";
-                //variable que contiene los valores de los campos de la tabla
+//variable que contiene los valores de los campos de la tabla
                 $campos = "";
-                //en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
+//en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
                 for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
-                    //Si se quieren añadir todos los datos solo es quitar el if,
-                    //en este caso solo se esta colocando el id
+//Si se quieren añadir todos los datos solo es quitar el if,
+//en este caso solo se esta colocando el id
                     if ($posreg == 0) {
                         $funcion.='\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
                     }
@@ -272,23 +281,23 @@ class Repository extends Internationalization {
                         $campos.="<td>" . substr($vec[$cont][$posreg], 0, $max) .
                                 ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
                     }
-                    //VERIFICAR AQUI
+//VERIFICAR AQUI
 //                    if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
 //                        $funcion.=",";
 //                    }
                 }
 
 
-                //$funcion.= "]);showButton(false);>"; 
-                //finaliza la funcion search
+//$funcion.= "]);showButton(false);>"; 
+//finaliza la funcion search
                 $funcion.= ");>"; //finaliza la funcion updatedata
                 $cadenaHTML.=$funcion . "<td>" . ($cont + 1) . "</td>";
-                //$cadenaHTML.=$funcion;
+//$cadenaHTML.=$funcion;
                 $cadenaHTML.=$campos . "</tr>";
             }
 
             $cadenaHTML.="</tbody>";
-            //$cadenaHTML.="</table>";
+//$cadenaHTML.="</table>";
         } else {
             $cadenaHTML = "<label>No hay registros en la base de datos</label>";
         }

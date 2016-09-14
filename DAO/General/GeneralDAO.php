@@ -20,11 +20,14 @@ class GeneralDAO {
      * @param GeneralDTO $obj
      * @return void      
      * @author Johnny Alexander Salazar
-     * @version 0.1
+     * @version 0.2
      */
-    public function LoadRol(GeneralDTO $obj) {
-        $query = $this->repository->buildQuery("loadrol", array((int) $obj->getId(), (int) $obj->getIdUser()));
+    public function LoadSelect(GeneralDTO $obj, $name) {
+        $query = $this->repository->buildQuery($name, array((int) $obj->getId()));
         $this->repository->Execute($query);
     }
+    
+    
+   
 
 }

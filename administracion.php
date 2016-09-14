@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php 
+    /*Toca colocarlo aqui porque si no el servidor esta mostrando error*/
+    session_start(); 
+?>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <!--Prevenir autocompletado -->
-        <meta http-equiv="Pragma" content="no-cache">
-        <meta http-equiv="Expires" content="-1">        
-
+      
         <title>Sistema</title>
-        
+
         <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
         <!--Import materialize.css ONLINE-->
@@ -50,16 +46,12 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        session_start();
-
         if (isset($_SESSION["User"])) {
             include("View/MasterPage.php");
         } else {
             include("View/Security/LogIn.php");
         }
         ?>
-
-
         <div class="row center-row">
             <div class="col s12 ">
                 <label>
