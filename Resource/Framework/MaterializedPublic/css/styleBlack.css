@@ -116,3 +116,9 @@ input, textArea{
 }
 
 
+
+
+.boxorange{    
+    border: 2px double rgb(188,128,0);     
+    border-radius: 10px;
+}

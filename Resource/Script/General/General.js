@@ -17,7 +17,13 @@ $(document).ready(function () {
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year
-        format: 'yyyy-mm-dd'
+        onSet: function () {
+            this.close();//Cuando selecciona una fecha, cierra automaticamente
+                        //el calendario
+        },
+        format: 'yyyy-mm-dd',
+        container: 'body'//Con esto se evita que cuando esta en un modal, 
+                //quede oculto detras del modal 
     });
 });
 
@@ -104,7 +110,8 @@ function Execute(dataSend, url, before, success) {
                 case "Error":
                     showToast(info.msg);
                     break;
-                case undefined:;
+                case undefined:
+                    ;
                 default :
                     /*En el caso de que sea un listar info, buscar o pintar menu*/
                     if (dataSend.action === "list" || dataSend.action === "menu" || dataSend.action === "search"
@@ -345,7 +352,7 @@ function cleanForm(form) {
         var elemento = this;
         if (elemento.value) {
             /*Si es un select, coloca el -1*/
-            if (elemento.type === "select-one") {                
+            if (elemento.type === "select-one") {
                 $("#" + elemento.id).val("-1");
                 $('#' + elemento.id).material_select('destroy');
                 $('#' + elemento.id).material_select();
