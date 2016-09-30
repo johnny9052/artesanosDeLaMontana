@@ -122,3 +122,24 @@ input, textArea{
     border: 2px double rgb(188,128,0);     
     border-radius: 10px;
 }
+
+
+/************MODIFICACIONES DIRECTAS A MATERIALIZE***********************************/
+
+
+/* label underline focus color */
+.input-field input[type=text]:focus, 
+.input-field input[type=email]:focus,
+.input-field input[type=number]:focus,
+.input-field input[type=password]:focus,
+.input-field input[type=tel]:focus
+{
+    border-bottom: 1px solid  rgb(188,128,0);
+    box-shadow: 0 1px 0 0  rgb(188,128,0);
+}
+
+
+textarea:focus{
+    border-bottom: 1px solid  rgb(188,128,0);
+    box-shadow: 0 1px 0 0  rgb(188,128,0);
+}

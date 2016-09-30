@@ -19,7 +19,7 @@ $(document).ready(function () {
         selectYears: 15, // Creates a dropdown of 15 years to control year
         onSet: function () {
             this.close();//Cuando selecciona una fecha, cierra automaticamente
-                        //el calendario
+            //el calendario
         },
         format: 'yyyy-mm-dd',
         container: 'body'//Con esto se evita que cuando esta en un modal, 
@@ -255,13 +255,18 @@ function refreshSelect(id, val) {
  * @returns {boolean} true si es correctamente validado, false si tiene errores
  * en la validacion
  * @author Johnny Alexander Salazar
- * @version 0.2
+ * @version 0.3
  */
 function validateForm(form) {
     var status = true;
     form = defualtForm(form);
 
-    $("#" + form).find(':input').each(function () {
+
+    var campos = '#' + form + ' :input,\n\
+                 #' + form + ' select, \n\
+                 #' + form + ' textarea';
+
+    $(campos).each(function () {
         var elemento = this;
         if (!elemento.validity.valid) { //es valido?                                   
             $("#" + elemento.id).addClass("invalid");

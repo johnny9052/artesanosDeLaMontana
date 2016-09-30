@@ -3,7 +3,7 @@
 require_once ('../../DTO/BaseDTO.php');
 
 class ContactDTO extends BaseDTO {
-    
+
     private $id;
     private $typeClient;
     private $name;
@@ -12,8 +12,9 @@ class ContactDTO extends BaseDTO {
     private $address;
     private $phonenumber;
     private $description;
+    private $password;
 
-    function __construct($id, $typeClient, $name, $code, $email, $address, $phonenumber, $description) {
+    function __construct($id, $typeClient, $name, $code, $email, $address, $phonenumber, $description, $password) {
         $this->id = $id;
         $this->typeClient = $typeClient;
         $this->name = $name;
@@ -22,8 +23,9 @@ class ContactDTO extends BaseDTO {
         $this->address = $address;
         $this->phonenumber = $phonenumber;
         $this->description = $description;
+        $this->password = $password;
     }
-    
+
     function getId() {
         return $this->id;
     }
@@ -88,6 +90,12 @@ class ContactDTO extends BaseDTO {
         $this->description = $description;
     }
 
+    function getPassword() {
+        return $this->password;
+    }
 
+    function setPassword($password) {
+        $this->password = $password;
+    }
 
 }

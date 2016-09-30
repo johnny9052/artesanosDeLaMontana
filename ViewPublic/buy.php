@@ -15,7 +15,7 @@ and open the template in the editor.
             <div class="row">
 
                 <?php
-                if (isset($_SESSION['xxxxx'])) {
+                if (isset($_SESSION['identificationPublic'])) {
                     include("ViewPublic/form/formBuy.php");
                 } else {
                     include("ViewPublic/template/v_Message_StartSesion.php");

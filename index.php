@@ -46,6 +46,7 @@
         
         include("ViewPublic/template/v_modal_coment.php");
         include("ViewPublic/template/v_modal_register.php");
+        include("ViewPublic/template/v_modal_logIn.php");
         ?>
         <!--END MASTER PAGE CONTROL  -->
 

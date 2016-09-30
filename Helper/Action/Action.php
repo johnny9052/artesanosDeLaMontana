@@ -33,6 +33,14 @@ function ExecuteAction($action, $obj, $dao) {
 
         /* END Transaction CRUD */
 
+
+        /* Other transactions */
+        case "register":
+            $dao->Register($obj);
+            break;
+
+
+
         default :
             echo 'No action found';
             break;

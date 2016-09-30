@@ -8188,16 +8188,3 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 }
 
 
-/* label underline focus color */
-.input-field input[type=text]:focus, 
-.input-field input[type=email]:focus
-{
-    border-bottom: 1px solid  rgb(188,128,0);
-    box-shadow: 0 1px 0 0  rgb(188,128,0);
-}
-
-
-textarea:focus{
-    border-bottom: 1px solid  rgb(188,128,0) !important;
-    box-shadow: 0 1px 0 0  rgb(188,128,0) !important;
-}

@@ -35,8 +35,9 @@ footer{
 
 
 .invalid {
-    border-bottom:1px solid #ff6666;    
+    border-bottom:1px solid #ff6666;        
 }
+
 
 .messageInfo{
     width: 100%;

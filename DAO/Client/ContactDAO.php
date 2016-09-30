@@ -30,7 +30,7 @@ class ContactDAO {
             (string) $obj->getEmail(),
             (string) $obj->getAddress(),
             (string) $obj->getPhonenumber(),
-            (string) $obj->getDescription(),
+            (string) $obj->getDescription()
         ));
         $this->repository->ExecuteTransaction($query);
     }
@@ -75,7 +75,7 @@ class ContactDAO {
             (string) $obj->getEmail(),
             (string) $obj->getAddress(),
             (string) $obj->getPhonenumber(),
-            (string) $obj->getDescription(),
+            (string) $obj->getDescription()
         ));
         $this->repository->ExecuteTransaction($query);
     }
@@ -89,6 +89,27 @@ class ContactDAO {
      */
     public function Delete(ContactDTO $obj) {
         $query = $this->repository->buildQuerySimply("deleteclient", array((int) $obj->getId()));
+        $this->repository->ExecuteTransaction($query);
+    }
+
+    /**
+     * Guarda una solicitud de registro de un cliente
+     * @param ContactDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function Register(ContactDTO $obj) {
+        $query = $this->repository->buildQuerySimply("saveclientregister", array(
+            (int) $obj->getId(),
+            (int) $obj->getTypeClient(),
+            (string) $obj->getName(),
+            (string) $obj->getCode(),
+            (string) $obj->getEmail(),
+            (string) $obj->getAddress(),
+            (string) $obj->getPhonenumber(),
+            md5((string) $obj->getPassword())
+        ));
         $this->repository->ExecuteTransaction($query);
     }
 

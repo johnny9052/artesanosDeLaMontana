@@ -1824,3 +1824,61 @@ IF NOT EXISTS(select id from gasto where id_tipo_gasto=vTypeexpense AND fecha = 
 END//
 DELIMITER ;
 
+
+
+
+
+
+/***********************************************************/
+
+
+alter table cliente add column password varchar(32);
+
+
+
+
+DELIMITER //
+CREATE FUNCTION saveclientregister(vid INT,vTypeClient INT, vName varchar(50), 
+                           vCode varchar(50), vEmail varchar(50), 
+                           vAddress varchar(50), vPhonenumber varchar(50), 
+                           vPassword varchar(32)
+                           ) RETURNS INT( 1 )
+COMMENT  'Funcion que almacena un cliente, que solicito registro'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select code from cliente where code=vCode)
+		THEN
+			insert into cliente(id_tipo_cliente,nombre,
+                                           code,email,direccion,telefono, 
+                                           password,observaciones) 
+                               values(vTypeClient,vName,vCode,vEmail, 
+                                      vAddress,vPhonenumber,vPassword,'Se registro por la pagina');
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS loginpublic;
+DELIMITER //
+CREATE PROCEDURE loginpublic(usu VARCHAR(50), pass VARCHAR(32))
+COMMENT 'Procedimiento que valida las credenciales de un usuario que de identifica en la pagina web'
+BEGIN
+   select id,nombre from cliente where password=pass and code=usu;		
+END//
+
+DELIMITER ;

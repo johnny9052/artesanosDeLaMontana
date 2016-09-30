@@ -1,17 +1,31 @@
 <?php
 
-/*IMPORTS*/
+/* IMPORTS */
 require '../../DTO/Security/LogInDTO.php';
 require '../../DAO/Security/LogInDAO.php';
 
-/*RECEPCION DE DATOS*/
+/* RECEPCION DE DATOS */
+$action = (isset($_POST['action']) ? $_POST['action'] : "");
 $usuario = (isset($_POST['user']) ? $_POST['user'] : "");
 $password = (isset($_POST['password']) ? $_POST['password'] : "");
 
-/*DEFINICION DE OBJETOS*/
+
+/* DEFINICION DE OBJETOS */
 $obj = new LogInDTO($usuario, $password);
 $conex = new LogInDAO();
-//
+
+
 ///* CONTROL DE ACCIONES */
-$conex->SignIn($obj);
+switch ($action) {
+    case "logInPublic":
+        $conex->SignInPublic($obj);
+        break;
+
+    default :
+        $conex->SignIn($obj);
+        break;
+}
+
+
+
 

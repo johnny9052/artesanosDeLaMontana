@@ -98,6 +98,34 @@ class Repository extends Internationalization {
     }
 
     /**
+     * Ejecuta una consulta sql y retorna su resultado, si encuentra algo inicia una sesion
+     *
+     * @return string Echo de resultado de la consulta en formato JSON
+     * @param string $query Consulta a ejecutar     
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function ExecuteLogInPublic($query) {
+        /* Le asigno la consulta SQL a la conexion de la base de datos */
+        $resultado = $this->objCon->getConnect()->prepare($query);
+        /* Executo la consulta */
+        $resultado->execute();
+        /* Si obtuvo resultados, entonces paselos a un vector */
+        if ($resultado->rowCount() > 0) {
+            $vec = $resultado->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        if (isset($vec)) {
+            session_start();
+            $_SESSION["identificationPublic"] = $vec[0]['id'];
+            $_SESSION["namePublic"] = $vec[0]['nombre'];
+            echo(json_encode(['res' => 'Success']));
+        } else {
+            echo '{"res" : "Error", "msg" :"' . $this->getLogInError() . '" }';
+        }
+    }
+
+    /**
      * Valida si se tiene permisos para acceder a la pagina solicitada
      * @return string Echo de resultado de la consulta en formato JSON
      * @param string $query Consulta a ejecutar     
