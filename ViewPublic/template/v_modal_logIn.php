@@ -18,15 +18,17 @@ and open the template in the editor.
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">subtitles</i>
-                        <input id="txtCodeLogIn" name="user" type="number" value="" autocomplete="off" required>
-                        <label for="txtCode">Cedula o NIT</label>
+                        <input id="txtCodeLogIn" name="user" type="number" value="" autocomplete="off" required
+                               placeholder="Cedula o NIT">
+<!--                        <label for="txtCode">Cedula o NIT</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">verified_user</i>
                         <input id="txtPasswordLogIn" name="password" type="password" 
-                               value="" autocomplete="off" required>
-                        <label for="txtPassword">Password</label>
+                               value="" autocomplete="off" required
+                               placeholder="Password">
+<!--                        <label for="txtPassword">Password</label>-->
                     </div>
 
                 </div>

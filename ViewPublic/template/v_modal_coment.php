@@ -19,32 +19,40 @@ and open the template in the editor.
 
                     <div class="row input-field col s12">
                         <i class="material-icons prefix">perm_identity</i>                       
-                        <input id="txtName" name="name" type="text" value="" autocomplete="off" required 
-                               length="50">
-                        <label for="txtName">Ingresa tu nombre</label>
+                        <input id="txtName" name="name" type="text" 
+                               value="<?php
+                               (isset($_SESSION['namePublic'])) ? print $_SESSION['namePublic'] : print "";
+                               ?>" 
+                               autocomplete="off" required 
+                               length="50" placeholder="Ingresa tu nombre">
+                        <!--                        <label for="txtName">Ingresa tu nombre</label>-->
                     </div>                            
 
 
                     <div class="row input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        <input id="txtEmail" name="email" type="email" value="" autocomplete="off" required 
-                               >
-                        <label for="txtEmail">Ingresa tu correo</label>
+                        <input id="txtEmail" name="email" type="email" 
+                               value="<?php
+                               (isset($_SESSION['emailPublic'])) ? print $_SESSION['emailPublic'] : print "";
+                               ?>" 
+                               autocomplete="off" required 
+                               placeholder="Ingresa tu correo">
+                        <!--                        <label for="txtEmail">Ingresa tu correo</label>-->
                     </div>                            
 
 
                     <div class="row input-field col s12">
                         <i class="material-icons prefix">mode_edit</i>
                         <textarea id="txtDescription" class="materialize-textarea" length="2000" 
-                                  required name="description"></textarea>      
-                        <label for="txtDescription">¿Que quieres comentarnos?</label>
+                                  required name="description" placeholder="¿Que quieres comentarnos?"></textarea>      
+                        <!--                        <label for="txtDescription">¿Que quieres comentarnos?</label>-->
                     </div>
 
                 </div>
             </div>
             <div class="modal-footer modalDark">
                 <a class="modal-action modal-close waves-effect waves-red btn-flat" onclick="cleanForm('ModalComentario');">Cancelar</a>
-                <a class="modal-action waves-effect waves-green btn-flat" onclick="save();">Enviar</a>
+                <a class="modal-action waves-effect waves-green btn-flat" onclick="save('ModalComentario');">Enviar</a>
             </div>
         </div>
 

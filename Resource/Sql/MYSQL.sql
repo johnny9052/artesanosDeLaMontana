@@ -1878,7 +1878,7 @@ DELIMITER //
 CREATE PROCEDURE loginpublic(usu VARCHAR(50), pass VARCHAR(32))
 COMMENT 'Procedimiento que valida las credenciales de un usuario que de identifica en la pagina web'
 BEGIN
-   select id,nombre from cliente where password=pass and code=usu;		
+   select id,nombre,email from cliente where password=pass and code=usu;		
 END//
 
 DELIMITER ;

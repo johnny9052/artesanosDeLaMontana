@@ -110,6 +110,8 @@ class ContactDAO {
             (string) $obj->getPhonenumber(),
             md5((string) $obj->getPassword())
         ));
+
+
         $this->repository->ExecuteTransaction($query);
     }
 

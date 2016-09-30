@@ -27,40 +27,51 @@ and open the template in the editor.
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">subtitles</i>
-                        <input id="txtCodeRegister" name="code" type="number" value="" autocomplete="off" required>
-                        <label for="txtCode">Cedula o NIT</label>
+                        <input id="txtCodeRegister" name="code" type="number" value="" autocomplete="off" required 
+                               placeholder="Cedula o NIT">
+                        <!--                        <label for="txtCode">Cedula o NIT</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">perm_identity</i>
-                        <input id="txtNameRegister" name="name" type="text" value="" autocomplete="off" required>
-                        <label for="txtName">Nombre del cliente o empresa</label>
+                        <input id="txtNameRegister" name="name" type="text" value="" autocomplete="off" required 
+                               placeholder="Nombre del cliente o empresa">
+                        <!--<label for="txtName">Nombre del cliente o empresa</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">verified_user</i>
-                        <input id="txtPasswordRegister" name="password" type="password" 
-                               value="" autocomplete="off" required>
-                        <label for="txtPassword">Password</label>
+                        <input id="txtPasswordRegister" name="passwordRegister" type="password" 
+                               value="" autocomplete="off" required placeholder="Password">
+                        <!--<label for="txtPassword">Password</label>-->
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">verified_user</i>
+                        <input id="txtPasswordRegisterConfirm" name="passwordConfirm" type="password" 
+                               value="" autocomplete="off" required placeholder="Confirme password">
+                        <!--                        <label for="txtPassword">Confirme password</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        <input id="txtEmailRegister" name="email" type="email" value="" autocomplete="off" required>
-                        <label for="txtEmail">Correo electronico</label>
+                        <input id="txtEmailRegister" name="email" type="email" value="" autocomplete="off" required 
+                               placeholder="Correo electronico">
+                        <!--                        <label for="txtEmail">Correo electronico</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">room</i>
-                        <input id="txtAddressRegister" name="address" type="text" value="" autocomplete="off" required>
-                        <label for="txtAddress">Direccion</label>
+                        <input id="txtAddressRegister" name="address" type="text" value="" autocomplete="off" required 
+                               placeholder="Direccion">
+                        <!--                        <label for="txtAddress">Direccion</label>-->
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">perm_phone_msg</i>
                         <input id="txtPhonenumberRegister" name="phonenumber" type="tel" 
-                               value="" autocomplete="off" required>
-                        <label for="txtPhonenumber">Numero telefonico</label>
+                               value="" autocomplete="off" required placeholder="Numero telefonico">
+                        <!--                        <label for="txtPhonenumber">Numero telefonico</label>-->
                     </div>
 
                 </div>

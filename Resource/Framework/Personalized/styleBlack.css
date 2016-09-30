@@ -134,12 +134,48 @@ input, textArea{
 .input-field input[type=password]:focus,
 .input-field input[type=tel]:focus
 {
-    border-bottom: 1px solid  rgb(188,128,0);
-    box-shadow: 0 1px 0 0  rgb(188,128,0);
+    border-bottom: 1px solid  rgb(188,128,0)  !important;
+    box-shadow: 0 1px 0 0  rgb(188,128,0)  !important;
 }
 
 
 textarea:focus{
-    border-bottom: 1px solid  rgb(188,128,0);
-    box-shadow: 0 1px 0 0  rgb(188,128,0);
+    border-bottom: 1px solid  rgb(188,128,0) !important;
+    box-shadow: 0 1px 0 0  rgb(188,128,0) !important;
+}
+
+/*BOTONES GRANDES*/
+.teal.lighten-1 {
+    background-color: rgb(188,128,0) !important; 
+}
+
+/*.teal {
+    background-color: rgb(188,128,0) !important; 
+}*/
+
+
+.btn, .btn-large {  
+    background-color: rgb(188,128,0) !important;
+}
+
+
+.btn-floating {  
+    background-color: rgb(188,128,0) !important;
+}
+
+
+
+
+
+nav .input-field label.active i {
+    color: rgb(188,128,0) !important;
+}
+
+label.active{
+    color: rgb(188,128,0) !important;  
+}
+
+
+.input-field .prefix.active {
+    color: rgb(188,128,0);
 }

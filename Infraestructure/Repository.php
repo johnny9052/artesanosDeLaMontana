@@ -119,6 +119,7 @@ class Repository extends Internationalization {
             session_start();
             $_SESSION["identificationPublic"] = $vec[0]['id'];
             $_SESSION["namePublic"] = $vec[0]['nombre'];
+            $_SESSION["emailPublic"] = $vec[0]['email'];
             echo(json_encode(['res' => 'Success']));
         } else {
             echo '{"res" : "Error", "msg" :"' . $this->getLogInError() . '" }';

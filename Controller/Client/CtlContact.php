@@ -15,7 +15,8 @@ $email = (isset($_POST['email']) ? $_POST['email'] : "");
 $address = (isset($_POST['address']) ? $_POST['address'] : "");
 $phonenumber = (isset($_POST['phonenumber']) ? $_POST['phonenumber'] : "");
 $description = (isset($_POST['description']) ? $_POST['description'] : "");
-$password = (isset($_POST['password']) ? $_POST['password'] : "");
+$password = (isset($_POST['passwordRegister']) ? $_POST['passwordRegister'] : "");
+
 
 /* DEFINICION DE OBJETOS */
 $obj = new ContactDTO($id, $typeClient, $name, $code, $email, $address, $phonenumber, $description,$password);

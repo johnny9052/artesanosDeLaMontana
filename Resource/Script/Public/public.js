@@ -12,14 +12,18 @@ function loadClientType() {
 
 function save(form) {
     if (validateForm(form) === true) {
-        Execute(scanInfo('save', true, form), 'Public/CtlMessage', '', 'closeWindow();');
+        Execute(scanInfo('save', true, form), 'Public/CtlMessage', '', 'closeWindow("ModalComentario");');
     }
 }
 
 
 function register(form) {
     if (validateForm(form) === true) {
-        Execute(scanInfo('register', true), 'Client/CtlContact', '', 'closeWindow("ModalRegister");');
+        if ($("#txtPasswordRegisterConfirm").val() === $("#txtPasswordRegister").val()) {
+            Execute(scanInfo('register', true), 'Client/CtlContact', '', 'closeWindow("ModalRegister");');
+        } else {
+            showToast("Las contraseñas no coinciden");
+        }
     }
 }
 
@@ -30,3 +34,12 @@ function LogInPublic(form) {
         Execute(scanInfo('logInPublic', true), 'Security/CtlLogIn', '', 'location.reload();');
     }
 }
+
+
+/* Desconectarce del sistema */
+function LogOutPublic() {
+    Execute("", 'Security/CtlLogOut', '', 'location.reload();');
+}
+
+
+

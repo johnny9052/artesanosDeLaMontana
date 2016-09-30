@@ -37,8 +37,19 @@ and open the template in the editor.
                         <li class="divider"></li>                                                                                               
                     </ul>                                                                                                                             
 
-                    <li><a href="#ModalLogIn" class="modal-trigger">Identificarse</a></li>
-                    <li><a href="#ModalRegister" class="modal-trigger">Registrarse</a></li>
+                    <?php
+                    if (isset($_SESSION['identificationPublic'])) {
+                        echo " <li><a>Bienvenid@: " . $_SESSION["namePublic"] . " </a></li>";
+                        ?>
+                        <li><a onclick="LogOutPublic();">Cerrar sesion</a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="#ModalLogIn" class="modal-trigger">Identificarse</a></li>
+                        <li><a href="#ModalRegister" class="modal-trigger">Registrarse</a></li>                    
+
+                    <?php } ?>
+
                 </ul>
 
                 <ul id="nav-mobile" class="side-nav">
@@ -54,18 +65,28 @@ and open the template in the editor.
                                 <a class="collapsible-header">Productos<i class="material-icons right">arrow_drop_down</i></a>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a class="submenu" href="index.php?page=estudiantes">American Brown Ale (Dulima)</a></li>                                    
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Irish Red Ale (Santa Chava)</a></li>            
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Imperial Stout Con Café (Tatamá)</a></li>                                      
-                                        <li><a class="submenu" href="index.php?page=estudiantes">Bohemian Ale (Cumanday)</a></li>            
+                                        <li><a class="submenu" href="index.php">American Brown Ale (Dulima)</a></li>                                    
+                                        <li><a class="submenu" href="index.php">Irish Red Ale (Santa Chava)</a></li>            
+                                        <li><a class="submenu" href="index.php">Imperial Stout Con Café (Tatamá)</a></li>                                      
+                                        <li><a class="submenu" href="index.php">Bohemian Ale (Cumanday)</a></li>            
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
 
-                    <li><a href="#ModalLogIn" class="modal-trigger">Identificarse</a></li>
-                    <li><a href="#ModalRegister" class="modal-trigger">Registrarse</a></li>
+                    <?php
+                    if (isset($_SESSION['identificationPublic'])) {
+                        echo " <li><a>Bienvenid@: " . $_SESSION["namePublic"] . " </a></li>";
+                        ?>
+                    <li><a onclick="LogOutPublic();">Cerrar sesion</a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="#ModalLogIn" class="modal-trigger">Identificarse</a></li>
+                        <li><a href="#ModalRegister" class="modal-trigger">Registrarse</a></li>                    
+
+                    <?php } ?>
                 </ul>
 
                 <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

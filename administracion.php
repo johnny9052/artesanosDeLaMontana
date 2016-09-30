@@ -1,6 +1,6 @@
-<?php 
-    /*Toca colocarlo aqui porque si no el servidor esta mostrando error*/
-    session_start(); 
+<?php
+/* Toca colocarlo aqui porque si no el servidor esta mostrando error */
+session_start();
 ?>
 
 <html>
@@ -9,7 +9,7 @@
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-      
+
         <title>Sistema</title>
 
         <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
@@ -17,7 +17,9 @@
         <!--Import materialize.css ONLINE-->
         <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
         <!--Import materialize.css OFFLINE-->
-        <link type="text/css" rel="stylesheet" href="Resource/Framework/Materialize/css/materialize.min.css"  media="screen,projection"/>
+
+
+        <link type="text/css" rel="stylesheet" href="Resource/Framework/Materialize/css/materialize.min.css"  media="screen,projection"/>        
 
         <!-- Personal Styles -->
         <link href="Resource/Style/General.css" rel="stylesheet">
@@ -39,8 +41,8 @@
         <!--Import materialize.js ONLINE-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>-->
         <!--Import materialize.js OFFLINE-->
-        <script type="text/javascript" src="Resource/Framework/Materialize/js/materialize.min.js"></script>
 
+        <script src="Resource/Framework/MaterializedPublic/js/materialize.min.js" type="text/javascript"></script>
         <!-- GENERAL JS -->
         <script defer type="text/javascript" src="Resource/Script/General/General.js"></script>
     </head>
