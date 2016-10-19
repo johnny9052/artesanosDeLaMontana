@@ -1,3 +1,8 @@
+-- CAMBIAR EL TIPO DE UNA TABLA
+SET storage_engine=MYISAM;
+ALTER TABLE menu ENGINE = MyISAM;
+
+
 -- ----------------------------------------------------------------------------
 -- MySQL Workbench Migration
 -- Migrated Schemata: proyectoInicial
@@ -1878,7 +1883,107 @@ DELIMITER //
 CREATE PROCEDURE loginpublic(usu VARCHAR(50), pass VARCHAR(32))
 COMMENT 'Procedimiento que valida las credenciales de un usuario que de identifica en la pagina web'
 BEGIN
-   select id,nombre,email from cliente where password=pass and code=usu;		
+   select id,nombre,email,direccion from cliente where password=pass and code=usu;		
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadbeertypestock(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de cerveza'
+BEGIN 
+	IF idfilter > -1 THEN	
+		select tip.id as id, tip.nombre as 'nombre', SUM(ent.cantidad) as 'stock'
+                from entrada_cerveza as ent
+                inner join tipo_cerveza as tip on ent.id_tipo_cerveva = tip.id
+                group by tip.nombre
+                order by tip.nombre;
+        ELSE		
+		select tip.id as id, tip.nombre as 'nombre', SUM(ent.cantidad) as 'stock'
+                from entrada_cerveza as ent
+                inner join tipo_cerveza as tip on ent.id_tipo_cerveva = tip.id
+                group by tip.nombre
+                order by tip.nombre;
+   END IF;
+END//
+DELIMITER ;
+
+
+CREATE TABLE pedido (
+  id INT NOT NULL AUTO_INCREMENT,  
+  idcliente INT not null,
+  fechapedido DATE,
+  direccion varchar(50),
+  PRIMARY KEY (id),
+  FOREIGN KEY (idcliente) references cliente(id)
+) ENGINE = MYISAM;
+
+
+CREATE TABLE pedidoproducto(
+  id INT NOT NULL AUTO_INCREMENT,
+  idpedido int,
+  idcerveza INT not null,
+  cantidad INT,
+  PRIMARY KEY (id),
+  FOREIGN KEY (idpedido) references pedido(id),
+  FOREIGN KEY (idcerveza) references tipo_cerveza(id)
+) ENGINE = MYISAM;
+
+  
+DELIMITER //
+CREATE FUNCTION  saveorder (vid integer, vproducts varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un pedido de cervezas'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    /*Variable que contendra el tipo de cerveza a almacenar*/
+    DECLARE vidcerveza varchar(50) DEFAULT '';    
+    /*Variable que contendra la cantidad de cerveza pedida*/
+    DECLARE vcantidad varchar(50) DEFAULT '';       
+    
+    WHILE (LOCATE(',', vproducts) > 0) DO
+
+        /*Se saca el primer campo separado por coma del varchar*/
+    	SET vidcerveza = ELT(1, vproducts);
+        /*Se elimina ese primer valor y se reemplaza en la cadena*/
+    	SET vproducts = SUBSTRING(vproducts, LOCATE(',',vproducts) + 1);
+
+
+        /*Se saca el primer campo separado por coma del varchar*/
+    	SET vcantidad = ELT(1, vproducts);
+        /*Se elimina ese primer valor y se reemplaza en la cadena*/
+    	SET vproducts = SUBSTRING(vproducts, LOCATE(',',vproducts) + 1);
+
+
+        /*Se almacena en la tabla, siempre y cuando tenga un dato para almacenar*/
+		IF vidcerveza <> ',' THEN	
+    		INSERT INTO pedido(idcliente, idcerveza,cantidad) VALUES (vid, vidcerveza,vcantidad);
+		END IF;
+    END WHILE;
+
+    SET res = 1;
+
+    RETURN res;	
+END//
+
+DELIMITER ;
+
+
+
+
+
+DROP PROCEDURE IF EXISTS loginpublic;
+DELIMITER //
+CREATE PROCEDURE loginpublic(usu VARCHAR(50), pass VARCHAR(32))
+COMMENT 'Procedimiento que valida las credenciales de un usuario que de identifica en la pagina web'
+BEGIN
+   select id,nombre,email,direccion from cliente where password=pass and code=usu;		
 END//
 
 DELIMITER ;

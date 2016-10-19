@@ -12,8 +12,25 @@ and open the template in the editor.
     <body>
         <br>
         <h5 class="center-align" style="color: white">
-            <i class="material-icons iconoverde">group</i>
             por favor inicie sesión o registrese para acceder a este formulario
         </h5>
+        
+        <br>
+
+        <h5 class="center-align" style="color: white">
+            <a href="#ModalRegister" class="modal-trigger">
+                <i class="material-icons iconoverde">assignment</i>
+                Registrarse
+            </a>
+        </h5>
+
+        <h5 class="center-align" style="color: white">
+            <a href="#ModalLogIn" class="modal-trigger">
+                <i class="material-icons iconoverde">group</i>            
+                Iniciar sesion
+            </a>
+        </h5>
+
+
     </body>
 </html>

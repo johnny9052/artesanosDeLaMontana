@@ -31,6 +31,7 @@ function showData(info) {
 function update() {
     var temp = new Array();
     temp.push("permission");
+    
     $(":checked").each(function () {
         var elemento = this;
         temp.push(elemento.value);

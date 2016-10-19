@@ -28,11 +28,16 @@ function ExecuteActionLoad($action, $obj, $dao) {
         case "loadClientType":
             $dao->LoadSelect($obj, "loadclienttype");
             break;
-        
+
         case "loadTypeExpense":
             $dao->LoadSelect($obj, "loadexpensetype");
             break;
-        
+
+
+        case "loadBeerTypeStock":
+            $dao->LoadSelect($obj, "loadbeertypestock");
+            break;
+
         default :
             echo 'No action found';
             break;

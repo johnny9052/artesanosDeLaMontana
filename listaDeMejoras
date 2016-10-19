@@ -1,0 +1,3 @@
+1. Colocar todo el carga selects en un archivo generico, es decir, todos son llamados desde 1 archivo
+2. arreglar que los datos lleguen con info.data, siempre sin excepcion. 
+3. Añadir que las acciones sirvan presionando enter, como el logIn, etc. 
