@@ -42,7 +42,7 @@ session_start();
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>-->
         <!--Import materialize.js OFFLINE-->
 
-        <script src="Resource/Framework/MaterializedPublic/js/materialize.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="Resource/Framework/Materialize/js/materialize.min.js"></script>
         <!-- GENERAL JS -->
         <script defer type="text/javascript" src="Resource/Script/General/General.js"></script>
     </head>

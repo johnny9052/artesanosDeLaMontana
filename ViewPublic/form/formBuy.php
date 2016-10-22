@@ -19,7 +19,7 @@ and open the template in the editor.
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s12">                                
-                                <input id="txtDireccionPedido" type="tel" name="direccion" required 
+                                <input id="txtDireccionPedido" type="text" name="direccion" required 
                                        value="<?php
                                        (isset($_SESSION['addressPublic'])) ? print $_SESSION['addressPublic'] : print "";
                                        ?>" >
@@ -28,12 +28,7 @@ and open the template in the editor.
                         </div>                        
                     </form>
                 </div>     
-            </form>
-
-            <form class="col s12" id="structureBuy">                
-            </form>
-
-
+            </form>         
         </div>     
     </body>
 </html>

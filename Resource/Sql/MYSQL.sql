@@ -1,6 +1,7 @@
 -- CAMBIAR EL TIPO DE UNA TABLA
 SET storage_engine=MYISAM;
 ALTER TABLE menu ENGINE = MyISAM;
+ALTER TABLE menu ENGINE = InnoDB;
 
 
 -- ----------------------------------------------------------------------------
@@ -1914,6 +1915,7 @@ END//
 DELIMITER ;
 
 
+
 CREATE TABLE pedido (
   id INT NOT NULL AUTO_INCREMENT,  
   idcliente INT not null,
@@ -1921,22 +1923,23 @@ CREATE TABLE pedido (
   direccion varchar(50),
   PRIMARY KEY (id),
   FOREIGN KEY (idcliente) references cliente(id)
-) ENGINE = MYISAM;
+) ENGINE = MyISAM;
 
 
 CREATE TABLE pedidoproducto(
   id INT NOT NULL AUTO_INCREMENT,
   idpedido int,
-  idcerveza INT not null,
+  idcerveza INT,
   cantidad INT,
   PRIMARY KEY (id),
   FOREIGN KEY (idpedido) references pedido(id),
   FOREIGN KEY (idcerveza) references tipo_cerveza(id)
-) ENGINE = MYISAM;
+) ENGINE = MyISAM;
 
   
-DELIMITER //
-CREATE FUNCTION  saveorder (vid integer, vproducts varchar(2000)) RETURNS INT( 1 ) 
+
+  DELIMITER //
+CREATE FUNCTION  saveorder (vidcliente integer, vdireccion varchar(50), vproducts varchar(2000)) RETURNS INT( 1 ) 
 COMMENT  'Funcion que almacena un pedido de cervezas'
 READS SQL DATA 
 DETERMINISTIC 
@@ -1945,7 +1948,11 @@ BEGIN
     /*Variable que contendra el tipo de cerveza a almacenar*/
     DECLARE vidcerveza varchar(50) DEFAULT '';    
     /*Variable que contendra la cantidad de cerveza pedida*/
-    DECLARE vcantidad varchar(50) DEFAULT '';       
+    DECLARE vcantidad varchar(50) DEFAULT '';
+
+    INSERT INTO pedido(idcliente,fechapedido,direccion) values (vidcliente, NOW(),vdireccion);
+	
+	SET @vidpedido = LAST_INSERT_ID();	
     
     WHILE (LOCATE(',', vproducts) > 0) DO
 
@@ -1963,7 +1970,7 @@ BEGIN
 
         /*Se almacena en la tabla, siempre y cuando tenga un dato para almacenar*/
 		IF vidcerveza <> ',' THEN	
-    		INSERT INTO pedido(idcliente, idcerveza,cantidad) VALUES (vid, vidcerveza,vcantidad);
+    		INSERT INTO pedidoproducto(idpedido, idcerveza,cantidad) VALUES (@vidpedido, vidcerveza,vcantidad);
 		END IF;
     END WHILE;
 
@@ -1977,7 +1984,6 @@ DELIMITER ;
 
 
 
-
 DROP PROCEDURE IF EXISTS loginpublic;
 DELIMITER //
 CREATE PROCEDURE loginpublic(usu VARCHAR(50), pass VARCHAR(32))
@@ -1987,3 +1993,6 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+

@@ -5,7 +5,7 @@ $(document).ready(function () {
 
 function loadProductType() {
     //Execute(scanInfo('loadBeerType', true), 'General/CtlGeneral', '', 'buildSelect(info,"selTypeProductType");');
-    Execute(scanInfo('loadBeerTypeStock', true), 'General/CtlGeneral', '', 'buildBuyProduct(info,"structureBuy");');
+    Execute(scanInfo('loadBeerTypeStock', true), 'General/CtlGeneral', '', 'buildBuyProduct(info,"structureBuy2");');
 }
 
 
@@ -14,17 +14,23 @@ function saveInventary() {
 
     var temp = new Array();
     temp.push("products");
+    var status = false;
 
     $(".inventaryBuy").each(function () {
         var elemento = this;
         if (elemento.value !== undefined && elemento.value !== "") {
             temp.push(elemento.id);
             temp.push(elemento.value);
+            status = true;
         }
     });
 
-    if (validateForm('structureBuy2')) {
-        Execute(scanInfo('save', true, 'structureBuy2', [{datos: temp}]), 'Shop/CtlOrder', '', 'refreshOrder(msg,"structureGlobalBuy");');
+    if (status) {
+        if (validateForm('structureBuy2')) {
+            Execute(scanInfo('save', true, 'structureBuy2', [{datos: temp}]), 'Shop/CtlOrder', '', 'refreshOrder(msg,"structureGlobalBuy");');
+        }
+    }else{
+        showToast("Ingrese como minimo la cantidad de 1 producto");
     }
 }
 
@@ -65,7 +71,9 @@ function buildBuyProduct(info, id) {
                                         </blockquote>\n\
                                     </div>\n\
                                     <div class="input-field col s8 m9">\n\
-                                        <input id="' + info[x].id + '" type="number" class=" inventaryBuy">\n\
+                                        <input id="' + info[x].id + '" type="number" \n\
+                                            class=" inventaryBuy"  \n\
+                                            min="1" max="' + info[x].stock + '">\n\
                                         <label for="icon_telephone">Cantidad</label>\n\
                                     </div>\n\
                         </div> ';
@@ -94,6 +102,6 @@ function buildBuyProduct(info, id) {
                     </div>';
     }
 
-    $("#" + id).html(structure);
+    $("#" + id).html($("#" + id).html() + structure);
 }
 

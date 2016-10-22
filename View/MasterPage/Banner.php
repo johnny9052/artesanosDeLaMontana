@@ -14,12 +14,9 @@ and open the template in the editor.
             <h6 id="titleUser">
                 <?php
                 if (isset($_SESSION["UserName"])) {
-                    
-                    echo "<i>Bienvenid@: " . $_SESSION["UserName"]."</i>";
+                    echo "Bienvenid@: " . $_SESSION["UserName"];
                 }
-                ?>         
-                
-                <i class="small material-icons" onclick="LogOut();" style="cursor: pointer;">lock_open</i>
+                ?>                                
             </h6>
         </ul>
     </body>
