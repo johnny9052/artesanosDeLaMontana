@@ -29,6 +29,9 @@ class ExpenseDAO {
             (double) $obj->getValue(),
             date($obj->getDateExpense())
         ));
+        
+        //echo $query;
+        
         $this->repository->ExecuteTransaction($query);
     }
 

@@ -37,6 +37,10 @@ function ExecuteActionLoad($action, $obj, $dao) {
         case "loadBeerTypeStock":
             $dao->LoadSelect($obj, "loadbeertypestock");
             break;
+        
+        case "loadDepartment":
+            $dao->LoadSelect($obj, "loaddepartment");
+            break;
 
         default :
             echo 'No action found';

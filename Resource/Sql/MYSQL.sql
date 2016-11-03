@@ -1730,15 +1730,11 @@ DETERMINISTIC
 BEGIN 
     DECLARE res INT DEFAULT 0;
     
-IF NOT EXISTS(select id from gasto 
-              where id_tipo_gasto=vTypeexpense AND fecha = vDateExpense)
-		THEN
 			insert into gasto(id_tipo_gasto,observaciones,
                                            valor,fecha) 
                                values(vTypeexpense,vDescription,vValue,
                                       vDateExpense);
 			set res = 1;										
-		END IF;
 	RETURN res;	
 END//
 DELIMITER ;
@@ -1996,3 +1992,279 @@ DELIMITER ;
 
 
 
+
+
+/***********************************************************************************/
+
+
+CREATE TABLE IF NOT EXISTS department (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(50) NULL,
+  `descripcion` VARCHAR(2000) NULL,
+  PRIMARY KEY (`id`));
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savedepartment(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un departamento'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from department where nombre=nom)
+		THEN
+			insert into department(nombre,descripcion) values(nom,des);	
+			set res = 1;							
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchdepartment(iddepartment int)
+COMMENT 'Procedimiento que carga la informacion de un departamento'
+BEGIN 	
+	select id,nombre,descripcion
+	from department
+	where id = iddepartment;	
+END//
+
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletedepartment(cod INT) RETURNS INT(1)
+COMMENT 'Funcion que elimina un departamento'
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE res INT default 0;	
+    delete from department where id = cod;
+	SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatedepartment(cod INT,nom varchar(50),des varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un departamento'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from department where nombre=nom and id<>cod)
+		THEN
+			update department set nombre = nom,descripcion = des where id = cod;		
+			set res=1;
+														
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listdepartment(iduser int)
+COMMENT 'Procedimiento que lista los departamento'
+BEGIN
+   select id,nombre as nombre_departamento,descripcion 
+   from department
+   order by nombre;
+END//
+
+DELIMITER ;
+
+
+
+
+CREATE TABLE IF NOT EXISTS ciudad (
+  id INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(50) NULL,
+  descripcion VARCHAR(2000) NULL,
+  iddepartment INT,
+  PRIMARY KEY (id),
+  foreign key (iddepartment) references department(id)
+);
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION savecity(id int, vname varchar(50), vdepartment int, vdescription varchar(50)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un departamento'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from ciudad where nombre=vname)
+		THEN
+			insert into ciudad(nombre,iddepartment,descripcion)
+			VALUES (vname,vdepartment,vdescription);
+			set res = 1;										
+		END IF;
+
+	RETURN res;
+	
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION updatecity(vid int, vname varchar(50), vdepartment int, vdescription varchar(50)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica un municipio'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+IF NOT EXISTS(select nombre from ciudad where nombre=vname and id<>vid)
+		THEN
+
+UPDATE ciudad
+   SET  nombre=vname, iddepartment=vdepartment, descripcion=vdescription
+ WHERE id=vid;
+		
+		set res=1;
+								
+			
+		END IF;
+
+	RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchcity(vid int)
+COMMENT 'Procedimiento que carga la informacion de un municipio'
+BEGIN
+ 	
+	SELECT id, nombre, iddepartment, descripcion
+	FROM ciudad
+	where id = vid;	
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deletecity(vid INT) RETURNS INT( 1 ) 
+COMMENT  'Funcion que elimina un municipio'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    DELETE FROM ciudad WHERE id = vid;
+SET res = 1;
+	RETURN res;
+END//
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listcity(iduser int)
+COMMENT 'Procedimiento que lista los municipios'
+BEGIN
+   
+	SELECT ci.id, ci.nombre as nombre_ciudad,
+               dep.nombre as departamento, ci.descripcion as descripcion
+	FROM ciudad as ci
+	INNER JOIN department as dep on ci.iddepartment = dep.id
+	ORDER BY ci.nombre;
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loaddepartment(idfilter int)
+COMMENT 'Procedimiento que lista los departamentos'
+BEGIN
+ 
+	IF idfilter > -1 THEN
+	
+		select id,nombre
+		from department
+		ORDER BY nombre;
+		
+   ELSE	
+	
+		select id,nombre
+		from department
+		ORDER BY nombre;
+	
+   END IF;
+
+END//
+
+DELIMITER ;
