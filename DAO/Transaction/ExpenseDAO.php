@@ -44,7 +44,7 @@ class ExpenseDAO {
      */
     public function ListAll(ExpenseDTO $obj) {
         $query = $this->repository->buildQuery("listexpense", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

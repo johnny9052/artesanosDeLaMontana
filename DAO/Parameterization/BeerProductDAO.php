@@ -43,7 +43,7 @@ class BeerProductDAO {
      */
     public function ListAll(BeerProductDTO $obj) {
         $query = $this->repository->buildQuery("listbeerproduct", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

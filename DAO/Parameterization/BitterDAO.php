@@ -36,7 +36,7 @@ class BitterDAO {
      */
     public function ListAll(BitterDTO $obj) {
         $query = $this->repository->buildQuery("listbitter", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

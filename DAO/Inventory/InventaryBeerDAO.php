@@ -24,7 +24,7 @@ class InventaryBeerDAO {
      */
     public function ListAll(InventaryBeerDTO $obj) {
         $query = $this->repository->buildQuery("listbeerinventary", array((int) $obj->getId()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
   

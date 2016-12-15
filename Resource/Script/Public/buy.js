@@ -1,11 +1,16 @@
 $(document).ready(function () {
     loadProductType();
+    loadCity();
 });
 
 
 function loadProductType() {
     //Execute(scanInfo('loadBeerType', true), 'General/CtlGeneral', '', 'buildSelect(info,"selTypeProductType");');
-    Execute(scanInfo('loadBeerTypeStock', true), 'General/CtlGeneral', '', 'buildBuyProduct(info,"structureBuy2");');
+    Execute(scanInfo('loadBeerTypeStock', true), 'General/CtlGeneral', '', 'buildBuyProduct(info,"listadoInventarioDisponible");');
+}
+
+function loadCity() {
+    Execute(scanInfo('loadCity', true), 'General/CtlGeneral', '', 'buildSelect(info,"selCity");');
 }
 
 

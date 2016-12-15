@@ -23,8 +23,7 @@ class Connection {
     public function connect() {
         $this->userbd = "root";
         $this->passworddb = "admin";
-        $this->database = "artesano_proyectoinicial";
-        $this->port = 5432;
+        $this->database = "artesano_proyectoinicial";        
         $this->host = "localhost";
 
         try {

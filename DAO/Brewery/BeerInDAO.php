@@ -43,7 +43,7 @@ class BeerInDAO {
      */
     public function ListAll(BeerInDTO $obj) {
         $query = $this->repository->buildQuery("listbeerin", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

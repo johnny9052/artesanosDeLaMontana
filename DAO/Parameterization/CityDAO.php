@@ -40,7 +40,7 @@ class CityDAO {
      */
     public function ListAll(CityDTO $obj) {
         $query = $this->repository->buildQuery("listcity", array((int) $obj->getId()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

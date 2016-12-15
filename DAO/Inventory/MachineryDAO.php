@@ -41,7 +41,7 @@ class MachineryDAO {
      */
     public function ListAll(MachineryDTO $obj) {
         $query = $this->repository->buildQuery("listinventary", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

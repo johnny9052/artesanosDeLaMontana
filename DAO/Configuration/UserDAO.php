@@ -40,7 +40,7 @@ class UserDAO {
      */
     public function ListAll(UserDTO $obj) {
         $query = $this->repository->buildQuery("listuser", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

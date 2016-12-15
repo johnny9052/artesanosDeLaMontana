@@ -36,7 +36,7 @@ class SpendTypeDAO {
      */
     public function ListAll(SpendTypeDTO $obj) {
         $query = $this->repository->buildQuery("listspendtype", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

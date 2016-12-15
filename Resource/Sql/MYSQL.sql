@@ -2268,3 +2268,158 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadcity(idfilter int)
+COMMENT 'Procedimiento que lista los municipios'
+BEGIN
+ 
+	IF idfilter > -1 THEN
+	
+		select id,nombre
+		from ciudad
+                where iddepartment = idfilter
+		ORDER BY nombre;
+		
+   ELSE	
+	
+		select id,nombre
+		from ciudad
+		ORDER BY nombre;
+	
+   END IF;
+
+END//
+
+DELIMITER ;
+
+
+
+
+alter table pedido add column idciudad int;
+
+alter table pedido add foreign key (idciudad) references ciudad(id)
+
+
+DROP FUNCTION IF EXISTS saveorder;
+
+
+  DELIMITER //
+CREATE  FUNCTION  saveorder (vidcliente integer, vdireccion varchar(50), vidciudad integer, vproducts varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que almacena un pedido de cervezas'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    /*Variable que contendra el tipo de cerveza a almacenar*/
+    DECLARE vidcerveza varchar(50) DEFAULT '';    
+    /*Variable que contendra la cantidad de cerveza pedida*/
+    DECLARE vcantidad varchar(50) DEFAULT '';
+
+    INSERT INTO pedido(idcliente,fechapedido,direccion,idciudad) values (vidcliente, NOW(),vdireccion,vidciudad);
+	
+	SET @vidpedido = LAST_INSERT_ID();	
+    
+    WHILE (LOCATE(',', vproducts) > 0) DO
+
+        /*Se saca el primer campo separado por coma del varchar*/
+    	SET vidcerveza = ELT(1, vproducts);
+        /*Se elimina ese primer valor y se reemplaza en la cadena*/
+    	SET vproducts = SUBSTRING(vproducts, LOCATE(',',vproducts) + 1);
+
+
+        /*Se saca el primer campo separado por coma del varchar*/
+    	SET vcantidad = ELT(1, vproducts);
+        /*Se elimina ese primer valor y se reemplaza en la cadena*/
+    	SET vproducts = SUBSTRING(vproducts, LOCATE(',',vproducts) + 1);
+
+
+        /*Se almacena en la tabla, siempre y cuando tenga un dato para almacenar*/
+		IF vidcerveza <> ',' THEN	
+    		INSERT INTO pedidoproducto(idpedido, idcerveza,cantidad) VALUES (@vidpedido, vidcerveza,vcantidad);
+		END IF;
+    END WHILE;
+
+    SET res = 1;
+
+    RETURN res;	
+END//
+
+DELIMITER ;
+
+
+
+
+
+DROP PROCEDURE IF EXISTS login;
+DELIMITER //
+CREATE PROCEDURE login(usu VARCHAR(50), pass VARCHAR(50))
+COMMENT 'Procedimiento que valida las credenciales de un usuairo'
+BEGIN
+   select usuario,primer_nombre,primer_apellido,rol,id from usuario where password=pass and usuario=usu;		
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE validateclient(idfilter int)
+COMMENT 'Procedimiento que valida si existe un cliente'
+BEGIN 		
+		select id,code, nombre, direccion
+		from cliente
+                where code = idfilter;	
+	   
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listorder(iduser int)
+COMMENT 'Procedimiento que lista los pedidos'
+BEGIN
+   select p.id, p.fechapedido as fecha, c.nombre as ciudad, p.direccion as direccion, cli.nombre as cliente
+   from pedido as p inner join ciudad as c on c.id = p.idciudad
+   inner join cliente as cli on cli.id = p.idcliente 
+   order by p.fechapedido desc;
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchorderproduct(vid int)
+COMMENT 'Procedimiento que carga productos y sus cantidades de un determinada pedido'
+BEGIN
+ 	
+	SELECT ped.id,tip.nombre,ped.cantidad
+	FROM pedidoproducto as ped 
+        inner join tipo_cerveza as tip on ped.idcerveza = tip.id
+	where ped.idpedido = vid;	
+	
+END//
+
+DELIMITER ;

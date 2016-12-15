@@ -36,7 +36,7 @@ class DepartmentDAO {
      */
     public function ListAll(DepartmentDTO $obj) {
         $query = $this->repository->buildQuery("listdepartment", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

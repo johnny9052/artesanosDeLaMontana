@@ -44,7 +44,7 @@ class ContactDAO {
      */
     public function ListAll(ContactDTO $obj) {
         $query = $this->repository->buildQuery("listclient", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

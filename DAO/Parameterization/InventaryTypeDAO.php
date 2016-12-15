@@ -36,7 +36,7 @@ class InventaryTypeDAO {
      */
     public function ListAll(InventaryTypeDTO $obj) {
         $query = $this->repository->buildQuery("listinventarytype", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

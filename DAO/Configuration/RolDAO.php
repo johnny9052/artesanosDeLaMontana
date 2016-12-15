@@ -36,7 +36,7 @@ class RolDAO {
      */
     public function ListAll(RolDTO $obj) {
         $query = $this->repository->buildQuery("listrol", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**

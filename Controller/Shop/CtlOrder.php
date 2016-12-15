@@ -10,9 +10,11 @@ $action = (isset($_POST['action']) ? $_POST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $direccion = (isset($_POST['direccion']) ? $_POST['direccion'] : "");
 $products = (isset($_POST['products']) ? $_POST['products'] : "");
+$city = (isset($_POST['city']) ? $_POST['city'] : "");
+$idclient = (isset($_POST['idclient']) ? $_POST['idclient'] : "");
 
 /* DEFINICION DE OBJETOS */
-$obj = new OrderDTO($id, $direccion, $products);
+$obj = new OrderDTO($id, $direccion, $products, $city,$idclient);
 $dao = new OrderDAO();
 
 /* CONTROL DE ACCIONES */

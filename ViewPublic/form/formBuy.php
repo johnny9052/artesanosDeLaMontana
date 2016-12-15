@@ -15,19 +15,33 @@ and open the template in the editor.
         <div id="structureGlobalBuy" class="boxorange col m10 offset-m1 s12">    
 
             <form class="col s12" id="structureBuy2">
+
                 <div class="row">
-                    <form class="col s12">
-                        <div class="row">
-                            <div class="input-field col s12">                                
-                                <input id="txtDireccionPedido" type="text" name="direccion" required 
-                                       value="<?php
-                                       (isset($_SESSION['addressPublic'])) ? print $_SESSION['addressPublic'] : print "";
-                                       ?>" >
-                                <label for="txtDireccionPedido">Direccion de entrega</label>
-                            </div>                               
-                        </div>                        
-                    </form>
-                </div>     
+                    <div class="input-field col s12">
+                        <select id="selCity" name="city" required>
+                            <option value="-1" selected> -- SELECCIONE CIUDAD --</option>                            
+                        </select>
+                    </div>
+                </div>           
+
+                <div class="row">
+                    <div class="input-field col s12">                                
+                        <input id="txtDireccionPedido" type="text" name="direccion" required 
+                               value="<?php
+                               (isset($_SESSION['addressPublic'])) ? print $_SESSION['addressPublic'] : print "";
+                               ?>" >
+                        <label for="txtDireccionPedido">Direccion de entrega</label>
+                    </div>                               
+                </div>                        
+
+                <input type="hidden" name="idclient"
+                       value="<?php
+                       (isset($_SESSION['identificationPublic'])) ? print $_SESSION['identificationPublic'] : print "no existe";
+                       ?>" >
+
+                <div id="listadoInventarioDisponible">
+                </div>
+
             </form>         
         </div>     
     </body>

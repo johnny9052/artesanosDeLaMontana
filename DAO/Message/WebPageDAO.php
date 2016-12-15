@@ -24,7 +24,7 @@ class WebPageDAO {
      */
     public function ListAll(WebPageDTO $obj) {
         $query = $this->repository->buildQuery("listmessage", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query);
+        $this->repository->BuildPaginator($query,'');
     }
 
     /**
