@@ -15,7 +15,7 @@ session_start();
         <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
         <!--Import materialize.css ONLINE-->
-        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">-->
         <!--Import materialize.css OFFLINE-->
 
 
@@ -39,7 +39,7 @@ session_start();
 
 
         <!--Import materialize.js ONLINE-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>-->
         <!--Import materialize.js OFFLINE-->
 
         <script type="text/javascript" src="Resource/Framework/Materialize/js/materialize.min.js"></script>

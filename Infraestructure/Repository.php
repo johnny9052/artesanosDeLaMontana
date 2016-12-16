@@ -77,6 +77,9 @@ class Repository extends Internationalization {
      * @version 0.1
      */
     public function ExecuteLogIn($query) {
+
+        //echo $query;
+
         /* Le asigno la consulta SQL a la conexion de la base de datos */
         $resultado = $this->objCon->getConnect()->prepare($query);
         /* Executo la consulta */
@@ -88,9 +91,11 @@ class Repository extends Internationalization {
 
         if (isset($vec)) {
             session_start();
+            $_SESSION["IdUser"] = $vec[0]['id'];
             $_SESSION["User"] = $vec[0]['usuario'];
             $_SESSION["UserName"] = $vec[0]['primer_nombre'] . " " . $vec[0]['primer_apellido'];
             $_SESSION["TypeUser"] = $vec[0]['rol'];
+
             echo(json_encode(['res' => 'Success', "msg" => $this->getLogInSuccess() . " " . $vec[0]['primer_nombre'] . " " . $vec[0]['primer_apellido']]));
         } else {
             echo '{"res" : "Error", "msg" :"' . $this->getLogInError() . '" }';
@@ -120,6 +125,7 @@ class Repository extends Internationalization {
             $_SESSION["identificationPublic"] = $vec[0]['id'];
             $_SESSION["namePublic"] = $vec[0]['nombre'];
             $_SESSION["emailPublic"] = $vec[0]['email'];
+            $_SESSION["addressPublic"] = $vec[0]['direccion'];
             echo(json_encode(['res' => 'Success']));
         } else {
             echo '{"res" : "Error", "msg" :"' . $this->getLogInError() . '" }';
@@ -173,11 +179,11 @@ class Repository extends Internationalization {
             }
 
             if (isset($vec)) {
-                echo(json_encode($vec));
+                echo(json_encode(['res' => 'Success',
+                    'data' => json_encode($vec)]));
+                //echo(json_encode($vec));
             } else {
-                echo ' {
-                "res" : "Error"
-            }';
+                echo '{"res" : "NotInfo","msg":"No se encontro informacion","data":""}';
             }
         } catch (PDOException $exception) {
             /* Se captura el error de ejecucion SQL */
@@ -248,10 +254,11 @@ class Repository extends Internationalization {
      * Ejecuta una consulta sql y retorna una tabla HTML con el resultado de la consulta
      * @return string Echo de resultado de la consulta en formato JSON, con variable res y conteniendo la talba
      * @param string $query Consulta a ejecutar     
+     * @param string $actionclick nombre de la funcion onclick que se desee ejecutar en cada registro
      * @author Johnny Alexander Salazar
      * @version 0.5
      */
-    public function BuildPaginator($query) {
+    public function BuildPaginator($query,$actionclick) {
 
 //Longitud maxima de los caracteres del listado
         $max = 25;
@@ -296,7 +303,8 @@ class Repository extends Internationalization {
             for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
 //variable que contiene el tr con la funcion del selradio y el update data
 //$funcion = "<tr class='rowTable' onclick=showData([";
-                $funcion = "<tr class='rowTable' onclick=search(";
+                //$funcion = "<tr class='rowTable' onclick=search(";
+                $funcion = "<tr class='rowTable' onclick=" . (($actionclick !== '') ? $actionclick : 'search') . "(";
 //variable que contiene los valores de los campos de la tabla
                 $campos = "";
 //en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
@@ -320,6 +328,95 @@ class Repository extends Internationalization {
 //$funcion.= "]);showButton(false);>"; 
 //finaliza la funcion search
                 $funcion.= ");>"; //finaliza la funcion updatedata
+                $cadenaHTML.=$funcion . "<td>" . ($cont + 1) . "</td>";
+//$cadenaHTML.=$funcion;
+                $cadenaHTML.=$campos . "</tr>";
+            }
+
+            $cadenaHTML.="</tbody>";
+//$cadenaHTML.="</table>";
+        } else {
+            $cadenaHTML = "<label>No hay registros en la base de datos</label>";
+        }
+        echo '[{"res" :"' . $cadenaHTML . '"}]';
+    }
+
+    /**
+     * Ejecuta una consulta sql y retorna una tabla HTML con el resultado de la consulta
+     * @return string Echo de resultado de la consulta en formato JSON, con variable res y conteniendo la talba
+     * @param string $query Consulta a ejecutar     
+     * @author Johnny Alexander Salazar
+     * @version 0.5
+     */
+    public function BuildDetail($query) {
+
+//Longitud maxima de los caracteres del listado
+        $max = 25;
+
+        /* Le asigno la consulta SQL a la conexion de la base de datos */
+        $resultado = $this->objCon->getConnect()->prepare($query);
+        /* Executo la consulta */
+        $resultado->execute();
+
+        /* Se meten los datos a un vector, organizados sus campos no por nombre, 
+          si no enumarados */
+        $vec = $resultado->fetchAll(PDO::FETCH_NUM);
+//echo $resultado->columnCount() . '----' . $resultado->rowCount();
+
+        /* quedo pendiente mirar como saco todos los registros por un lado y 
+         * los campos por el otro de ser necesario, para eso si se necesita 
+         * sacar una copia de resultado despues del execute pues se hace.
+         */
+
+        if ($resultado->rowCount() > 0) {
+//$cadenaHTML = "<table class='centered responsive-table striped'>";
+            $cadenaHTML = "<thead>";
+            $cadenaHTML.= "<tr>";
+            $cadenaHTML.= "<th data-field='sel'>registro #</th>";
+
+
+
+            for ($cont = 1; $cont < $resultado->columnCount(); $cont++) { //arma la cabecera de la tabla
+                $col = $resultado->getColumnMeta($cont);
+//Coloca la cabecera reempleazando los guiones bajos con espacios
+                $cadenaHTML .= "<th data-field='" . $col['name'] . "'>" . str_replace("_", " ", $col['name']) . "</th>";
+//VERIFICAR AQUI
+            }
+
+
+            $cadenaHTML .= "</tr>";
+            $cadenaHTML .= "</thead>";
+
+            $cadenaHTML .= "<tbody>";
+
+
+            for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
+//variable que contiene el tr con la funcion del selradio y el update data
+//$funcion = "<tr class='rowTable' onclick=showData([";
+                $funcion = "<tr class='rowTable' ";
+//variable que contiene los valores de los campos de la tabla
+                $campos = "";
+//en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
+                for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
+//Si se quieren añadir todos los datos solo es quitar el if,
+//en este caso solo se esta colocando el id
+                    if ($posreg == 0) {
+                        $funcion.='\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
+                    }
+                    if ($posreg > 0) {//omite el id para no mostrarlo en los campos de la tabla
+                        $campos.="<td>" . substr($vec[$cont][$posreg], 0, $max) .
+                                ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
+                    }
+//VERIFICAR AQUI
+//                    if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
+//                        $funcion.=",";
+//                    }
+                }
+
+
+//$funcion.= "]);showButton(false);>"; 
+//finaliza la funcion search
+                $funcion.= ">"; //finaliza la funcion updatedata
                 $cadenaHTML.=$funcion . "<td>" . ($cont + 1) . "</td>";
 //$cadenaHTML.=$funcion;
                 $cadenaHTML.=$campos . "</tr>";

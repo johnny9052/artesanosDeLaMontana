@@ -26,7 +26,7 @@ function showData(info) {
     $("#txtEmail").val(info[0].email);
     $("#txtDescription").val(info[0].descripcion);
     $("#txtRespuesta").val(info[0].respuesta);        
-    $("#chkEstado").attr("checked",(info[0].estado === "1") ? true : false);
+    $("#chkEstado").prop("checked",(info[0].estado === "1") ? true : false);
     openWindow();
     showButton(false);
 }

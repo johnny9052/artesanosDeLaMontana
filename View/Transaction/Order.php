@@ -8,7 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
-        
+
         <script defer type="text/javascript" src="Resource/Script/Transaction/Order.js"></script>
     </head>
     <body>
@@ -20,7 +20,7 @@ and open the template in the editor.
         <!-- BOTON AÑADIR Y PRIMERA BARRA DE CARGA-->
         <div class="row">
             <div class="col s4 l4 m4 left">
-                <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true);">
+                <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true);loadProductType();">
                     <i class="material-icons">add</i>
                 </a>
             </div>
@@ -126,7 +126,7 @@ and open the template in the editor.
                 </div>
 
                 <div class="row updateActionButton">
-                                            
+
                 </div>             
 
             </div>
@@ -156,6 +156,14 @@ and open the template in the editor.
         <!-- MODAL PARA ADMINISTRACION DE REGISTROS-->
         <div id="ModalDetail" class="boxModal modal">
             <div class="modal-content">
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="checkbox" id="chkEstado" name="estado"/>
+                        <label for="chkEstado">¿El pedido ya fue entregado?</label>                        
+                    </div>
+                </div>
+
                 <!--CENTRAR LOS ELEMENTOS DEL FORMULARIO -->
                 <div class="boxModal container col s12" id="FormContainer">  
                     <!--LISTADO DE REGISTROS-->
@@ -163,6 +171,8 @@ and open the template in the editor.
                     </table>
                     <!--END LISTADO DE REGISTROS-->
                 </div>   
+
+
             </div>
 
             <div  class="buttonContainer modal-footer center-row">
@@ -173,7 +183,11 @@ and open the template in the editor.
 
                 <br>
 
-                <div class="row updateActionButton">                                               
+                <div class="row updateActionButton">       
+
+                    <a class="buttonAction l4 btn-floating" id="btnSave" 
+                       onclick="updateState();"><i class="material-icons">edit</i></a> 
+
                     <a class="buttonAction l4 btn-floating" id="btnSave" 
                        onclick="goNavigation('ModalDetail', 'ModalConfirm');"><i class="material-icons">delete</i></a>    
 

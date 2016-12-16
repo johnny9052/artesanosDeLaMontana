@@ -5,11 +5,11 @@
  * @author Johnny Alexander Salazar
  * @version 0.1
  */
-class GeneralDAO {
+class ValidationDAO {
 
     private $repository;
 
-    function GeneralDAO() {
+    function ValidationDAO() {
         require_once '../../Infraestructure/Repository.php';
         $this->repository = new Repository();
     }
@@ -22,13 +22,10 @@ class GeneralDAO {
      * @author Johnny Alexander Salazar
      * @version 0.2
      */
-    public function LoadSelect(GeneralDTO $obj, $name) {
+    public function Validate(ValidationDTO $obj, $name) {
         $query = $this->repository->buildQuery($name, array((int) $obj->getId()));
         //echo $query;
         $this->repository->Execute($query);
     }
-    
-    
-   
 
 }

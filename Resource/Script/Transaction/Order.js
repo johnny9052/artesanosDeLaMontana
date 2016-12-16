@@ -1,12 +1,11 @@
 /* Funciones jQuery */
 $(window).load(function () {
-    list();
-    loadProductType();
+    list();    
     loadCity();
 });
 
 
-function loadProductType() {    
+function loadProductType() {
     Execute(scanInfo('loadBeerTypeStock', true), 'General/CtlGeneral', '', 'buildBuyProduct(info,"listadoInventarioDisponible");');
 }
 
@@ -56,7 +55,7 @@ function save() {
 
 
 function buildBuyProduct(info, id) {
-    
+
     $("#" + id).html("");
 
     var structure = "";
@@ -105,16 +104,25 @@ function list() {
 }
 
 
-function detail(id) {    
+function detail(id) {
     $("#txtId").val(id);
-    Execute(scanInfo('detail', true), 'Shop/CtlOrder', '', 'showDetail(info);');
+    Execute(scanInfo('detail', true), 'Shop/CtlOrder', '', 'showDetail(info);search();');
 }
 
 
-function showDetail(info) {    
-    buildPaginator(info, 'TblListDetail');
-    openWindow('ModalDetail');
-    showButton(false);
+function search() {
+    Execute(scanInfo('search', true), 'Shop/CtlOrder', '', 'showData(info);');
+}
+
+function showData(info) {
+    $("#chkEstado").prop("checked", (info[0].estado === "1") ? true : false);
+}
+
+
+function updateState() {
+    if (validateSearch() === true) {
+        Execute(scanInfo('updatestate', true, 'ModalDetail', [{datos: ['id', $("#txtId").val()]}]), 'Shop/CtlOrder', '', 'closeWindow("ModalDetail");list();');
+    }
 }
 
 
@@ -124,7 +132,7 @@ function detectValidate(info) {
         $("#noValidateSection").show();
     } else {
         showToast("Registro validado");
-        $("#txtCedula").attr('disabled', 'disabled');
+        $("#txtCedula").prop('disabled', 'disabled');
         $("#noValidateSection").hide();
         $("#txtItsOk").val(true);
         $("#txtDireccionPedido").val(info[0].direccion);
@@ -135,8 +143,8 @@ function detectValidate(info) {
 
 
 function deleteInfo() {
-    if (validateForm() === true) {
-        Execute(scanInfo('delete', true), 'Transaction/CtlOrder', '', 'closeWindow();list();');
+    if (validateSearch() === true) {
+        Execute(scanInfo('delete', true), 'Shop/CtlOrder', '', 'closeWindow();list();');
     }
 }
 

@@ -39,6 +39,15 @@ function ExecuteAction($action, $obj, $dao) {
             $dao->Register($obj);
             break;
 
+        case "detail":
+            $dao->Detail($obj);
+            break;
+
+
+        /* Other transactions */
+        case "updatestate":
+            $dao->UpdateState($obj);
+            break;
 
 
         default :

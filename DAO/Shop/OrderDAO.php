@@ -42,32 +42,7 @@ class OrderDAO {
      */
     public function ListAll(OrderDTO $obj) {
         $query = $this->repository->buildQuery("listorder", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query,'detail');
-    }
-
-    /**
-     * Ejecuta un buscar en la base de datos
-     * @param OrderDTO $obj 
-     * @return void      
-     * @author Johnny Alexander Salazar
-     * @version 0.1
-     */
-    public function Search(OrderDTO $obj) {
-        $query = $this->repository->buildQuery("searchorderproduct", array((int) $obj->getId()));
-        $this->repository->Execute($query);
-    }
-
-    /**
-     * Ejecuta un actualizar en la base de datos
-     * @param OrderDTO $obj 
-     * @return void      
-     * @author Johnny Alexander Salazar
-     * @version 0.1
-     */
-    public function Update(OrderDTO $obj) {
-        $query = $this->repository->buildQuerySimply("updateorder", array((int) $obj->getId(),
-            (string) $obj->getName(), (string) $obj->getDescription()));
-        $this->repository->ExecuteTransaction($query);
+        $this->repository->BuildPaginator($query, 'detail');
     }
 
     /**
@@ -83,6 +58,18 @@ class OrderDAO {
     }
 
     /**
+     * Ejecuta un buscar en la base de datos
+     * @param OrderDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function Search(OrderDTO $obj) {
+        $query = $this->repository->buildQuery("searchorder", array((int) $obj->getId()));
+        $this->repository->Execute($query);
+    }
+
+    /**
      * Ejecuta un listar en la base de datos
      * @param OrderDTO $obj 
      * @return void      
@@ -92,6 +79,23 @@ class OrderDAO {
     public function Detail(OrderDTO $obj) {
         $query = $this->repository->buildQuery("searchorderproduct", array((int) $obj->getId()));
         $this->repository->BuildDetail($query);
+    }
+
+    /**
+     * Ejecuta un guardar en la base de datos
+     * @param OrderDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function UpdateState(OrderDTO $obj) {
+        /* Se debe agregar una coma al final, para que el plsql pueda recorrerlo 
+          como un array */
+        $query = $this->repository->buildQuerySimply("orderupdatestate", array((int) $obj->getId(),
+            (int) $obj->getEstado() . ","));
+
+        //echo $query;
+        $this->repository->ExecuteTransaction($query);
     }
 
 }

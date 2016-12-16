@@ -82,7 +82,7 @@ function showLoadBar(status) {
  * @version 0.2
  */
 function Execute(dataSend, url, before, success) {
-    //alert(dataSend);
+           
     $.ajax({
         type: 'post',
         url: "Controller/" + url + ".php",
@@ -95,27 +95,41 @@ function Execute(dataSend, url, before, success) {
         data: dataSend,
         success: function (data) {
             //alert(data);
-            //$("#txtName").val(data);
+            //$("#txtDireccionPedido").val(data);
             showLoadBar(false);
             var info = eval("(" + data + ")");
             var response = (info.res !== undefined) ? info.res : info[0].res;
+            var msg = (info.msg !== undefined) ? info.msg : "";
             switch (response) {
+
                 case "Success":
                     /*Funcion que refresca la pagina*/
                     showToast(info.msg);
+
                     if (success !== "") {
+                        /*Si en la estructura enviada se tienen datos, entonces
+                         * se sacan, parseandolos como objetos*/
+                        info = (info.data !== undefined || info.data !== "") ? eval("(" + info.data + ")") : info;
+                        eval(success);
+                    }
+
+                    break;
+
+                case "NotInfo":
+                    if (success !== "") {
+                        info = "";
                         eval(success);
                     }
                     break;
+
                 case "Error":
                     showToast(info.msg);
                     break;
                 case undefined:
-                    ;
                 default :
                     /*En el caso de que sea un listar info, buscar o pintar menu*/
                     if (dataSend.action === "list" || dataSend.action === "menu" || dataSend.action === "search"
-                            || dataSend.action.indexOf("load") > -1) {
+                            || dataSend.action === "detail" || dataSend.action.indexOf("load") > -1) {
                         if (success !== "") {
                             eval(success);
                         }
@@ -148,14 +162,12 @@ function Execute(dataSend, url, before, success) {
  * @version 0.3
  */
 function scanInfo(type, status, form, dataPlus) {
-
     var arrayParameters = new Array();
     form = defualtForm(form);
     arrayParameters.push(newArg("action", type));
 
     /*Inputs sencillos*/
     if (status) {
-
         var campos = '#' + form + ' :input,\n\
                  #' + form + ' select, \n\
                  #' + form + ' textarea';
@@ -201,11 +213,13 @@ function scanInfo(type, status, form, dataPlus) {
 /**
  * Ingresa un codigo html al listado general
  * @param {String-html} info : html con la tabla
+ * @param {String} id : Id del contenedor de la lista
  * @author Johnny Alexander Salazar
  * @version 0.3
  */
-function buildPaginator(info) {
-    $("#TblList").html(info[0].res);
+function buildPaginator(info, id) {
+    id = DefaultTableList(id);
+    $("#" + id).html(info[0].res);
 }
 
 
@@ -217,6 +231,8 @@ function buildPaginator(info) {
  * @version 0.3
  */
 function buildSelect(info, idSelect) {
+
+    //alert(info);
 
     var combo = document.getElementById(idSelect);
 
@@ -268,12 +284,25 @@ function validateForm(form) {
 
     $(campos).each(function () {
         var elemento = this;
-        if (!elemento.validity.valid) { //es valido?                                   
-            $("#" + elemento.id).addClass("invalid");
-            status = false; // si no es valido retorne falso                               
+
+        /*Si es un select se valida que no sea -1*/
+        if (elemento.type === "select-one") {
+            if (elemento.value === "-1") { //es valido?                                   
+                $("#" + elemento.id).addClass("invalid");
+                status = false; // si no es valido retorne falso                               
+            } else {
+                $("#" + elemento.id).removeClass("invalid");
+            }
         } else {
-            $("#" + elemento.id).removeClass("invalid");
+            /*Si es cualquier otro elementos diferente a select*/
+            if (!elemento.validity.valid) { //es valido?                                   
+                $("#" + elemento.id).addClass("invalid");
+                status = false; // si no es valido retorne falso                               
+            } else {
+                $("#" + elemento.id).removeClass("invalid");
+            }
         }
+
     });
 
     if (!status) {
@@ -481,6 +510,18 @@ function DefaultModal(idModal) {
 }
 
 
+
+/**
+ * Retorna el id del paginador por defecto si no se le especifica uno 
+ * @param {int} idTable : Id del contenedor
+ * @author Johnny Alexander Salazar
+ * @version 0.1
+ */
+function DefaultTableList(idTable) {
+    return (idTable === undefined || idTable === "") ? 'TblList' : idTable;
+}
+
+
 /**
  * Oculta o muestra las acciones de un formulario segun se necesiten
  * @param {boolean} status : Indica si se muestra las acciones de guardar o de 
@@ -496,4 +537,60 @@ function showButton(status) {
         $(".newActionButton").hide();
         $(".updateActionButton").show();
     }
+}
+
+
+/**
+ * Redirecciona a otro formulario del sistema
+ * @param {string} url : Ruta archivo a abrir
+ * @author Johnny Alexander Salazar
+ * @version 0.1
+ */
+function refreshPage(url) {
+    window.location.href = "Helper/Content/Content.php?page=" + url;
+}
+
+
+
+/**
+ * Valida si se ha realizado una busqueda previa, validando si el campo por defecto
+ * se encuentra bien, o si se especifica por parametro el campo que se desea validar,
+ * lo valida
+ * @param {string} id : id del campo a validar si se desea uno diferente al que se valida
+ * por defecto
+ * @author Johnny Alexander Salazar
+ * @version 0.1
+ */
+function validateSearch(id) {
+
+    id = (id === undefined || id === "") ? 'txtId' : id;
+
+    if ($("#" + id).val() !== "") {
+        return true;
+    } else {
+        showToast("No se ha realizado una busqueda previa");
+        return false;
+    }
+}
+
+
+
+
+/**
+ * Muestra en un modal el detalle de un conjunto de registros
+ * @param {string - JSON} info : Informacion en formato JSON que se desea mostrar
+ * @param {string} idList : Id de la tabla contenedora
+ * @param {string} idModal : Id del modal que se abrira para mostrar el detalle
+ * @author Johnny Alexander Salazar
+ * @version 0.1
+ */
+function showDetail(info, idList, idModal) {
+
+    idList = (idList === undefined || idList === "") ? 'TblListDetail' : idList;
+    idModal = (idModal === undefined || idModal === "") ? 'ModalDetail' : idModal;
+
+    buildPaginator(info, idList);
+    openWindow(idModal);
+
+    showButton(false);
 }

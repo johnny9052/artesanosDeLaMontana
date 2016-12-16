@@ -1934,7 +1934,7 @@ CREATE TABLE pedidoproducto(
 
   
 
-  DELIMITER //
+DELIMITER //
 CREATE FUNCTION  saveorder (vidcliente integer, vdireccion varchar(50), vproducts varchar(2000)) RETURNS INT( 1 ) 
 COMMENT  'Funcion que almacena un pedido de cervezas'
 READS SQL DATA 
@@ -1946,7 +1946,7 @@ BEGIN
     /*Variable que contendra la cantidad de cerveza pedida*/
     DECLARE vcantidad varchar(50) DEFAULT '';
 
-    INSERT INTO pedido(idcliente,fechapedido,direccion) values (vidcliente, NOW(),vdireccion);
+    INSERT INTO pedido(idcliente,fechapedido,direccion, pedido) values (vidcliente, NOW(),vdireccion,0);
 	
 	SET @vidpedido = LAST_INSERT_ID();	
     
@@ -2319,7 +2319,7 @@ BEGIN
     /*Variable que contendra la cantidad de cerveza pedida*/
     DECLARE vcantidad varchar(50) DEFAULT '';
 
-    INSERT INTO pedido(idcliente,fechapedido,direccion,idciudad) values (vidcliente, NOW(),vdireccion,vidciudad);
+    INSERT INTO pedido(idcliente,fechapedido,direccion,idciudad,estado) values (vidcliente, NOW(),vdireccion,vidciudad,0);
 	
 	SET @vidpedido = LAST_INSERT_ID();	
     
@@ -2395,7 +2395,10 @@ DELIMITER //
 CREATE PROCEDURE listorder(iduser int)
 COMMENT 'Procedimiento que lista los pedidos'
 BEGIN
-   select p.id, p.fechapedido as fecha, c.nombre as ciudad, p.direccion as direccion, cli.nombre as cliente
+   select p.id, p.fechapedido as fecha, c.nombre as ciudad, p.direccion as direccion, cli.nombre as cliente, 
+          CASE estado 
+             WHEN 1 THEN 'Cerrado' 
+ 	     ELSE 'Abierto' END as estado
    from pedido as p inner join ciudad as c on c.id = p.idciudad
    inner join cliente as cli on cli.id = p.idcliente 
    order by p.fechapedido desc;
@@ -2422,4 +2425,157 @@ BEGIN
 	
 END//
 
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION deleteorder(vid INT) RETURNS INT( 1 ) 
+COMMENT  'Funcion que elimina un pedido y los productos asociados a este'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    
+    DECLARE res INT DEFAULT 0;
+    DECLARE vestado bit;
+    SET vestado = (select estado from pedido where id = vid);
+
+    if vestado <> 1 THEN	
+    	DELETE FROM pedidoproducto WHERE idpedido = vid;
+        DELETE FROM pedido WHERE id = vid;
+        SET res = 1;
+    END IF;
+    
+    RETURN res;
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE searchorder(vid int)
+COMMENT 'Procedimiento que carga productos y sus cantidades de un determinada pedido'
+BEGIN
+ 	
+	SELECT id,idcliente,fechapedido, direccion, idciudad,estado
+	FROM pedido 
+	where id = vid;	
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+alter table pedido add column estado bit;
+
+
+
+
+ 
+
+
+
+
+
+
+DELIMITER //
+CREATE FUNCTION orderupdatestate(vid int,  vestado int) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica el estado de una orden'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+
+    UPDATE pedido
+    SET  estado=vestado
+    WHERE id=vid;
+		
+    set res=1;
+								
+    RETURN res;
+	
+
+END//
+
+DELIMITER ;
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE listbeerinventary(iduser int)
+COMMENT 'Procedimiento que calcula y lista el total de cervezas disponibles'
+BEGIN
+        select id,tipo, SUM(res.cantidad) from(
+        select id,tipo,cantidad from vbeerin
+        union all
+        select id,tipo,cantidad from vbeerout) as res
+        group by res.tipo
+        order by res.tipo;
+END//
+DELIMITER ;
+
+
+
+    
+CREATE VIEW vbeerin
+ AS 
+select tip.id, tip.nombre as 'tipo', SUM(ent.cantidad) as cantidad
+        from entrada_cerveza as ent
+        inner join tipo_cerveza as tip on ent.id_tipo_cerveva = tip.id        
+        group by tip.nombre
+        order by tip.nombre;
+
+
+
+CREATE VIEW vbeerout
+ AS 
+    select tip.id, tip.nombre as 'tipo', -SUM(sal.cantidad) as cantidad
+        from pedidoproducto as sal
+        inner join tipo_cerveza as tip on sal.idcerveza = tip.id
+        group by tip.nombre
+        order by tip.nombre;
+
+
+
+
+
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE loadbeertypestock(idfilter int)
+COMMENT 'Procedimiento que lista los tipos de cerveza con sus cantidades disponibles'
+BEGIN 
+	IF idfilter > -1 THEN	
+		select id,tipo as nombre, SUM(res.cantidad) as stock from(
+                select id,tipo,cantidad from vbeerin
+                union all
+                select id,tipo,cantidad from vbeerout) as res
+                group by res.tipo
+                order by res.tipo;
+        ELSE		
+                select id,tipo as nombre, SUM(res.cantidad) as stock from(
+                select id,tipo,cantidad from vbeerin
+                union all
+                select id,tipo,cantidad from vbeerout) as res
+                group by res.tipo
+                order by res.tipo;
+   END IF;
+END//
 DELIMITER ;

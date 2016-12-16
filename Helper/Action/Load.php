@@ -9,6 +9,8 @@ function ExecuteActionLoad($action, $obj, $dao) {
 
     switch ($action) {
 
+        /* Load selects */
+
         case "loadRol":
             $dao->LoadSelect($obj, "loadrol");
             break;
@@ -37,10 +39,17 @@ function ExecuteActionLoad($action, $obj, $dao) {
         case "loadBeerTypeStock":
             $dao->LoadSelect($obj, "loadbeertypestock");
             break;
-        
+
         case "loadDepartment":
             $dao->LoadSelect($obj, "loaddepartment");
             break;
+
+        case "loadCity":
+            $dao->LoadSelect($obj, "loadcity");
+            break;
+
+        /* End load selects */
+ 
 
         default :
             echo 'No action found';
