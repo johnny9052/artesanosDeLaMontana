@@ -2301,7 +2301,7 @@ DELIMITER ;
 
 alter table pedido add column idciudad int;
 
-alter table pedido add foreign key (idciudad) references ciudad(id)
+alter table pedido add foreign key (idciudad) references ciudad(id);
 
 
 DROP FUNCTION IF EXISTS saveorder;
@@ -2514,20 +2514,21 @@ DELIMITER ;
 
 
 
+DROP FUNCTION IF EXISTS listbeerinventary;
 
 
-DELIMITER //
-CREATE PROCEDURE listbeerinventary(iduser int)
-COMMENT 'Procedimiento que calcula y lista el total de cervezas disponibles'
-BEGIN
-        select id,tipo, SUM(res.cantidad) from(
-        select id,tipo,cantidad from vbeerin
-        union all
-        select id,tipo,cantidad from vbeerout) as res
-        group by res.tipo
-        order by res.tipo;
-END//
-DELIMITER ;
+    DELIMITER //
+    CREATE PROCEDURE listbeerinventary(iduser int)
+    COMMENT 'Procedimiento que calcula y lista el total de cervezas disponibles'
+    BEGIN
+            select id,tipo, SUM(res.cantidad) from(
+            select id,tipo,cantidad from vbeerin
+            union all
+            select id,tipo,cantidad from vbeerout) as res
+            group by res.tipo
+            order by res.tipo;
+    END//
+    DELIMITER ;
 
 
 

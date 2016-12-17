@@ -213,12 +213,14 @@ class Repository extends Internationalization {
             }
 
             if ($vec[0][0] > 0) {
-                echo(json_encode(['res' => 'Success', "msg" => $this->getOperationSuccess()]));
+                echo(json_encode(['res' => 'Success', "msg" => $this->getOperationSuccess(),
+                    'sql' => $query]));
             } else {
                 echo(json_encode(['res' => 'Error', "msg" => $this->getOperationError()]));
             }
         } catch (PDOException $exception) {
-            echo(json_encode(['res' => 'Error', "msg" => $this->getOperationErrorForeign()]));
+            echo(json_encode(['res' => 'Error', "msg" => $this->getOperationErrorForeign(),
+                    'development' => $exception->getMessage(),'sql' => $query]));
         }
     }
 
@@ -258,7 +260,7 @@ class Repository extends Internationalization {
      * @author Johnny Alexander Salazar
      * @version 0.5
      */
-    public function BuildPaginator($query,$actionclick) {
+    public function BuildPaginator($query, $actionclick) {
 
 //Longitud maxima de los caracteres del listado
         $max = 25;
