@@ -23,10 +23,10 @@ and open the template in the editor.
                     <div class="col l4 s12">
                         <h5 class="">Productos</h5>
                         <ul>
-                            <li><a class="white-text" href="#!">American Brown Ale (Dulima)</a></li>
-                            <li><a class="white-text" href="#!">Irish Red Ale (Santa Chava)</a></li>
-                            <li><a class="white-text" href="#!">Imperial Stout Con Café (Tatamá)</a></li>
-                            <li><a class="white-text" href="#!">Bohemian Ale (Cumanday)</a></li>
+                            <li><a class="white-text" href="index.php?page=products/dulima">American Brown Ale (Dulima)</a></li>
+                            <li><a class="white-text" href="index.php?page=products/santa_chava">Irish Red Ale (Santa Chava)</a></li>
+                            <li><a class="white-text" href="index.php?page=products/tatama">Imperial Stout Con Café (Tatamá)</a></li>
+                            <li><a class="white-text" href="index.php?page=products/cumanday">Bohemian Ale (Cumanday)</a></li>
                         </ul>
                     </div>
 

@@ -102,8 +102,6 @@ and open the template in the editor.
                 </div>
 
             </div>
-
-
         </div>
 
 
@@ -122,8 +120,6 @@ and open the template in the editor.
 
 
         <?php
-        include("ViewPublic/template/v_logo.php");
-
         include("ViewPublic/template/v_footer.php");
         ?>
     </body>

@@ -25,6 +25,11 @@ $(document).ready(function () {
         container: 'body'//Con esto se evita que cuando esta en un modal, 
                 //quede oculto detras del modal 
     });
+
+    //Inicializa los carruseles de la pagina
+    $(document).ready(function () {
+        $('.slider').slider({full_width: true});
+    });
 });
 
 
@@ -82,7 +87,7 @@ function showLoadBar(status) {
  * @version 0.2
  */
 function Execute(dataSend, url, before, success) {
-           
+
     $.ajax({
         type: 'post',
         url: "Controller/" + url + ".php",
