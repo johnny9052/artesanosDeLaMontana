@@ -28,10 +28,10 @@ and open the template in the editor.
         <div class="container">
             <div class="section">
 
-                <h3><i class="mdi-content-send brown-text"></i></h3>
+<!--                <h3><i class="mdi-content-send brown-text"></i></h3>
                 <div class="row center">
                     <a href="" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Conoce Nuestros productos</a>
-                </div>
+                </div>-->
 
                 <!--   Icon Section   -->
                 <div class="row">

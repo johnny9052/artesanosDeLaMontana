@@ -10,14 +10,16 @@ class OrderDTO extends BaseDTO {
     private $city;
     private $idclient;
     private $estado;
+    private $description;
 
-    function __construct($id, $direccion, $products, $city, $idclient, $estado) {
+    function __construct($id, $direccion, $products, $city, $idclient, $estado, $description) {
         $this->id = $id;
         $this->direccion = $direccion;
         $this->products = $products;
         $this->city = $city;
         $this->idclient = $idclient;
         $this->estado = $estado;
+        $this->description = $description;
     }
 
     function getId() {
@@ -66,6 +68,14 @@ class OrderDTO extends BaseDTO {
 
     function setEstado($estado) {
         $this->estado = $estado;
+    }
+
+    function getDescription() {
+        return $this->description;
+    }
+
+    function setDescription($description) {
+        $this->description = $description;
     }
 
 }

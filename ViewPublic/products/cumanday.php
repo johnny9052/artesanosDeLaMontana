@@ -13,24 +13,56 @@ and open the template in the editor.
 
         <h2 class="center-align" style="color: white">Cumanday</h2>
 
-        <div class="slider">
-            <ul class="slides">
-                <li>
-                    <img src="Resource/Multimedia/Products/Cumanday/cumanday1.jpg"> <!-- random image -->
-                    <div class="caption center-align">
-                        <h3>!Que buena combinación!</h3>
-                        <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
-                    </div>
-                </li>
-                <li>
-                    <img src="Resource/Multimedia/Products/Cumanday/cumanday2.jpg"> <!-- random image -->
-                    <div class="caption left-align">
-                        <h3>!Que buena combinación!</h3>
-                        <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
-                    </div>
-                </li>                
-            </ul>
+
+        <!-- La division por columnas fue necesaria, debido  al zoom que se hace
+        en las imagenes, para pantallas grandes se segmentara, para tablets y 
+        celulares se mostrara completo-->
+        <div class="row">
+            <div class="col l2">
+
+            </div>
+
+            <div class="col l8 s12 m12">
+                <div class="slider">
+                    <ul class="slides">
+                        <li>
+                            <img src="Resource/Multimedia/Products/Cumanday/cumanday1.jpg"> <!-- random image -->
+                            <div class="caption center-align">
+                                <h3>!Que buena combinación!</h3>
+                                <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="Resource/Multimedia/Products/Cumanday/cumanday2.jpg"> <!-- random image -->
+                            <div class="caption left-align">
+                                <h3>!Que buena combinación!</h3>
+                                <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
+                            </div>
+                        </li>                
+                        <li>
+                            <img src="Resource/Multimedia/Products/Cumanday/cumanday3.jpg"> <!-- random image -->
+                            <div class="caption center-align">
+                                <h3>!Que buena combinación!</h3>
+                                <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="Resource/Multimedia/Products/Cumanday/cumanday4.jpg"> <!-- random image -->
+                            <div class="caption left-align">
+                                <h3>!Que buena combinación!</h3>
+                                <h5 class="light grey-text text-lighten-3">Notas florales y afrutadas</h5>
+                            </div>
+                        </li>                
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col l2">
+
+            </div>
         </div>
+
+
 
 
         <div class="container">
@@ -46,7 +78,7 @@ and open the template in the editor.
                         </p>
 
                         <div class="row center">
-                            <a  href="#ModalComentario"  id="download-button" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Comprar</a>                         
+                            <a  href="index.php?page=buy"  id="download-button" class="btn-large waves-effect waves-light teal lighten-1 modal-trigger">Comprar</a>                         
                         </div>
 
                     </div>
@@ -54,5 +86,11 @@ and open the template in the editor.
 
             </div>
         </div>
+
+
+
+        <?php
+        include("ViewPublic/template/v_footer.php");
+        ?>
     </body>
 </html>

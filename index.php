@@ -13,7 +13,7 @@ session_start();
         <link rel="shortcut icon" type="image/png" href="Resource/Images/Public/favicon.png"/>
 
         <!--        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
-        
+
         <link href="Resource/Framework/MaterializedPublic/css/materialize.min.css" rel="stylesheet" type="text/css"/>
 
         <link href="Resource/Framework/Personalized/styleBlack.css" rel="stylesheet" type="text/css"/>
@@ -23,7 +23,7 @@ session_start();
         <link href="Resource/Style/Public/modal.css" rel="stylesheet" type="text/css"/>        
 
         <script src="Resource/Framework/Jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
-        
+
         <script src="Resource/Framework/MaterializedPublic/js/materialize.min.js" type="text/javascript"></script>
 
         <script src="Resource/Framework/Personalized/init.js" type="text/javascript"></script>
@@ -31,6 +31,7 @@ session_start();
         <link href="Resource/Framework/Personalized/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
 
         <script src="Resource/Script/General/General.js" type="text/javascript"></script>
+        
         <script src="Resource/Script/Public/public.js" type="text/javascript"></script>
     </head>
     <body>

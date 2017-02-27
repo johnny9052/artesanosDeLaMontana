@@ -35,12 +35,14 @@ and open the template in the editor.
                         <h5 class="">Siguenos</h5>
                         <ul>
                             <li class="mdi mdi-facebook-box iconoblanco">
-                                <a class="white-text" href="https://www.facebook.com/artesanosdelamontana" target="_blank"> Facebook</a>
+                                <a class="white-text" href="https://www.facebook.com/artesanosdelamontana" target="_blank">&nbsp;Facebook</a>
                             </li>
                             <br>
-                            <li class="mdi mdi-twitter-box iconoblanco"><a class="white-text" href="https://twitter.com/ArtesanoMontana" target="_blank"> Twitter</a></li>
+                            <li class="mdi mdi-twitter-box iconoblanco"><a class="white-text" href="https://twitter.com/ArtesanoMontana" target="_blank">&nbsp;Twitter</a></li>
                             <br>
-                            <li class="mdi mdi-youtube-play iconoblanco"><a class="white-text" href="https://www.youtube.com/channel/UCwnlXvNoglSYdBIL-Zc0q0w" target="_blank"> YouTube</a></li>                            
+                            <li class="mdi mdi-youtube-play iconoblanco"><a class="white-text" href="https://www.youtube.com/channel/UCwnlXvNoglSYdBIL-Zc0q0w" target="_blank">&nbsp;YouTube</a></li>                            
+                             <br>
+                             <li class="mdi iconoblanco"><img style="width: 14px; height: 15px;" src="Resource/Multimedia/Other/instagram.png" alt=""/><a class="white-text" href="https://www.instagram.com/artesanosdelamontana/" target="_blank">&nbsp;Instagram</a></li>                            
                         </ul>
                     </div>
                 </div>
@@ -51,6 +53,7 @@ and open the template in the editor.
                 </div>
             </div>
         </footer>
+        
 
     </body>
 </html>

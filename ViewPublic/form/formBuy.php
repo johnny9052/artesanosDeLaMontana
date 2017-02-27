@@ -39,8 +39,19 @@ and open the template in the editor.
                        (isset($_SESSION['identificationPublic'])) ? print $_SESSION['identificationPublic'] : print "no existe";
                        ?>" >
 
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="txtDescription" name="description" class="materialize-textarea" value="" autocomplete="off" 
+                                  placeholder="Observaciones"></textarea>                                                  
+                        </label>
+                    </div>
+                </div>
+
                 <div id="listadoInventarioDisponible">
                 </div>
+
+
+
 
             </form>         
         </div>     

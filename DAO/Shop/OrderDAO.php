@@ -27,6 +27,7 @@ class OrderDAO {
         $query = $this->repository->buildQuerySimply("saveorder", array((int) $obj->getIdclient(),
             (string) $obj->getDireccion(),
             (int) $obj->getCity(),
+            (string) $obj->getDescription(),
             (string) $obj->getProducts() . ","));
 
         //echo $query;

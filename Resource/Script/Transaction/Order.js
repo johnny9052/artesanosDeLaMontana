@@ -1,6 +1,6 @@
 /* Funciones jQuery */
 $(window).load(function () {
-    list();    
+    list();
     loadCity();
 });
 
@@ -115,7 +115,8 @@ function search() {
 }
 
 function showData(info) {
-    $("#chkEstado").prop("checked", (info[0].estado === "1") ? true : false);
+    $("#chkEstado").prop("checked", (info[0].estado === "1") ? true : false);    
+    $("#lblObservaciones").html(info[0].descripcion);
 }
 
 

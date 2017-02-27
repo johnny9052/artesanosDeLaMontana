@@ -95,7 +95,16 @@ and open the template in the editor.
                                            value="" placeholder="Direccion de entrega">
                                     <!--<label for="txtDireccionPedido">Direccion de entrega</label>-->
                                 </div>                               
-                            </div>                        
+                            </div>    
+
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="txtDescription" name="description" class="materialize-textarea" value="" autocomplete="off" 
+                                              placeholder="Observaciones"></textarea>                                                  
+                                    </label>
+                                </div>
+                            </div>
 
                             <input id="txtIdClient" type="hidden" name="idclient"
                                    value="">
@@ -161,6 +170,13 @@ and open the template in the editor.
                     <div class="input-field col s12">
                         <input type="checkbox" id="chkEstado" name="estado"/>
                         <label for="chkEstado">¿El pedido ya fue entregado?</label>                        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12"> 
+                        <b id="observ">Observaciones </b>
+                        <label for="observ" id="lblObservaciones"></label>                        
                     </div>
                 </div>
 

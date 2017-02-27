@@ -66,10 +66,10 @@ and open the template in the editor.
                                placeholder="Codigo">
                         <!--                        <label class="messageInfo" for="name" data-error="Este campo es obligatorio" data-success=""></label>-->
                     </div>
+                    
                     <div class="input-field col s12">
                         <input id="txtDateIn" name="dateIn" type="date" value="" autocomplete="off" required
-                               placeholder="Fecha de ingreso" class="datepicker">
-                        <!--                        <label class="messageInfo" for="name" data-error="Este campo es obligatorio" data-success=""></label>-->
+                               placeholder="Fecha de ingreso" class="datepicker">                        
                     </div>
 
 
