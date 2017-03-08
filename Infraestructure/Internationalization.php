@@ -14,7 +14,11 @@ class Internationalization {
     private $OperationSuccess = "Operacion exitosa";
     private $OperationError = "Error en la operacion";
     private $OperationErrorForeign = "Error en la operacion, el registro esta asociado a otra informacion";
-    
+
+    /* EMAIL */
+    private $titleEmailSystemMessage = "Has recibido un mensaje de ";
+    private $titleEmailSystemPedido = "Has recibido una solicitud de pedido de ";
+
     function getOperationErrorForeign() {
         return $this->OperationErrorForeign;
     }
@@ -23,7 +27,7 @@ class Internationalization {
         $this->OperationErrorForeign = $OperationErrorForeign;
     }
 
-        function getLogInError() {
+    function getLogInError() {
         return $this->LogInError;
     }
 
@@ -70,5 +74,21 @@ class Internationalization {
     function setOperationError($OperationError) {
         $this->OperationError = $OperationError;
     }
+    function getTitleEmailSystemMessage() {
+        return $this->titleEmailSystemMessage;
+    }
+
+    function getTitleEmailSystemPedido() {
+        return $this->titleEmailSystemPedido;
+    }
+
+    function setTitleEmailSystemMessage($titleEmailSystemMessage) {
+        $this->titleEmailSystemMessage = $titleEmailSystemMessage;
+    }
+
+    function setTitleEmailSystemPedido($titleEmailSystemPedido) {
+        $this->titleEmailSystemPedido = $titleEmailSystemPedido;
+    }
+
 
 }

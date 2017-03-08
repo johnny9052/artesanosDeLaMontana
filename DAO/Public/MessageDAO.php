@@ -24,7 +24,9 @@ class MessageDAO {
     public function Save(MessageDTO $obj) {
         $query = $this->repository->buildQuerySimply("savepublicmessage", array((string) $obj->getName(),
             (string) $obj->getEmail(), (string) $obj->getDescription()));
-        $this->repository->ExecuteTransaction($query);
+        $this->repository->ExecuteTransaction($query);        
+        $this->repository->sendEmailSystem(
+                $this->repository->getTitleEmailSystemMessage() . $obj->getName(), $obj->getDescription());
     }
 
 }

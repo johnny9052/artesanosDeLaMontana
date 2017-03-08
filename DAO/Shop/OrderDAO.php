@@ -32,6 +32,14 @@ class OrderDAO {
 
         //echo $query;
         $this->repository->ExecuteTransaction($query);
+
+        /* La bandera indica que el pedido fue solicitado desde la pagina web */
+        echo $obj->getFlag() . "";
+        if ($obj->getFlag() == 1) {
+            echo "Entre!!";
+            //$this->repository->sendEmailSystem(
+              //      $this->repository->getTitleEmailSystemPedido() . $obj->getDireccion(), $obj->getDescription());
+        }
     }
 
     /**

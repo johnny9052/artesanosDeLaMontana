@@ -105,6 +105,9 @@ and open the template in the editor.
                                     </label>
                                 </div>
                             </div>
+                            
+                            <input id="txtFlag" type="hidden" name="flag"
+                                   value="0">
 
                             <input id="txtIdClient" type="hidden" name="idclient"
                                    value="">

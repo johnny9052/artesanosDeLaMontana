@@ -2642,7 +2642,7 @@ DELIMITER ;
 
 
 
-
+DROP FUNCTION IF EXISTS listorder;
 
 
 DELIMITER //
@@ -2661,6 +2661,9 @@ END//
 DELIMITER ;
 
 
+
+
+DROP FUNCTION IF EXISTS searchorder;
 
 
 DELIMITER //

@@ -6,14 +6,15 @@
  * @version 0.1
  */
 require_once 'Internationalization.php';
+require_once 'Connection.php';
 
 class Repository extends Internationalization {
 
     private $con;
     private $objCon;
+    private $emailSystem = "artesanosdelamontana@gmail.com";
 
     function Repository() {
-        require 'Connection.php';
         $this->objCon = new Connection();
         $this->con = $this->objCon->connect();
     }
@@ -33,15 +34,15 @@ class Repository extends Internationalization {
 
         if ($array) {//tiene parametros?
             for ($i = 0; $i < count($array); $i++) {
-                (is_string($array[$i])) ? $query.="'" . $array[$i] . "'" : $query.=$array[$i]; //si es String pone comilla
+                (is_string($array[$i])) ? $query .= "'" . $array[$i] . "'" : $query .= $array[$i]; //si es String pone comilla
 //echo $i. ' &&  '.count($array). ' ----';
                 if ((int) ($i) < (int) (count($array) - 1)) { //si quedan mas parametros pone una ,
 //echo 'entre';
-                    $query.=",";
+                    $query .= ",";
                 }
             }
         }
-        $query.= ");";
+        $query .= ");";
         return $query;
     }
 
@@ -59,12 +60,12 @@ class Repository extends Internationalization {
         $query = "SELECT " . $nameFunction . "(";
 
         for ($i = 0; $i < count($array); $i++) {
-            (is_string($array[$i])) ? $query.="'" . $array[$i] . "'" : $query.=$array[$i]; //si es String pone comilla
+            (is_string($array[$i])) ? $query .= "'" . $array[$i] . "'" : $query .= $array[$i]; //si es String pone comilla
             if ($i < count($array) - 1) { //si quedan mas parametros pone una ,
-                $query.=",";
+                $query .= ",";
             }
         }
-        $query.= ");";
+        $query .= ");";
         return $query;
     }
 
@@ -220,7 +221,7 @@ class Repository extends Internationalization {
             }
         } catch (PDOException $exception) {
             echo(json_encode(['res' => 'Error', "msg" => $this->getOperationErrorForeign(),
-                    'development' => $exception->getMessage(),'sql' => $query]));
+                'development' => $exception->getMessage(), 'sql' => $query]));
         }
     }
 
@@ -283,8 +284,8 @@ class Repository extends Internationalization {
         if ($resultado->rowCount() > 0) {
 //$cadenaHTML = "<table class='centered responsive-table striped'>";
             $cadenaHTML = "<thead>";
-            $cadenaHTML.= "<tr>";
-            $cadenaHTML.= "<th data-field='sel'>registro #</th>";
+            $cadenaHTML .= "<tr>";
+            $cadenaHTML .= "<th data-field='sel'>registro #</th>";
 
 
 
@@ -314,10 +315,10 @@ class Repository extends Internationalization {
 //Si se quieren añadir todos los datos solo es quitar el if,
 //en este caso solo se esta colocando el id
                     if ($posreg == 0) {
-                        $funcion.='\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
+                        $funcion .= '\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
                     }
                     if ($posreg > 0) {//omite el id para no mostrarlo en los campos de la tabla
-                        $campos.="<td>" . substr($vec[$cont][$posreg], 0, $max) .
+                        $campos .= "<td>" . substr($vec[$cont][$posreg], 0, $max) .
                                 ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
                     }
 //VERIFICAR AQUI
@@ -329,13 +330,13 @@ class Repository extends Internationalization {
 
 //$funcion.= "]);showButton(false);>"; 
 //finaliza la funcion search
-                $funcion.= ");>"; //finaliza la funcion updatedata
-                $cadenaHTML.=$funcion . "<td>" . ($cont + 1) . "</td>";
+                $funcion .= ");>"; //finaliza la funcion updatedata
+                $cadenaHTML .= $funcion . "<td>" . ($cont + 1) . "</td>";
 //$cadenaHTML.=$funcion;
-                $cadenaHTML.=$campos . "</tr>";
+                $cadenaHTML .= $campos . "</tr>";
             }
 
-            $cadenaHTML.="</tbody>";
+            $cadenaHTML .= "</tbody>";
 //$cadenaHTML.="</table>";
         } else {
             $cadenaHTML = "<label>No hay registros en la base de datos</label>";
@@ -373,8 +374,8 @@ class Repository extends Internationalization {
         if ($resultado->rowCount() > 0) {
 //$cadenaHTML = "<table class='centered responsive-table striped'>";
             $cadenaHTML = "<thead>";
-            $cadenaHTML.= "<tr>";
-            $cadenaHTML.= "<th data-field='sel'>registro #</th>";
+            $cadenaHTML .= "<tr>";
+            $cadenaHTML .= "<th data-field='sel'>registro #</th>";
 
 
 
@@ -403,10 +404,10 @@ class Repository extends Internationalization {
 //Si se quieren añadir todos los datos solo es quitar el if,
 //en este caso solo se esta colocando el id
                     if ($posreg == 0) {
-                        $funcion.='\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
+                        $funcion .= '\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
                     }
                     if ($posreg > 0) {//omite el id para no mostrarlo en los campos de la tabla
-                        $campos.="<td>" . substr($vec[$cont][$posreg], 0, $max) .
+                        $campos .= "<td>" . substr($vec[$cont][$posreg], 0, $max) .
                                 ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
                     }
 //VERIFICAR AQUI
@@ -418,18 +419,45 @@ class Repository extends Internationalization {
 
 //$funcion.= "]);showButton(false);>"; 
 //finaliza la funcion search
-                $funcion.= ">"; //finaliza la funcion updatedata
-                $cadenaHTML.=$funcion . "<td>" . ($cont + 1) . "</td>";
+                $funcion .= ">"; //finaliza la funcion updatedata
+                $cadenaHTML .= $funcion . "<td>" . ($cont + 1) . "</td>";
 //$cadenaHTML.=$funcion;
-                $cadenaHTML.=$campos . "</tr>";
+                $cadenaHTML .= $campos . "</tr>";
             }
 
-            $cadenaHTML.="</tbody>";
+            $cadenaHTML .= "</tbody>";
 //$cadenaHTML.="</table>";
         } else {
             $cadenaHTML = "<label>No hay registros en la base de datos</label>";
         }
         echo '[{"res" :"' . $cadenaHTML . '"}]';
+    }
+
+    /* Funciones para correo electronico */
+
+    /**
+     * Envia un correo electronico al correo de la empresa
+     * @return void
+     * @param string $titulo Tema del correo
+     * @param string $mensaje Mensaje del correo
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function sendEmailSystem($titulo, $mensaje) {
+        mail($this->emailSystem, $titulo, $mensaje);
+    }
+
+    /**
+     * Envia un correo electronico al correo especificado
+     * @return void
+     * @param string $email Correo al cual se enviara el mensaje
+     * @param string $titulo Tema del correo
+     * @param string $mensaje Mensaje del correo
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function sendEmail($email, $titulo, $mensaje) {
+        mail($email, $titulo, $mensaje);
     }
 
 }

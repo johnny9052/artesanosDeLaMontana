@@ -186,7 +186,7 @@ function scanInfo(type, status, form, dataPlus) {
             /*Si es un radio, retornamos 1 si esta checkeado, 0 si no*/
             if (elemento.type === "checkbox") {
                 arrayParameters.push(newArg(elemento.name, (elemento.checked) ? 1 : 0));
-            } else {
+            } else {                
                 arrayParameters.push(newArg(elemento.name, elemento.value));
             }
 
@@ -208,7 +208,7 @@ function scanInfo(type, status, form, dataPlus) {
         }
 
     }
-
+    
     //alert(arrayToObject(arrayParameters));
     return arrayToObject(arrayParameters);
 }
@@ -389,16 +389,17 @@ function cleanForm(form) {
 
     $(campos).each(function () {
         var elemento = this;
-        if (elemento.value) {
-            /*Si es un select, coloca el -1*/
-            if (elemento.type === "select-one") {
-                $("#" + elemento.id).val("-1");
-                $('#' + elemento.id).material_select('destroy');
-                $('#' + elemento.id).material_select();
-            } else {
-                $("#" + elemento.id).val("");
+        if (elemento.id !== "txtFlag") {
+            if (elemento.value) {
+                /*Si es un select, coloca el -1*/
+                if (elemento.type === "select-one") {
+                    $("#" + elemento.id).val("-1");
+                    $('#' + elemento.id).material_select('destroy');
+                    $('#' + elemento.id).material_select();
+                } else {
+                    $("#" + elemento.id).val("");
+                }
             }
-
         }
         /*Si esta pintado como invalido se le quita*/
         $("#" + elemento.id).removeClass("invalid");

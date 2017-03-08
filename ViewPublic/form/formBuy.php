@@ -32,7 +32,10 @@ and open the template in the editor.
                                ?>" >
                         <label for="txtDireccionPedido">Direccion de entrega</label>
                     </div>                               
-                </div>                        
+                </div>  
+
+                <input id="txtFlag" type="hidden" name="flag"
+                       value="0">
 
                 <input type="hidden" name="idclient"
                        value="<?php
