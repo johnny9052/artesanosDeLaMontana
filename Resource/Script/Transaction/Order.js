@@ -48,7 +48,7 @@ function save() {
             showToast("Ingrese como minimo la cantidad de 1 producto");
         }
     } else {
-        showToast("Valide el cliente")
+        showToast("Valide el cliente");
     }
 }
 
@@ -115,8 +115,9 @@ function search() {
 }
 
 function showData(info) {
-    $("#chkEstado").prop("checked", (info[0].estado === "1") ? true : false);    
+    $("#chkEstado").prop("checked", (info[0].estado === "1") ? true : false);
     $("#lblObservaciones").html(info[0].descripcion);
+    $("#txtDescriptionAdmin").val(info[0].descripcion_administracion);
 }
 
 

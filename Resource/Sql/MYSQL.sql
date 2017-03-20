@@ -2678,3 +2678,62 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+
+
+
+
+/*************************************************************************/
+/*************************************************************************/
+/*************************************************************************/
+
+alter table pedido add column descripcion_administracion varchar(2000);
+
+
+
+DROP PROCEDURE IF EXISTS searchorder;
+
+
+DELIMITER //
+CREATE PROCEDURE searchorder(vid int)
+COMMENT 'Procedimiento que carga productos y sus cantidades de un determinada pedido'
+BEGIN
+ 	
+	SELECT id,idcliente,fechapedido, direccion, idciudad,estado, descripcion,descripcion_administracion
+	FROM pedido 
+	where id = vid;	
+	
+END//
+
+DELIMITER ;
+
+
+
+
+
+DROP FUNCTION IF EXISTS orderupdatestate;
+
+
+DELIMITER //
+CREATE FUNCTION orderupdatestate(vid int,  vestado int,vdescripcionadmin varchar(2000)) RETURNS INT( 1 ) 
+COMMENT  'Funcion que modifica el estado de una orden'
+READS SQL DATA 
+DETERMINISTIC 
+BEGIN 
+    DECLARE res INT DEFAULT 0;
+    
+
+    UPDATE pedido
+    SET  estado=vestado, descripcion_administracion = vdescripcionadmin
+    WHERE id=vid;
+		
+    set res=1;
+								
+    RETURN res;
+	
+
+END//
+
+DELIMITER ;

@@ -105,7 +105,7 @@ and open the template in the editor.
                                     </label>
                                 </div>
                             </div>
-                            
+
                             <input id="txtFlag" type="hidden" name="flag"
                                    value="0">
 
@@ -191,7 +191,13 @@ and open the template in the editor.
                     <!--END LISTADO DE REGISTROS-->
                 </div>   
 
-
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="txtDescriptionAdmin" name="descriptionAdmin" class="materialize-textarea" value="" autocomplete="off" 
+                                  placeholder="Observaciones de administracion"></textarea>                                                  
+                        </label>
+                    </div>
+                </div>
             </div>
 
             <div  class="buttonContainer modal-footer center-row">

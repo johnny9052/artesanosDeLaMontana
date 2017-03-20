@@ -15,11 +15,10 @@ $idclient = (isset($_POST['idclient']) ? $_POST['idclient'] : "");
 $estado = (isset($_POST['estado']) ? $_POST['estado'] : "");
 $description = (isset($_POST['description']) ? $_POST['description'] : "");
 $flag = (isset($_POST['flag']) ? $_POST['flag'] : 0);
-
-echo "valor recien " . $flag;
+$descriptionAdmin = (isset($_POST['descriptionAdmin']) ? $_POST['descriptionAdmin'] : "");
 
 /* DEFINICION DE OBJETOS */
-$obj = new OrderDTO($id, $direccion, $products, $city, $idclient, $estado, $description, $flag);
+$obj = new OrderDTO($id, $direccion, $products, $city, $idclient, $estado, $description, $flag,$descriptionAdmin);
 $dao = new OrderDAO();
 
 /* CONTROL DE ACCIONES */

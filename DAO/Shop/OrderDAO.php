@@ -101,7 +101,7 @@ class OrderDAO {
         /* Se debe agregar una coma al final, para que el plsql pueda recorrerlo 
           como un array */
         $query = $this->repository->buildQuerySimply("orderupdatestate", array((int) $obj->getId(),
-            (int) $obj->getEstado()));
+            (int) $obj->getEstado(), (string) $obj->getDescriptionAdmin()));
 
         //echo $query;
         $this->repository->ExecuteTransaction($query);
