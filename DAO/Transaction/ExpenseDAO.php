@@ -29,9 +29,9 @@ class ExpenseDAO {
             (double) $obj->getValue(),
             date($obj->getDateExpense())
         ));
-        
+
         //echo $query;
-        
+
         $this->repository->ExecuteTransaction($query);
     }
 
@@ -44,7 +44,7 @@ class ExpenseDAO {
      */
     public function ListAll(ExpenseDTO $obj) {
         $query = $this->repository->buildQuery("listexpense", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query,'');
+        $this->repository->BuildPaginator($query, '');
     }
 
     /**
@@ -87,6 +87,19 @@ class ExpenseDAO {
     public function Delete(ExpenseDTO $obj) {
         $query = $this->repository->buildQuerySimply("deleteexpense", array((int) $obj->getId()));
         $this->repository->ExecuteTransaction($query);
+    }
+
+    /**
+     * Ejecuta una generacion de reporte, llamando el procedimiento almacenado
+     * y generando un archivo CSV a partir del resultado obtenido
+     * @param ExpenseDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function ReportCSV(ExpenseDTO $obj) {        
+        $query = $this->repository->buildQuery("reportexpense", array((int) $obj->getIdUser()));
+        $this->repository->BuildReportCSV($query, 'gastos');
     }
 
 }

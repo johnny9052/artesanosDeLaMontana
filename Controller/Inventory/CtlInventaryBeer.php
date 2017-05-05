@@ -6,7 +6,7 @@ require '../../DAO/Inventory/InventaryBeerDAO.php';
 include '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 
 /* DEFINICION DE OBJETOS */

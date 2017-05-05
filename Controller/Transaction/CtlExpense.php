@@ -6,7 +6,7 @@ require '../../DAO/Transaction/ExpenseDAO.php';
 include '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $typeexpense = (isset($_POST['typeexpense']) ? $_POST['typeexpense'] : "");
 $description = (isset($_POST['description']) ? $_POST['description'] : "");

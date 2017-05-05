@@ -1,0 +1,35 @@
+GASTOS
+
+SELECT g.fecha, t.nombre, g.observaciones, g.valor
+FROM gasto AS g
+INNER JOIN tipo_gasto AS t ON g.id_tipo_gasto = t.id
+INTO OUTFILE  'c:\\gastos.csv'
+FIELDS TERMINATED BY  ';
+
+
+
+
+VENTAS 
+
+
+SELECT v.id AS codigo_pedido,v.descripcion, v.descripcion_administracion, v.direccion, v.estado, v.fechapedido, c.nombre AS ciudad, cli.code AS cedula, cli.nombre AS nombre_cliente, v.estado
+FROM pedido AS v
+INNER JOIN ciudad AS c ON v.idciudad = c.id
+INNER JOIN cliente AS cli ON v.idcliente = cli.id
+INTO OUTFILE  'c:\\ventas.csv'
+FIELDS TERMINATED BY  ';'
+
+
+
+
+VENTAS X PRODUCTO
+
+SELECT v.id AS codigo_pedido,v.descripcion, v.descripcion_administracion, v.direccion, v.fechapedido, c.nombre AS ciudad, cli.code AS cedula, cli.nombre AS nombre_cliente,tip.nombre as nombre_cerveza,pp.cantidad
+FROM pedido AS v
+INNER JOIN ciudad AS c ON v.idciudad = c.id
+INNER JOIN cliente AS cli ON v.idcliente = cli.id
+INNER JOIN pedidoproducto as pp on v.id = pp.idpedido
+INNER JOIN tipo_cerveza as tip on tip.id = pp.idcerveza
+order by v.id
+INTO OUTFILE  'c:\\ventas_producto.csv'
+FIELDS TERMINATED BY  ';'

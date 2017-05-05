@@ -49,3 +49,8 @@ function deleteInfo() {
         Execute(scanInfo('delete', true), 'Transaction/CtlExpense', '', 'closeWindow();list();');
     }
 }
+
+
+function reportCSV() {        
+    ExecuteNewTab(scanInfoNewTab('reportcsv'), 'Transaction/CtlExpense');
+}

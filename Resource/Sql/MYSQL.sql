@@ -2737,3 +2737,47 @@ BEGIN
 END//
 
 DELIMITER ;
+
+
+
+
+
+
+/*************************************************************************/
+/*************************************************************************/
+/*************************************************************************/
+
+
+
+DELIMITER //
+CREATE PROCEDURE reportexpense(iduser int)
+COMMENT 'Procedimiento que genera un reporte con todos los gastos'
+BEGIN
+        SELECT g.fecha, t.nombre, g.observaciones, g.valor
+        FROM gasto AS g
+        INNER JOIN tipo_gasto AS t ON g.id_tipo_gasto = t.id
+        order by g.fecha desc;
+END//
+DELIMITER ;
+
+
+
+
+DELIMITER //
+CREATE PROCEDURE reportorder(iduser int)
+COMMENT 'Procedimiento que genera un reporte con todos los gastos'
+BEGIN
+        SELECT v.id AS codigo_pedido,v.descripcion, v.descripcion_administracion, 
+               v.direccion, v.fechapedido, c.nombre AS ciudad, cli.code AS cedula, 
+               cli.nombre AS nombre_cliente,tip.nombre as nombre_cerveza,pp.cantidad,
+               CASE v.estado  
+                    WHEN 1 THEN 'Cerrado' 
+                    ELSE 'Abierto' END as estado
+        FROM pedido AS v
+        INNER JOIN ciudad AS c ON v.idciudad = c.id
+        INNER JOIN cliente AS cli ON v.idcliente = cli.id
+        INNER JOIN pedidoproducto as pp on v.id = pp.idpedido
+        INNER JOIN tipo_cerveza as tip on tip.id = pp.idcerveza
+        order by v.fechapedido;
+END//
+DELIMITER ;

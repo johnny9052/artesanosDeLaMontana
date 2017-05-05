@@ -23,6 +23,10 @@ and open the template in the editor.
                 <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true);">
                     <i class="material-icons">add</i>
                 </a>
+
+                <a class="l3 btn-floating btn" id="btnOpen" onclick="reportCSV();">
+                    <i class="material-icons">description</i>
+                </a>
             </div>
             <div class="col s4 l4 m4 container">
                 <div class="progress">

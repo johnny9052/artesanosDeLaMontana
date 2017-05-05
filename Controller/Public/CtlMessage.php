@@ -6,7 +6,7 @@ require '../../DAO/Public/MessageDAO.php';
 include '../../Helper/Action/Action.php';
 
 /*RECEPCION DE DATOS*/
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $name = (isset($_POST['name']) ? $_POST['name'] : "");
 $email = (isset($_POST['email']) ? $_POST['email'] : "");
 $description = (isset($_POST['description']) ? $_POST['description'] : "");

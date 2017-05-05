@@ -35,6 +35,12 @@ function ExecuteAction($action, $obj, $dao) {
 
 
         /* Other transactions */
+
+        case "reportcsv":
+            $dao->ReportCSV($obj);
+            break;
+
+
         case "register":
             $dao->Register($obj);
             break;

@@ -38,7 +38,7 @@ class OrderDAO {
         if ($obj->getFlag() == 1) {
             echo "Entre!!";
             //$this->repository->sendEmailSystem(
-              //      $this->repository->getTitleEmailSystemPedido() . $obj->getDireccion(), $obj->getDescription());
+            //      $this->repository->getTitleEmailSystemPedido() . $obj->getDireccion(), $obj->getDescription());
         }
     }
 
@@ -105,6 +105,19 @@ class OrderDAO {
 
         //echo $query;
         $this->repository->ExecuteTransaction($query);
+    }
+
+    /**
+     * Ejecuta una generacion de reporte, llamando el procedimiento almacenado
+     * y generando un archivo CSV a partir del resultado obtenido
+     * @param ExpenseDTO $obj 
+     * @return void      
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function ReportCSV(OrderDTO $obj) {
+        $query = $this->repository->buildQuery("reportorder", array((int) $obj->getIdUser()));
+        $this->repository->BuildReportCSV($query, 'ventas');
     }
 
 }

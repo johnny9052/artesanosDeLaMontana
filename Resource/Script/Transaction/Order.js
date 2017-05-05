@@ -163,3 +163,6 @@ function resetOrder() {
 
 
 
+function reportCSV() {        
+    ExecuteNewTab(scanInfoNewTab('reportcsv'), 'Shop/CtlOrder');
+}

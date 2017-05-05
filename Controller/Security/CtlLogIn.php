@@ -5,7 +5,7 @@ require '../../DTO/Security/LogInDTO.php';
 require '../../DAO/Security/LogInDAO.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $usuario = (isset($_POST['user']) ? $_POST['user'] : "");
 $password = (isset($_POST['password']) ? $_POST['password'] : "");
 

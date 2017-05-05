@@ -263,7 +263,7 @@ class Repository extends Internationalization {
      */
     public function BuildPaginator($query, $actionclick) {
 
-//Longitud maxima de los caracteres del listado
+        //Longitud maxima de los caracteres del listado
         $max = 25;
 
         /* Le asigno la consulta SQL a la conexion de la base de datos */
@@ -274,7 +274,7 @@ class Repository extends Internationalization {
         /* Se meten los datos a un vector, organizados sus campos no por nombre, 
           si no enumarados */
         $vec = $resultado->fetchAll(PDO::FETCH_NUM);
-//echo $resultado->columnCount() . '----' . $resultado->rowCount();
+        //echo $resultado->columnCount() . '----' . $resultado->rowCount();
 
         /* quedo pendiente mirar como saco todos los registros por un lado y 
          * los campos por el otro de ser necesario, para eso si se necesita 
@@ -282,7 +282,7 @@ class Repository extends Internationalization {
          */
 
         if ($resultado->rowCount() > 0) {
-//$cadenaHTML = "<table class='centered responsive-table striped'>";
+            //$cadenaHTML = "<table class='centered responsive-table striped'>";
             $cadenaHTML = "<thead>";
             $cadenaHTML .= "<tr>";
             $cadenaHTML .= "<th data-field='sel'>registro #</th>";
@@ -291,9 +291,9 @@ class Repository extends Internationalization {
 
             for ($cont = 1; $cont < $resultado->columnCount(); $cont++) { //arma la cabecera de la tabla
                 $col = $resultado->getColumnMeta($cont);
-//Coloca la cabecera reempleazando los guiones bajos con espacios
+                //Coloca la cabecera reempleazando los guiones bajos con espacios
                 $cadenaHTML .= "<th data-field='" . $col['name'] . "'>" . str_replace("_", " ", $col['name']) . "</th>";
-//VERIFICAR AQUI
+                //VERIFICAR AQUI
             }
 
 
@@ -304,16 +304,16 @@ class Repository extends Internationalization {
 
 
             for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
-//variable que contiene el tr con la funcion del selradio y el update data
-//$funcion = "<tr class='rowTable' onclick=showData([";
+                //variable que contiene el tr con la funcion del selradio y el update data
+                //$funcion = "<tr class='rowTable' onclick=showData([";
                 //$funcion = "<tr class='rowTable' onclick=search(";
                 $funcion = "<tr class='rowTable' onclick=" . (($actionclick !== '') ? $actionclick : 'search') . "(";
-//variable que contiene los valores de los campos de la tabla
+                //variable que contiene los valores de los campos de la tabla
                 $campos = "";
-//en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
+                //en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
                 for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
-//Si se quieren añadir todos los datos solo es quitar el if,
-//en este caso solo se esta colocando el id
+                    //Si se quieren añadir todos los datos solo es quitar el if,
+                    //en este caso solo se esta colocando el id
                     if ($posreg == 0) {
                         $funcion .= '\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
                     }
@@ -321,23 +321,23 @@ class Repository extends Internationalization {
                         $campos .= "<td>" . substr($vec[$cont][$posreg], 0, $max) .
                                 ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
                     }
-//VERIFICAR AQUI
-//                    if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
-//                        $funcion.=",";
-//                    }
+                    //VERIFICAR AQUI
+                    //if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
+                    //$funcion.=",";
+                    //}
                 }
 
 
-//$funcion.= "]);showButton(false);>"; 
-//finaliza la funcion search
+                //$funcion.= "]);showButton(false);>"; 
+                //finaliza la funcion search
                 $funcion .= ");>"; //finaliza la funcion updatedata
                 $cadenaHTML .= $funcion . "<td>" . ($cont + 1) . "</td>";
-//$cadenaHTML.=$funcion;
+                //$cadenaHTML.=$funcion;
                 $cadenaHTML .= $campos . "</tr>";
             }
 
             $cadenaHTML .= "</tbody>";
-//$cadenaHTML.="</table>";
+            //$cadenaHTML.="</table>";
         } else {
             $cadenaHTML = "<label>No hay registros en la base de datos</label>";
         }
@@ -458,6 +458,60 @@ class Repository extends Internationalization {
      */
     public function sendEmail($email, $titulo, $mensaje) {
         mail($email, $titulo, $mensaje);
+    }
+
+    /**
+     * Ejecuta una consulta sql y retorna un archivo CSV con todos los datos
+     * @return file.csv Retorna el archivo CSV con todos los datos
+     * @param string $query Consulta a ejecutar     
+     * @param string $fileName nombre del archivo que se generará
+     * @author Johnny Alexander Salazar
+     * @version 0.5
+     */
+    public function BuildReportCSV($query, $fileName) {
+        /* Se define la zona horaria en Colombia para generar el archivo */
+        date_default_timezone_set("America/Bogota");
+        /* Se genera el nombre del archivo con la fecha y hora de la generacion */
+        $fileName = $fileName . '-' . date("Y-m-d") . "(" . date("h:i:sa") . ")" . '.csv';
+        /* Se define que se retornara un archivo CVS */
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename=' . $fileName);
+
+        /* Le asigno la consulta SQL a la conexion de la base de datos */
+        $resultado = $this->objCon->getConnect()->prepare($query);
+        /* Executo la consulta */
+        $resultado->execute();
+
+        /* Se meten los datos a un vector, organizados sus campos no por nombre, 
+          si no enumarados */
+        $vec = $resultado->fetchAll(PDO::FETCH_NUM);
+
+        if ($resultado->rowCount() > 0) {
+
+            $content = '';
+
+            /* arma la cabecera de la tabla */
+            for ($cont = 0; $cont < $resultado->columnCount(); $cont++) {
+                $col = $resultado->getColumnMeta($cont);
+                //Coloca la cabecera reempleazando los guiones bajos con espacios
+                $content .= $col['name'] . ";";
+            }
+
+            /* Enter para separar cabecera de los registros */
+            $content .= "\n";
+
+            /* Se sacan los registros */
+            for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
+                for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
+                    $content .= $vec[$cont][$posreg] . ';';
+                }
+                /* Enter para separar los diferentes registros */
+                $content .= "\n";
+            }
+        } else {
+            echo "No hay registros en la base de datos, por lo tanto no se puede generar el archivo";
+        }
+        echo $content;
     }
 
 }

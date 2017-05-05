@@ -6,7 +6,7 @@ require '../../DAO/Parameterization/CityDAO.php';
 include '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $name = (isset($_POST['name']) ? $_POST['name'] : "");
 $department = (isset($_POST['department']) ? $_POST['department'] : "");

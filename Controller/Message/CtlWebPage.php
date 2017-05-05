@@ -6,7 +6,7 @@ require '../../DAO/Message/WebPageDAO.php';
 include '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = ($_REQUEST($_POST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $name = (isset($_POST['name']) ? $_POST['name'] : "");
 $email = (isset($_POST['email']) ? $_POST['email'] : "");

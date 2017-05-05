@@ -153,6 +153,23 @@ function Execute(dataSend, url, before, success) {
 
 
 /**
+ * Ejecuta una peticion al servidor por get, mostrando los resultados en una 
+ * nueva pestaña en el navegador
+ * @param {Array} dataSend Array nombrado con los datos a enviar
+ * @param {String} url Paquete y nombre del controlador a ejecutar
+ * @returns {void} 
+ * @author Johnny Alexander Salazar
+ * @version 0.2
+ */
+function ExecuteNewTab(dataSend, url) {
+    url = "Controller/" + url + ".php?" + dataSend;
+    var win = window.open(url, '_blank');
+    win.focus();        
+}
+
+
+
+/**
  * Scanea un formulario, detecta los input tipo text y password, y añade
  * sus valores a un array para ser enviados por post. Adicionalmente añade por 
  * defecto el valor type mandado por parametro 
@@ -186,7 +203,7 @@ function scanInfo(type, status, form, dataPlus) {
             /*Si es un radio, retornamos 1 si esta checkeado, 0 si no*/
             if (elemento.type === "checkbox") {
                 arrayParameters.push(newArg(elemento.name, (elemento.checked) ? 1 : 0));
-            } else {                
+            } else {
                 arrayParameters.push(newArg(elemento.name, elemento.value));
             }
 
@@ -208,9 +225,69 @@ function scanInfo(type, status, form, dataPlus) {
         }
 
     }
-    
+
     //alert(arrayToObject(arrayParameters));
     return arrayToObject(arrayParameters);
+}
+
+
+
+
+
+
+/**
+ * Scanea un formulario, detecta los input tipo text y password, y añade
+ * sus valores a un array para ser enviados por GET. Adicionalmente añade por 
+ * defecto el valor type mandado por parametro. Este se utiliza para mandar los
+ * datos por la URL y esperar los resultados en una nueva pestaña del navegador
+ * @param {String} type : Accion que se ejecutara en el server
+ * @param {String} form : Id del formulario donde se encuentran los inputs
+ * @param {Array} dataPlus : Array con datos adicionales, la primera posicion
+ * de cada objeto en cada posicion del array, es el nombre que se le asignara
+ * a dichos datos
+ * @param {Boolean} status : Determina si escanea los campos del formulario
+ * @returns {String} listado de variables estructuradas para mandar por la URL
+ * @author Johnny Alexander Salazar
+ * @version 0.3
+ */
+function scanInfoNewTab(type, status, form, dataPlus) {
+    var arrayParameters = new Array();
+    form = defualtForm(form);
+    arrayParameters.push(newArg("action", type));
+
+    /*Inputs sencillos*/
+    if (status) {
+        var campos = '#' + form + ' :input,\n\
+                 #' + form + ' select, \n\
+                 #' + form + ' textarea';
+
+        $(campos).each(function () {
+            var elemento = this;
+            /*Si es un radio, retornamos 1 si esta checkeado, 0 si no*/
+            if (elemento.type === "checkbox") {
+                arrayParameters.push(newArg(elemento.name, (elemento.checked) ? 1 : 0));
+            } else {
+                arrayParameters.push(newArg(elemento.name, elemento.value));
+            }
+        });
+    }
+
+    //SI EXISTE INFO ADICIONAL
+    if (dataPlus !== undefined) {
+        if (dataPlus.length > 0) {
+            for (var x in dataPlus) {
+                var valTemp = new Array();
+                for (var y in dataPlus[x].datos) {
+                    valTemp.push(dataPlus[x].datos[y]);
+                }
+                var nombreData = valTemp.shift();
+                arrayParameters.push(newArg(nombreData, valTemp.toString()));
+            }
+        }
+
+    }
+    
+    return arrayParameters.join('&');
 }
 
 

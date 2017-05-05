@@ -5,7 +5,7 @@ require '../../DAO/Configuration/PermissionDAO.php';
 require '../../DTO/Configuration/PermissionDTO.php';
 
 /*RECEPCION DE DATOS*/
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $permission = (isset($_POST['permission']) ? $_POST['permission'] : "");
 

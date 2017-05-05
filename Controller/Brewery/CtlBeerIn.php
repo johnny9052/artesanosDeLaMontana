@@ -6,7 +6,7 @@ require '../../DAO/Brewery/BeerInDAO.php';
 include '../../Helper/Action/Action.php';
 
 /*RECEPCION DE DATOS*/
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $beerType = (isset($_POST['beerType']) ? $_POST['beerType'] : "");
 $bootle = (isset($_POST['bootle']) ? $_POST['bootle'] : "");

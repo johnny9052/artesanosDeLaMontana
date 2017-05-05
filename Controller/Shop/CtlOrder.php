@@ -6,7 +6,7 @@ require '../../DAO/Shop/OrderDAO.php';
 include '../../Helper/Action/Action.php';
 
 /* RECEPCION DE DATOS */
-$action = (isset($_POST['action']) ? $_POST['action'] : "");
+$action = (isset($_REQUEST['action']) ? $_REQUEST['action'] : "");
 $id = (isset($_POST['id']) ? $_POST['id'] : "");
 $direccion = (isset($_POST['direccion']) ? $_POST['direccion'] : "");
 $products = (isset($_POST['products']) ? $_POST['products'] : "");
