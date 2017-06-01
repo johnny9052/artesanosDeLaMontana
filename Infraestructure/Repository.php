@@ -6,15 +6,18 @@
  * @version 0.1
  */
 require_once 'Internationalization.php';
+require_once 'Cleaner.php';
 require_once 'Connection.php';
 
 class Repository extends Internationalization {
 
     private $con;
     private $objCon;
+    private $clean;
     private $emailSystem = "artesanosdelamontana@gmail.com";
 
     function Repository() {
+        $this->clean = new Cleaner();
         $this->objCon = new Connection();
         $this->con = $this->objCon->connect();
     }
@@ -34,10 +37,10 @@ class Repository extends Internationalization {
 
         if ($array) {//tiene parametros?
             for ($i = 0; $i < count($array); $i++) {
-                (is_string($array[$i])) ? $query .= "'" . $array[$i] . "'" : $query .= $array[$i]; //si es String pone comilla
-//echo $i. ' &&  '.count($array). ' ----';
+                (is_string($array[$i])) ? $query .= "'" . $this->cleanValue($array[$i]) . "'" : $query .= $array[$i]; //si es String pone comilla
+                //echo $i. ' &&  '.count($array). ' ----';
                 if ((int) ($i) < (int) (count($array) - 1)) { //si quedan mas parametros pone una ,
-//echo 'entre';
+                    //echo 'entre';
                     $query .= ",";
                 }
             }
@@ -60,7 +63,7 @@ class Repository extends Internationalization {
         $query = "SELECT " . $nameFunction . "(";
 
         for ($i = 0; $i < count($array); $i++) {
-            (is_string($array[$i])) ? $query .= "'" . $array[$i] . "'" : $query .= $array[$i]; //si es String pone comilla
+            (is_string($array[$i])) ? $query .= "'" . $this->cleanValue($array[$i]) . "'" : $query .= $array[$i]; //si es String pone comilla
             if ($i < count($array) - 1) { //si quedan mas parametros pone una ,
                 $query .= ",";
             }
@@ -430,7 +433,7 @@ class Repository extends Internationalization {
      */
     public function BuildDetail($query) {
 
-//Longitud maxima de los caracteres del listado
+        //Longitud maxima de los caracteres del listado
         $max = 25;
 
         /* Le asigno la consulta SQL a la conexion de la base de datos */
@@ -441,7 +444,7 @@ class Repository extends Internationalization {
         /* Se meten los datos a un vector, organizados sus campos no por nombre, 
           si no enumarados */
         $vec = $resultado->fetchAll(PDO::FETCH_NUM);
-//echo $resultado->columnCount() . '----' . $resultado->rowCount();
+        //echo $resultado->columnCount() . '----' . $resultado->rowCount();
 
         /* quedo pendiente mirar como saco todos los registros por un lado y 
          * los campos por el otro de ser necesario, para eso si se necesita 
@@ -449,7 +452,7 @@ class Repository extends Internationalization {
          */
 
         if ($resultado->rowCount() > 0) {
-//$cadenaHTML = "<table class='centered responsive-table striped'>";
+            //$cadenaHTML = "<table class='centered responsive-table striped'>";
             $cadenaHTML = "<thead>";
             $cadenaHTML .= "<tr>";
             $cadenaHTML .= "<th data-field='sel'>registro #</th>";
@@ -458,9 +461,9 @@ class Repository extends Internationalization {
 
             for ($cont = 1; $cont < $resultado->columnCount(); $cont++) { //arma la cabecera de la tabla
                 $col = $resultado->getColumnMeta($cont);
-//Coloca la cabecera reempleazando los guiones bajos con espacios
+                //Coloca la cabecera reempleazando los guiones bajos con espacios
                 $cadenaHTML .= "<th data-field='" . $col['name'] . "'>" . str_replace("_", " ", $col['name']) . "</th>";
-//VERIFICAR AQUI
+                //VERIFICAR AQUI
             }
 
 
@@ -471,15 +474,15 @@ class Repository extends Internationalization {
 
 
             for ($cont = 0; $cont < sizeof($vec); $cont++) { //recorre registro por registro
-//variable que contiene el tr con la funcion del selradio y el update data
-//$funcion = "<tr class='rowTable' onclick=showData([";
+                //variable que contiene el tr con la funcion del selradio y el update data
+                //$funcion = "<tr class='rowTable' onclick=showData([";
                 $funcion = "<tr class='rowTable' ";
-//variable que contiene los valores de los campos de la tabla
+                //variable que contiene los valores de los campos de la tabla
                 $campos = "";
-//en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
+                //en el registro que se encuentre pinta sus campos y los saca para la funcion selradio y update data
                 for ($posreg = 0; $posreg < $resultado->columnCount(); $posreg++) {//por cada valor del registro
-//Si se quieren añadir todos los datos solo es quitar el if,
-//en este caso solo se esta colocando el id
+                    //Si se quieren añadir todos los datos solo es quitar el if,
+                    //en este caso solo se esta colocando el id
                     if ($posreg == 0) {
                         $funcion .= '\'' . $vec[$cont][$posreg] . "'"; //lo añade a la funcion updatedata    
                     }
@@ -487,23 +490,23 @@ class Repository extends Internationalization {
                         $campos .= "<td>" . substr($vec[$cont][$posreg], 0, $max) .
                                 ((strlen($vec[$cont][$posreg]) > $max) ? ".." : "") . "</td>";
                     }
-//VERIFICAR AQUI
-//                    if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
-//                        $funcion.=",";
-//                    }
+                    //VERIFICAR AQUI
+                    //if ($posreg < $resultado->columnCount() - 1) { //si quedan mas parametros por recorrer pone una ,
+                    //$funcion.=",";
+                    //}
                 }
 
 
-//$funcion.= "]);showButton(false);>"; 
-//finaliza la funcion search
+                //$funcion.= "]);showButton(false);>"; 
+                //finaliza la funcion search
                 $funcion .= ">"; //finaliza la funcion updatedata
                 $cadenaHTML .= $funcion . "<td>" . ($cont + 1) . "</td>";
-//$cadenaHTML.=$funcion;
+                //$cadenaHTML.=$funcion;
                 $cadenaHTML .= $campos . "</tr>";
             }
 
             $cadenaHTML .= "</tbody>";
-//$cadenaHTML.="</table>";
+            //$cadenaHTML.="</table>";
         } else {
             $cadenaHTML = "<label>No hay registros en la base de datos</label>";
         }
@@ -589,6 +592,17 @@ class Repository extends Internationalization {
             echo "No hay registros en la base de datos, por lo tanto no se puede generar el archivo";
         }
         echo $content;
+    }
+
+    /**
+     * Limpia una cadena de caracteres extraños
+     * @return string cadena de caracteres limpia
+     * @param string $value Cadena a limpiar     
+     * @author Johnny Alexander Salazar
+     * @version 0.1
+     */
+    public function cleanValue($value) {
+        return $this->clean->cleanValue($value);
     }
 
 }
