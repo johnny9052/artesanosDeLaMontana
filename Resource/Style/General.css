@@ -75,5 +75,7 @@ th{
     margin-bottom: 10px;
 }
 
-
+.seleccionable{
+    cursor: pointer;   
+}
 

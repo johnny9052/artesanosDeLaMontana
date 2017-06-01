@@ -12,6 +12,7 @@ and open the template in the editor.
         <!--        <link href="Resource/Style/Security/LogIn.css" rel="stylesheet">-->
 
         <script defer type="text/javascript" src="Resource/Script/Configuration/Rol.js"></script>
+
     </head>
     <body>
 
@@ -39,8 +40,13 @@ and open the template in the editor.
         <br>
 
         <!-- LISTADO DE REGISTROS-->
-        <table  class="centered bordered responsive-table highlight" id="TblList">                        
-        </table>
+        <div  ng-controller="listController" id="divListController">   
+            <div class="row" dynamic="htmlSearch">
+            </div>
+
+            <table dynamic="html" class="centered bordered responsive-table highlight" id="TblList">                       
+            </table>
+        </div>
         <!-- END LISTADO DE REGISTROS-->
 
 

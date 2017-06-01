@@ -28,7 +28,11 @@ function ExecuteAction($action, $obj, $dao) {
             break;
 
         case "list":
-            $dao->ListAll($obj);
+            $dao->ListAll($obj,false);
+            break;
+        
+          case "listfilter":
+            $dao->ListAll($obj,true);
             break;
 
         /* END Transaction CRUD */

@@ -33,6 +33,8 @@ $(document).ready(function () {
 });
 
 
+
+
 /**
  * Muestra un mensaje en un toast 
  * @param {String} message Mensaje a mostrar en la ventana emergente
@@ -99,9 +101,12 @@ function Execute(dataSend, url, before, success) {
         },
         data: dataSend,
         success: function (data) {
+            //console.log(data);
+            //document.write(data);
             //alert(data);
             //$("#txtDireccionPedido").val(data);
             showLoadBar(false);
+
             var info = eval("(" + data + ")");
             var response = (info.res !== undefined) ? info.res : info[0].res;
             var msg = (info.msg !== undefined) ? info.msg : "";
@@ -133,7 +138,8 @@ function Execute(dataSend, url, before, success) {
                 case undefined:
                 default :
                     /*En el caso de que sea un listar info, buscar o pintar menu*/
-                    if (dataSend.action === "list" || dataSend.action === "menu" || dataSend.action === "search"
+                    if (dataSend.action === "list" || dataSend.action === "listfilter" ||
+                            dataSend.action === "menu" || dataSend.action === "search"
                             || dataSend.action === "detail" || dataSend.action.indexOf("load") > -1) {
                         if (success !== "") {
                             eval(success);
@@ -164,7 +170,7 @@ function Execute(dataSend, url, before, success) {
 function ExecuteNewTab(dataSend, url) {
     url = "Controller/" + url + ".php?" + dataSend;
     var win = window.open(url, '_blank');
-    win.focus();        
+    win.focus();
 }
 
 
@@ -286,7 +292,7 @@ function scanInfoNewTab(type, status, form, dataPlus) {
         }
 
     }
-    
+
     return arrayParameters.join('&');
 }
 
@@ -304,6 +310,27 @@ function buildPaginator(info, id) {
     $("#" + id).html(info[0].res);
 }
 
+/**
+ * Ingresa un codigo angular html al listado general y almacena los datos 
+ * para pintar dicha tabla
+ * @param {String-html} info : JSON con la tabla y los datos 
+ * @author Johnny Alexander Salazar
+ * @version 0.2
+ */
+function buildPaginatorFilter(info) {
+    /*Se referencia el controlador angular*/
+    var scope = angular.element($("#divListController")).scope();
+    /*Se almacenan los datos que se puntaran en la tabla*/
+    scope.objGeneral = info[0].datos;
+    /*Se ejecuta la funcion del controller angular para estructurar la tabla*/
+    scope.$apply(function () {
+        scope.cargarTabla(info[0].res);
+    });
+    /*Se ejecuta la funcion del controller angular para definir el buscador*/
+    scope.$apply(function () {
+        scope.cargarBuscador(info[0].search);
+    });
+}
 
 /**
  * Carga un combo especificado, con los datos que se envian por parametro

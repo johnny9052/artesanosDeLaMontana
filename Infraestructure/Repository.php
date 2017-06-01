@@ -345,6 +345,83 @@ class Repository extends Internationalization {
     }
 
     /**
+     * Ejecuta una consulta sql y retorna una tabla ANGULAR - HTML con el resultado de la consulta, 
+     * la tabla retornada tiene filtros de busqueda y ordenamiento
+     * @return String JSON con 2 valores. Res: Tabla angular y listData: Datos JSON que se pintaran en la 
+     *         tabla angular
+     * @param string $query Consulta a ejecutar     
+     * @param string $actionclick nombre de la funcion onclick que se desee ejecutar en cada registro
+     * @author Johnny Alexander Salazar
+     * @version 0.5
+     */
+    public function BuildPaginatorFilter($query, $actionclick) {
+
+        //Longitud maxima de los caracteres del listado
+        $max = 25;
+        /* Variable que contrendra los campos de angular y la estructura ng-repeat */
+        $estructuraRepeat = "";
+
+        /* Le asigno la consulta SQL a la conexion de la base de datos */
+        $resultado = $this->objCon->getConnect()->prepare($query);
+        /* Executo la consulta */
+        $resultado->execute();
+
+        /* Se meten los datos a un vector, organizados sus campos por nombre */
+        $vec = $resultado->fetchAll(PDO::FETCH_NAMED);
+
+        if ($resultado->rowCount() > 0) {
+
+            $searchContent = "<form class='col s12'>"
+                    . "<div class='row'><div class='input-field col s12'>"
+                    . "<i class='material-icons prefix'>search</i>"
+                    . "<input id='icon_prefix' type='text' class='validate' ng-model='buscar'>"
+                    . "<label for='icon_prefix'>Ingrese valor de busqueda</label>"
+                    . "</div>"
+                    . "</div>"
+                    . "</form>";
+
+            /* Se arman la tabla angular */
+            $cadenaHTML = "<thead>";
+            $cadenaHTML .= "<tr>";
+            /* Se cuenta desde 1 para omitir el ID */
+            for ($cont = 1; $cont < $resultado->columnCount(); $cont++) { //arma la cabecera de la tabla
+                $col = $resultado->getColumnMeta($cont);
+
+                /* Se recorren los nombres de cada una de los atributos de la consulta.
+                 * Ademas Se colocan las cabeceras con las funciones de ordenamiento, 
+                 * teniendo en cuenta que los atributos del JSON listData tendra 
+                 * el mismo nombre que la tabla. Ademas se coloca la cabecera 
+                 * reempleazando los guiones bajos con espacios */
+                $cadenaHTML .= "<th class='seleccionable' data-field='" . $col['name'] . "'>"
+                        . "<label class='seleccionable' ng-click=ordenarPor('" . $col['name'] . "')>" . str_replace("_", " ", $col['name']) . "</label>"
+                        . " <i class='tiny  material-icons seleccionable' ng-click=ordenarPor('-" . $col['name'] . "')>swap_vertical_circle</i>"
+                        . "</th>";
+
+                /* Por cada atributo se arma el NG-REPEAT utilizado por el angular */
+                $estructuraRepeat .= " <td>{{obj." . $col['name'] . " | limitTo:" . $max . "}}</td>";
+            }
+
+
+            $cadenaHTML .= "</tr>";
+            $cadenaHTML .= "</thead>";
+
+            $cadenaHTML .= "<tbody>";
+
+            /* Se establece las condiciones del NG-REPEAT, y se asigna la funcion 
+              NG-CLICK. Se debe tener encuenta que el CLICK no lleva llaves,
+              debido a que ahi se asigna codigo JS, y las llaves solo van en el
+             * HTML */
+            $cadenaHTML .= "<tr ng-repeat='obj in objGeneral| orderBy:ordenSeleccionado | filter:buscar | limitTo:25' "
+                    . "class='rowTable' ng-click='" . (($actionclick !== '') ? $actionclick . 'Angular' : 'searchAngular') . "(obj.id)" .
+                    ";showButtonAngular(false);'>" . $estructuraRepeat . "</tr>";
+        }
+
+        $cadenaHTML .= "</tbody>";
+
+        echo '[{"res" :"' . $cadenaHTML . '","datos": ' . json_encode($vec) . ',"search" :"' . $searchContent . '"}]';
+    }
+
+    /**
      * Ejecuta una consulta sql y retorna una tabla HTML con el resultado de la consulta
      * @return string Echo de resultado de la consulta en formato JSON, con variable res y conteniendo la talba
      * @param string $query Consulta a ejecutar     

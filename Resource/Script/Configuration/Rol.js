@@ -1,6 +1,7 @@
 /* Funciones jQuery */
 $(window).load(function () {
     list();
+    
 });
 
 function save() {
@@ -10,7 +11,7 @@ function save() {
 }
 
 function list() {
-    Execute(scanInfo('list'), 'Configuration/CtlRol', '', 'buildPaginator(info);');
+    Execute(scanInfo('listfilter'), 'Configuration/CtlRol', '', 'buildPaginatorFilter(info);');
 }
 
 

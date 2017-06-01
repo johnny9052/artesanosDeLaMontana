@@ -30,6 +30,8 @@ session_start();
         <!-- ICONOS OFFLINE-->
         <link href="Resource/Framework/Materialize/css/icons.css" rel="stylesheet">
 
+        
+        <script src="Resource/Framework/Angular/angular.min.js" type="text/javascript"></script>
 
         <!--Import jQuery before materialize.js ONLINE-->
         <!--<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
@@ -43,10 +45,14 @@ session_start();
         <!--Import materialize.js OFFLINE-->
 
         <script type="text/javascript" src="Resource/Framework/Materialize/js/materialize.min.js"></script>
+        
         <!-- GENERAL JS -->
+        
+        <script src="Resource/Script/General/GeneralAngular.js" type="text/javascript"></script>
+        
         <script defer type="text/javascript" src="Resource/Script/General/General.js"></script>
     </head>
-    <body>
+    <body ng-app="appMaster">
         <?php
         if (isset($_SESSION["User"])) {
             include("View/MasterPage.php");

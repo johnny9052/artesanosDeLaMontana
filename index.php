@@ -20,7 +20,9 @@ session_start();
 
         <link href="Resource/Framework/Personalized/icons.css" rel="stylesheet" type="text/css"/>
 
-        <link href="Resource/Style/Public/modal.css" rel="stylesheet" type="text/css"/>        
+        <link href="Resource/Style/Public/modal.css" rel="stylesheet" type="text/css"/>  
+        
+        <script src="Resource/Framework/Angular/angular.min.js" type="text/javascript"></script>
 
         <script src="Resource/Framework/Jquery/jquery-2.1.1.min.js" type="text/javascript"></script>
 
@@ -29,7 +31,9 @@ session_start();
         <script src="Resource/Framework/Personalized/init.js" type="text/javascript"></script>
 
         <link href="Resource/Framework/Personalized/MaterialDesign-Webfont-master/css/materialdesignicons.min.css" rel="stylesheet" type="text/css"/>
-
+        
+        <script src="Resource/Script/General/GeneralAngular.js" type="text/javascript"></script>
+        
         <script src="Resource/Script/General/General.js" type="text/javascript"></script>
         
         <script src="Resource/Script/Public/public.js" type="text/javascript"></script>

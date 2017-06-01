@@ -29,14 +29,19 @@ class RolDAO {
 
     /**
      * Ejecuta un listar en la base de datos
-     * @param RolDTO $obj 
+     * @param RolDTO $obj
+     * @param boolean $type indica si se quiere filtro o no 
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function ListAll(RolDTO $obj) {
+    public function ListAll(RolDTO $obj, $type) {
         $query = $this->repository->buildQuery("listrol", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query,'');
+        if ($type) {
+            $this->repository->BuildPaginatorFilter($query, '');
+        } else {
+            $this->repository->BuildPaginator($query, '');
+        }
     }
 
     /**

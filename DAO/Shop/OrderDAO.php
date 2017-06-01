@@ -45,13 +45,18 @@ class OrderDAO {
     /**
      * Ejecuta un listar en la base de datos
      * @param OrderDTO $obj 
+     * @param boolean $type indica si se quiere filtro o no
      * @return void      
      * @author Johnny Alexander Salazar
      * @version 0.1
      */
-    public function ListAll(OrderDTO $obj) {
+    public function ListAll(OrderDTO $obj, $type) {
         $query = $this->repository->buildQuery("listorder", array((int) $obj->getIdUser()));
-        $this->repository->BuildPaginator($query, 'detail');
+        if ($type) {
+            $this->repository->BuildPaginatorFilter($query, 'detail');
+        } else {
+            $this->repository->BuildPaginator($query, 'detail');
+        }
     }
 
     /**

@@ -9,18 +9,17 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
 
+
         <script defer type="text/javascript" src="Resource/Script/Transaction/Order.js"></script>
     </head>
     <body>
 
-
         <br>       
-
 
         <!-- BOTON AÑADIR Y PRIMERA BARRA DE CARGA-->
         <div class="row">
             <div class="col s4 l4 m4 left">
-                <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true);loadProductType();">
+                <a class="l3 btn-floating btn modal-trigger" id="btnOpen" href="#ModalNew" onclick="showButton(true); loadProductType();">
                     <i class="material-icons">add</i>
                 </a>
                 <a class="l3 btn-floating btn" id="btnOpen" onclick="reportCSV();">
@@ -35,13 +34,19 @@ and open the template in the editor.
         </div>
         <!-- END BOTON AÑADIR Y PRIMERA BARRA DE CARGA-->
 
-
-        <br>
-        <br>
-
         <!-- LISTADO DE REGISTROS-->
-        <table  class="centered bordered responsive-table highlight" id="TblList">                        
-        </table>
+        <div  ng-controller="listController" id="divListController">   
+
+            <div class="row" dynamic="htmlSearch">
+                
+            </div>
+
+            <table dynamic="html" class="centered bordered responsive-table highlight" id="TblList">                       
+
+            </table>
+
+        </div>
+
         <!-- END LISTADO DE REGISTROS-->
 
 
@@ -137,7 +142,7 @@ and open the template in the editor.
                        onclick="save();"><i class="material-icons">save</i></a>                                
 
                     <a class="buttonAction l4 btn-floating" 
-                       onclick="closeWindow();resetOrder();"><i class="material-icons">cancel</i></a>                                
+                       onclick="closeWindow(); resetOrder();"><i class="material-icons">cancel</i></a>                                
                 </div>
 
                 <div class="row updateActionButton">

@@ -1,8 +1,11 @@
 /* Funciones jQuery */
+/* global app */
+
 $(window).load(function () {
     list();
     loadCity();
 });
+
 
 
 function loadProductType() {
@@ -100,7 +103,7 @@ function buildBuyProduct(info, id) {
 
 
 function list() {
-    Execute(scanInfo('list'), 'Shop/CtlOrder', '', 'buildPaginator(info);');
+    Execute(scanInfo('listfilter'), 'Shop/CtlOrder', '', 'buildPaginatorFilter(info);');
 }
 
 
@@ -163,6 +166,6 @@ function resetOrder() {
 
 
 
-function reportCSV() {        
+function reportCSV() {
     ExecuteNewTab(scanInfoNewTab('reportcsv'), 'Shop/CtlOrder');
 }
